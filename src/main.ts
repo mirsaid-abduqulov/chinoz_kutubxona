@@ -24,7 +24,7 @@ async function bootstrap() {
     .split(',')
     .map((o) => o.trim())
     .filter(Boolean);
-
+ 
   const corsLogger = new Logger('CORS');
   const httpLogger = new Logger('HTTP');
   const appLogger = new Logger('Bootstrap');
