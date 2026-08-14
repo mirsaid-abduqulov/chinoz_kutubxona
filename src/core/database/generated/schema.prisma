@@ -1,0 +1,127 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/core/database/generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  SUPER_ADMIN
+  LIBRARIAN
+}
+
+model User {
+  id                   String   @id @default(uuid())
+  phone_number         String   @unique
+  email                String?  @unique
+  full_name            String
+  hashed_password      String
+  hashed_refresh_token String?
+  refresh_token_jti    String?
+  role                 UserRole @default(LIBRARIAN)
+  is_login             Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+  books                Book[]
+}
+
+model Genre {
+  id         String      @id @default(uuid())
+  name_latin String      @unique
+  name_cyril String      @unique
+  name_ru    String      @unique
+  books      GenreBook[]
+}
+
+model Author {
+  id                String        @id @default(uuid())
+  full_name_latin   String
+  full_name_cyril   String
+  full_name_ru      String
+  biography_latin   String?
+  biography_cyril   String?
+  biography_ru      String?
+  nationality_latin String?
+  nationality_cyril String?
+  nationality_ru    String?
+  birth_date        String?
+  death_date        String?
+  books             Book[]
+  images            AuthorImage[]
+  created_at        DateTime      @default(now())
+  updated_at        DateTime      @updatedAt
+}
+
+model AuthorImage {
+  id         String   @id @default(uuid())
+  author_id  String
+  author     Author   @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  url        String
+  is_main    Boolean  @default(false)
+  order      Int      @default(0)
+  created_at DateTime @default(now())
+}
+
+model Book {
+  id                String      @id @default(uuid())
+  name_latin        String
+  name_cyril        String
+  name_ru           String
+  description_latin String?
+  description_cyril String?
+  description_ru    String?
+  author_id         String
+  published_date    DateTime?
+  grade_level       Int?
+  creator_id        String
+  created_at        DateTime    @default(now())
+  updated_at        DateTime    @updatedAt
+  genres            GenreBook[]
+  creator           User?       @relation(fields: [creator_id], references: [id])
+  author            Author?     @relation(fields: [author_id], references: [id])
+  images            BookImage[]
+  files             BookFile[]
+}
+
+model BookImage {
+  id         String   @id @default(uuid())
+  book_id    String
+  book       Book     @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  url        String
+  is_main    Boolean  @default(false)
+  order      Int      @default(0)
+  created_at DateTime @default(now())
+}
+
+model BookFile {
+  id         String   @id @default(uuid())
+  book_id    String
+  book       Book     @relation(fields: [book_id], references: [id], onDelete: Cascade)
+  url        String
+  file_type  FileType
+  file_name  String
+  file_size  Int?
+  order      Int      @default(0)
+  created_at DateTime @default(now())
+}
+
+enum FileType {
+  PDF
+  EXCEL
+  WORD
+  IMAGE
+  OTHER
+}
+
+model GenreBook {
+  id      String @id @default(uuid())
+  book    Book   @relation(fields: [bookId], references: [id])
+  genre   Genre  @relation(fields: [genreId], references: [id])
+  bookId  String
+  genreId String
+
+  @@unique([bookId, genreId])
+}
