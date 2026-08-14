@@ -97,6 +97,7 @@ async function bootstrap() {
       .setDescription('Backend API hujjati')
       .setVersion('1.0')
       .addServer(`http://localhost:${port}`, 'Local')
+      .addServer(`http://${config.get<string>('API_HOST')}:${port}`, 'Server')
       .addBearerAuth()
       .build();
     
