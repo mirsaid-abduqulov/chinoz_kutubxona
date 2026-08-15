@@ -8,12 +8,10 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerStorage, imageFileFilter, imageLimits } from '../common/storage/multer.config';
-import { UploadTimeoutGuard } from '../common/guards/upload-timeout.guard';
 import { UserRole } from 'src/core/database/generated';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Authors(Mualliflar)')
-// @UseGuards(RolesGuard,JwtAuthGuard)
 @Controller('authors')
 export class AuthorsController {
   constructor(private readonly authorsService: AuthorsService) { }
