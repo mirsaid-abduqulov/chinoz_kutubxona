@@ -51,3 +51,22 @@ export function detectFileType(mimetype: string, filename: string): FileType {
   }
   return FileType.OTHER;
 }
+
+export const mediaItemLimits = {
+  fileSize: parseInt(process.env.MAX_VIDEO_FILE_SIZE_MB || '200') * 1024 * 1024,
+};
+
+export const mediaItemFileFilter = (req: any, file: any, cb: any) => {
+  if (!file.originalname.match(/\.(jpg|jpeg|png|webp|mp4|avi|mkv|mov|webm|pdf|ppt|pptx)$/i)) {
+    return cb(new BadRequestException('Unsupported media type!'), false);
+  }
+
+  const isVideo = file.mimetype.startsWith('video/') || file.originalname.match(/\.(mp4|avi|mkv|mov|webm)$/i);
+  const size = parseInt(req.headers['content-length'] || '0');
+  
+  if (!isVideo && size > 50 * 1024 * 1024) {
+    return cb(new BadRequestException('Non-video files must be under 50MB!'), false);
+  }
+
+  cb(null, true);
+};

@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { QueryAuthorDto } from './dto/query-author.dto';
@@ -16,6 +16,27 @@ export class AuthorsService {
   ) {}
 
   async create(dto: CreateAuthorDto) {
+    const normalizedName = normalizeName(dto.full_name_latin);
+    const normalizedNameCyril = normalizeName(dto.full_name_cyril);
+    const normalizedNameRu = normalizeName(dto.full_name_ru);
+
+    const existing = await this.prisma.author.findFirst({
+      where: {
+        OR: [
+          { full_name_latin: normalizedName },
+          { full_name_cyril: normalizedNameCyril },
+          { full_name_ru: normalizedNameRu },
+        ],
+      },
+    });
+
+    if (existing) {
+      throw new ConflictException('Yaratilayotgan 3 xil ismdan biri yoki bir nechtasi allaqachon mavjud');
+    }
+
+    dto.birth_date = dto.birth_date?.trim();
+    dto.death_date = dto.death_date?.trim();
+
     const data = {
       ...dto,
       full_name_latin: normalizeName(dto.full_name_latin),
@@ -35,17 +56,22 @@ export class AuthorsService {
   async findAll(query: QueryAuthorDto) {
     const { skip, take, page, limit } = buildPaginationParams(query);
     
-    let where: any = {};
+    const conditions: any[] = [];
     if (query.search) {
-      where = buildMultilangSearchWhere(query.search, 'full_name');
+      conditions.push(buildMultilangSearchWhere(query.search, 'full_name'));
     }
+
+    const where = conditions.length > 0 ? { AND: conditions } : {};
+    
+    const ALLOWED_SORT_FIELDS = ['created_at', 'updated_at', 'full_name_latin', 'rating_score'];
+    const sortBy = ALLOWED_SORT_FIELDS.includes(query.sortBy as string) ? query.sortBy : 'created_at';
 
     const [authors, total] = await Promise.all([
       this.prisma.author.findMany({
         where,
         skip,
         take,
-        orderBy: { [query.sortBy as string]: query.sortOrder },
+        orderBy: { [sortBy as string]: query.sortOrder },
         include: {
           images: {
             where: { is_main: true },
@@ -84,6 +110,21 @@ export class AuthorsService {
     if (dto.nationality_latin !== undefined) data.nationality_latin = dto.nationality_latin?.trim();
     if (dto.nationality_cyril !== undefined) data.nationality_cyril = dto.nationality_cyril?.trim();
     if (dto.nationality_ru !== undefined) data.nationality_ru = dto.nationality_ru?.trim();
+
+    if(dto.birth_date !== undefined) {
+      if(dto.birth_date.trim() === '') {
+        data.birth_date = null;
+      } else {
+        data.birth_date = dto.birth_date.trim();
+      }
+    }
+    if(dto.death_date !== undefined) {
+      if(dto.death_date.trim() === '') {
+        data.death_date = null;
+      } else {
+        data.death_date = dto.death_date.trim();
+      }
+    }
 
     return this.prisma.author.update({
       where: { id },

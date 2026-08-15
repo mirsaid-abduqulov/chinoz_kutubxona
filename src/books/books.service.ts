@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException, StreamableFile } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, StreamableFile, ConflictException, ForbiddenException } from '@nestjs/common';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { QueryBookDto } from './dto/query-book.dto';
@@ -19,12 +19,38 @@ export class BooksService {
   ) {}
 
   async create(dto: CreateBookDto) {
-    // Validate genres
+    // Validate genreIds
+    if (!dto.genreIds || dto.genreIds.length === 0) {
+      throw new BadRequestException('Kamida bitta janr tanlanishi shart');
+    }
+
     const genres = await this.prisma.genre.findMany({
       where: { id: { in: dto.genreIds } },
     });
     if (genres.length !== dto.genreIds.length) {
       throw new NotFoundException('One or more genres not found');
+    }
+
+    // Check if author exists
+    const author = await this.prisma.author.findUnique({ where: { id: dto.author_id } });
+    if (!author) {
+      throw new NotFoundException('Muallif topilmadi');
+    }
+
+    const normalizedName = normalizeName(dto.name_latin);
+
+    // Check for duplicate book
+    const existing = await this.prisma.book.findFirst({
+      where: {
+        name_latin: normalizedName,
+        author_id: dto.author_id,
+      },
+    });
+
+    if (existing) {
+      throw new ConflictException(
+        'Bu muallif ostida shu nomli kitob allaqachon mavjud',
+      );
     }
 
     const { genreIds, published_date, ...rest } = dto;
@@ -52,17 +78,31 @@ export class BooksService {
   async findAll(query: QueryBookDto) {
     const { skip, take, page, limit } = buildPaginationParams(query);
     
-    let where: any = {};
+    const conditions: any[] = [];
     if (query.search) {
-      where = buildMultilangSearchWhere(query.search, 'name');
+      conditions.push(buildMultilangSearchWhere(query.search, 'name'));
     }
+    if (query.author_id) {
+      conditions.push({ author_id: query.author_id });
+    }
+    if (query.genre_id) {
+      conditions.push({ genres: { some: { genreId: query.genre_id } } });
+    }
+    if (query.grade_level !== undefined) {
+      conditions.push({ grade_level: query.grade_level });
+    }
+
+    const where = conditions.length > 0 ? { AND: conditions } : {};
+    
+    const ALLOWED_SORT_FIELDS = ['created_at', 'updated_at', 'name_latin', 'published_date', 'download_count', 'rating_score'];
+    const sortBy = ALLOWED_SORT_FIELDS.includes(query.sortBy as string) ? query.sortBy : 'created_at';
 
     const [books, total] = await Promise.all([
       this.prisma.book.findMany({
         where,
         skip,
         take,
-        orderBy: { [query.sortBy as string]: query.sortOrder },
+        orderBy: { [sortBy as string]: query.sortOrder },
         include: {
           images: {
             where: { is_main: true },
@@ -95,6 +135,13 @@ export class BooksService {
   async update(id: string, dto: UpdateBookDto) {
     const book = await this.prisma.book.findUnique({ where: { id } });
     if (!book) throw new NotFoundException('Book not found');
+
+    if (dto.author_id) {
+      const author = await this.prisma.author.findUnique({ where: { id: dto.author_id } });
+      if (!author) {
+        throw new NotFoundException('Muallif topilmadi');
+      }
+    }
 
     const { genreIds, published_date, ...rest } = dto;
     const data: any = { ...rest };
@@ -316,7 +363,10 @@ export class BooksService {
     return { success: true };
   }
 
-  getDownloadStream(bookId: string, fileId: string) {
+  async getDownloadStream(bookId: string, fileId: string, user?: { role: string }) {
+    const book = await this.prisma.book.findUnique({ where: { id: bookId } });
+    if (!book) throw new NotFoundException('Book not found');
+
     return this.prisma.bookFile.findFirst({
       where: { id: fileId, book_id: bookId },
     }).then(file => {
@@ -330,5 +380,21 @@ export class BooksService {
       const stream = createReadStream(fullPath);
       return { stream, fileName: file.file_name };
     });
+  }
+
+  async logDownload(bookId: string) {
+    try {
+      await this.prisma.$transaction([
+        this.prisma.book.update({
+          where: { id: bookId },
+          data: { download_count: { increment: 1 } },
+        }),
+        this.prisma.bookDownloadLog.create({
+          data: { book_id: bookId },
+        }),
+      ]);
+    } catch (error) {
+      console.error('Download logging error:', error);
+    }
   }
 }

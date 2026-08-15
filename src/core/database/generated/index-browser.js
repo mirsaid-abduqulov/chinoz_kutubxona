@@ -180,7 +180,11 @@ exports.Prisma.BookScalarFieldEnum = {
   grade_level: 'grade_level',
   creator_id: 'creator_id',
   created_at: 'created_at',
-  updated_at: 'updated_at'
+  updated_at: 'updated_at',
+  download_count: 'download_count',
+  rating_score: 'rating_score',
+  weekly_trend_score: 'weekly_trend_score',
+  score_updated_at: 'score_updated_at'
 };
 
 exports.Prisma.BookImageScalarFieldEnum = {
@@ -207,6 +211,192 @@ exports.Prisma.GenreBookScalarFieldEnum = {
   id: 'id',
   bookId: 'bookId',
   genreId: 'genreId'
+};
+
+exports.Prisma.BannerScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  image_url: 'image_url',
+  link_url: 'link_url',
+  order: 'order',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.AnnouncementScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  content_latin: 'content_latin',
+  content_cyril: 'content_cyril',
+  content_ru: 'content_ru',
+  cover_image: 'cover_image',
+  is_published: 'is_published',
+  published_at: 'published_at',
+  creator_id: 'creator_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.UsefulLinkScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  url: 'url',
+  icon: 'icon',
+  order: 'order',
+  is_active: 'is_active'
+};
+
+exports.Prisma.BookDownloadLogScalarFieldEnum = {
+  id: 'id',
+  book_id: 'book_id',
+  downloaded_at: 'downloaded_at'
+};
+
+exports.Prisma.PageScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  content_latin: 'content_latin',
+  content_cyril: 'content_cyril',
+  content_ru: 'content_ru',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.DepartmentScalarFieldEnum = {
+  id: 'id',
+  name_latin: 'name_latin',
+  name_cyril: 'name_cyril',
+  name_ru: 'name_ru',
+  description_latin: 'description_latin',
+  description_cyril: 'description_cyril',
+  description_ru: 'description_ru',
+  order: 'order',
+  is_active: 'is_active',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.NewsScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  content_latin: 'content_latin',
+  content_cyril: 'content_cyril',
+  content_ru: 'content_ru',
+  cover_image: 'cover_image',
+  views_count: 'views_count',
+  is_published: 'is_published',
+  published_at: 'published_at',
+  creator_id: 'creator_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.EventScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  description_latin: 'description_latin',
+  description_cyril: 'description_cyril',
+  description_ru: 'description_ru',
+  location_latin: 'location_latin',
+  location_cyril: 'location_cyril',
+  location_ru: 'location_ru',
+  cover_image: 'cover_image',
+  event_date: 'event_date',
+  is_published: 'is_published',
+  creator_id: 'creator_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.DocumentScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  category: 'category',
+  file_url: 'file_url',
+  file_name: 'file_name',
+  file_size: 'file_size',
+  published_at: 'published_at',
+  creator_id: 'creator_id',
+  created_at: 'created_at'
+};
+
+exports.Prisma.MediaAlbumScalarFieldEnum = {
+  id: 'id',
+  title_latin: 'title_latin',
+  title_cyril: 'title_cyril',
+  title_ru: 'title_ru',
+  type: 'type',
+  cover_image: 'cover_image',
+  creator_id: 'creator_id',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.MediaItemScalarFieldEnum = {
+  id: 'id',
+  album_id: 'album_id',
+  url: 'url',
+  file_name: 'file_name',
+  file_size: 'file_size',
+  thumbnail: 'thumbnail',
+  order: 'order',
+  created_at: 'created_at'
+};
+
+exports.Prisma.OnlineRequestScalarFieldEnum = {
+  id: 'id',
+  type: 'type',
+  full_name: 'full_name',
+  phone: 'phone',
+  email: 'email',
+  book_id: 'book_id',
+  message: 'message',
+  answer: 'answer',
+  status: 'status',
+  created_at: 'created_at',
+  answered_at: 'answered_at'
+};
+
+exports.Prisma.ContactInfoScalarFieldEnum = {
+  id: 'id',
+  address_latin: 'address_latin',
+  address_cyril: 'address_cyril',
+  address_ru: 'address_ru',
+  phone: 'phone',
+  email: 'email',
+  latitude: 'latitude',
+  longitude: 'longitude',
+  telegram_url: 'telegram_url',
+  facebook_url: 'facebook_url',
+  instagram_url: 'instagram_url',
+  youtube_url: 'youtube_url',
+  updated_at: 'updated_at'
+};
+
+exports.Prisma.ContactMessageScalarFieldEnum = {
+  id: 'id',
+  full_name: 'full_name',
+  email: 'email',
+  phone: 'phone',
+  message: 'message',
+  is_read: 'is_read',
+  created_at: 'created_at'
 };
 
 exports.Prisma.SortOrder = {
@@ -237,6 +427,39 @@ exports.FileType = exports.$Enums.FileType = {
   OTHER: 'OTHER'
 };
 
+exports.PageSlug = exports.$Enums.PageSlug = {
+  HISTORY: 'HISTORY',
+  CHARTER: 'CHARTER',
+  STRUCTURE: 'STRUCTURE'
+};
+
+exports.DocumentCategory = exports.$Enums.DocumentCategory = {
+  LAW: 'LAW',
+  DECISION: 'DECISION',
+  ORDER: 'ORDER',
+  REPORT: 'REPORT'
+};
+
+exports.MediaType = exports.$Enums.MediaType = {
+  PHOTO: 'PHOTO',
+  VIDEO: 'VIDEO',
+  PRESENTATION: 'PRESENTATION'
+};
+
+exports.OnlineRequestType = exports.$Enums.OnlineRequestType = {
+  BOOK_ORDER: 'BOOK_ORDER',
+  INQUIRY: 'INQUIRY',
+  QUESTION_ANSWER: 'QUESTION_ANSWER',
+  VIRTUAL_REFERENCE: 'VIRTUAL_REFERENCE'
+};
+
+exports.RequestStatus = exports.$Enums.RequestStatus = {
+  NEW: 'NEW',
+  IN_PROGRESS: 'IN_PROGRESS',
+  ANSWERED: 'ANSWERED',
+  DONE: 'DONE'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Genre: 'Genre',
@@ -245,7 +468,21 @@ exports.Prisma.ModelName = {
   Book: 'Book',
   BookImage: 'BookImage',
   BookFile: 'BookFile',
-  GenreBook: 'GenreBook'
+  GenreBook: 'GenreBook',
+  Banner: 'Banner',
+  Announcement: 'Announcement',
+  UsefulLink: 'UsefulLink',
+  BookDownloadLog: 'BookDownloadLog',
+  Page: 'Page',
+  Department: 'Department',
+  News: 'News',
+  Event: 'Event',
+  Document: 'Document',
+  MediaAlbum: 'MediaAlbum',
+  MediaItem: 'MediaItem',
+  OnlineRequest: 'OnlineRequest',
+  ContactInfo: 'ContactInfo',
+  ContactMessage: 'ContactMessage'
 };
 
 /**

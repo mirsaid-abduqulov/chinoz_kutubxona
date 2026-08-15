@@ -1,3 +1,6 @@
+import { RolesGuard } from '../common/guards/roles.guard';
+import { Roles } from '../common/decorators/roles-auth-decorator';
+import { UserRole } from '../core/database/generated';
 import {
   Controller,
   Post,
@@ -16,7 +19,7 @@ import { LoginDto } from './dto/login.dto';
 import { RefreshDto } from './dto/refresh.dto';
 import { JwtAuthGuard, JwtPayload } from '../common/guards/jwt-auth.guard';
 
-@ApiTags('Auth')
+@ApiTags('Auth (Avtorizatsiya)')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -34,10 +37,12 @@ export class AuthController {
       dto.phone_number,
       dto.password,
       res,
-      clientIp,
     );
   }
 
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Logout' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
