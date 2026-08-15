@@ -12,6 +12,7 @@ import { documentFileFilter, documentLimits } from '../common/storage/multer.con
 import { createReadStream } from 'fs';
 import { join } from 'path';
 import type { Response } from 'express';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Documents(Hujjatlar)')
 @Controller('documents')
@@ -20,7 +21,7 @@ export class DocumentsController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new documents' })
   @ApiConsumes('multipart/form-data')
@@ -65,7 +66,7 @@ export class DocumentsController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a documents' })
   @ApiConsumes('multipart/form-data')
@@ -83,7 +84,7 @@ export class DocumentsController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a documents (Admin only)' })
   remove(@Param('id') id: string) {

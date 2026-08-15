@@ -23,7 +23,7 @@ export class BooksController {
   ) {}
   
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Post('admin/recalculate-scores')
   @ApiOperation({ summary: 'Recalculate book scores manually' })
@@ -33,7 +33,7 @@ export class BooksController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Post()
   @ApiOperation({ summary: 'Create a new book' })
@@ -54,7 +54,7 @@ export class BooksController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Patch(':id')
   @ApiOperation({ summary: 'Update a book details (metadata only)' })
@@ -64,7 +64,7 @@ export class BooksController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a book (Admin only)' })
   remove(@Param('id') id: string) {
@@ -75,7 +75,7 @@ export class BooksController {
 
   @Post(':id/images')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Upload images for a book' })
   @ApiConsumes('multipart/form-data')
@@ -92,7 +92,7 @@ export class BooksController {
 
   @Patch(':id/images/:imageId/set-main')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Set an image as main for a book' })
   setMainImage(@Param('id') id: string, @Param('imageId') imageId: string) {
@@ -101,7 +101,7 @@ export class BooksController {
 
   @Delete(':id/images/:imageId')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete an image for a book' })
   removeImage(@Param('id') id: string, @Param('imageId') imageId: string) {
@@ -111,8 +111,9 @@ export class BooksController {
   // --- Sub-resources: Files ---
 
   @Post(':id/files')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
-  @UseGuards(UploadTimeoutGuard)
   @ApiOperation({ summary: 'Upload document files for a book' })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -127,6 +128,8 @@ export class BooksController {
   }
 
   @Delete(':id/files/:fileId')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
   @ApiOperation({ summary: 'Delete a file for a book' })
   removeFile(@Param('id') id: string, @Param('fileId') fileId: string) {

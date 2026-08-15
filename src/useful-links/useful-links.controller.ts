@@ -7,6 +7,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
 import { BaseQueryDto } from '../common/dto/base-query.dto';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Useful Links(Foydali linklar)')
 @Controller('useful-links')
@@ -15,7 +16,7 @@ export class UsefulLinksController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
   @ApiOperation({ summary: 'Create a new useful link' })
   create(@Body() createUsefulLinkDto: CreateUsefulLinkDto) {
@@ -30,7 +31,7 @@ export class UsefulLinksController {
 
   @Get('all')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
   @ApiOperation({ summary: 'Get all useful links (Admin only)' })
   findAll(@Query() query: BaseQueryDto) {
@@ -39,7 +40,7 @@ export class UsefulLinksController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
   @ApiOperation({ summary: 'Update a useful link' })
   update(@Param('id') id: string, @Body() updateUsefulLinkDto: UpdateUsefulLinkDto) {
@@ -48,7 +49,7 @@ export class UsefulLinksController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a useful link' })
   remove(@Param('id') id: string) {

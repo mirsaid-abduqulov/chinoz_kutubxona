@@ -3,10 +3,11 @@ import { OnlineRequestsService } from './online-requests.service';
 import { CreateOnlineRequestDto } from './dto/create-online-request.dto';
 import { UpdateOnlineRequestDto } from './dto/update-online-request.dto';
 import { QueryOnlineRequestDto } from './dto/query-online-request.dto';
-import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Online Requests(Murojaatlar)')
 @Controller('online-requests')
@@ -21,7 +22,7 @@ export class OnlineRequestsController {
 
   @Get()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all online requests (Admin only)' })
   findAll(@Query() query: QueryOnlineRequestDto) {
@@ -30,7 +31,7 @@ export class OnlineRequestsController {
 
   @Get(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get online request by id (Admin only)' })
   findOne(@Param('id') id: string) {
@@ -39,7 +40,7 @@ export class OnlineRequestsController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update an online request (Admin only)' })
   update(
@@ -51,7 +52,7 @@ export class OnlineRequestsController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete an online request (Admin only)' })
   remove(@Param('id') id: string) {

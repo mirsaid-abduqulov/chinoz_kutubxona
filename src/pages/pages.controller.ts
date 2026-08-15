@@ -7,6 +7,7 @@ import { PageSlug } from '../core/database/generated';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles-auth-decorator';
 import { UserRole } from 'src/core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Pages(Sahifalar)')
 @Controller('pages')
@@ -14,7 +15,7 @@ export class PagesController {
   constructor(private readonly pagesService: PagesService) { }
 
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Post()
   @ApiOperation({ summary: 'Create a new page (Admin only)' })
@@ -35,7 +36,7 @@ export class PagesController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Patch(':slug')
   @ApiOperation({ summary: 'Update a page by slug (Admin only)' })
@@ -44,7 +45,7 @@ export class PagesController {
   }
 
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Delete(':slug')
   @ApiOperation({ summary: 'Delete a page by slug (Admin only)' })

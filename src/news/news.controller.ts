@@ -9,6 +9,7 @@ import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imageFileFilter, imageLimits} from '../common/storage/multer.config';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 
 @ApiTags('News(Yangiliklar)')
@@ -18,7 +19,7 @@ export class NewsController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new news' })
   @ApiConsumes('multipart/form-data')
@@ -50,7 +51,7 @@ export class NewsController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a news' })
   @ApiConsumes('multipart/form-data')
@@ -68,7 +69,7 @@ export class NewsController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a news (Admin only)' })
   remove(@Param('id') id: string) {

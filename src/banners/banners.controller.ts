@@ -9,6 +9,7 @@ import { UserRole } from '../core/database/generated';
 import { BaseQueryDto } from '../common/dto/base-query.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imageFileFilter, imageLimits } from '../common/storage/multer.config';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Banners(Bannerlar)')
 @Controller('banners')
@@ -17,7 +18,7 @@ export class BannersController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new banner (Admin only)' })
   @ApiConsumes('multipart/form-data')
@@ -41,7 +42,7 @@ export class BannersController {
 
   @Get('all')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all banners including inactive (Admin only)' })
   findAll(@Query() query: BaseQueryDto) {
@@ -50,7 +51,7 @@ export class BannersController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a banner (Admin only)' })
   @ApiConsumes('multipart/form-data')
@@ -68,7 +69,7 @@ export class BannersController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a banner (Admin only)' })
   remove(@Param('id') id: string) {

@@ -7,6 +7,7 @@ import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { RolesGuard } from 'src/common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles-auth-decorator';
 import { UserRole } from 'src/core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Departments(Bo\'limlar)')
 @Controller('departments')
@@ -15,7 +16,7 @@ export class DepartmentsController {
 
   // TODO: RolesGuard yaratilgach shu yerga @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ADMIN','SUPER_ADMIN') qo'shiladi
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Post()
   @ApiOperation({ summary: 'Create a new department (Admin only)' })
@@ -37,7 +38,7 @@ export class DepartmentsController {
 
   // TODO: RolesGuard yaratilgach shu yerga @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ADMIN','SUPER_ADMIN') qo'shiladi
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Patch(':id')
   @ApiOperation({ summary: 'Update a department by id (Admin only)' })
@@ -47,7 +48,7 @@ export class DepartmentsController {
 
   // TODO: RolesGuard yaratilgach shu yerga @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ADMIN','SUPER_ADMIN') qo'shiladi
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Delete(':id')
   @ApiOperation({ summary: 'Delete a department by id (Admin only)' })
