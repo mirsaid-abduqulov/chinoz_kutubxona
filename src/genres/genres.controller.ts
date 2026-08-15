@@ -16,7 +16,7 @@ export class GenresController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new genre' })
   create(@Body() createGenreDto: CreateGenreDto) {
@@ -37,7 +37,7 @@ export class GenresController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a genre' })
   update(@Param('id') id: string, @Body() updateGenreDto: UpdateGenreDto) {
@@ -46,7 +46,7 @@ export class GenresController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard, JwtAuthGuard)
+  @UseGuards( JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a genre (Admin only)' })
   remove(@Param('id') id: string) {
