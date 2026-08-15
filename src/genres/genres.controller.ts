@@ -8,7 +8,7 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from 'src/core/database/generated';
 
-@ApiTags('Genres')
+@ApiTags('Genres(Janrlar)')
 @ApiBearerAuth()
 @UseGuards(RolesGuard)
 @Controller('genres')

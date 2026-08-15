@@ -1,0 +1,66 @@
+GUARD TUZATISHLARI:
+- announcements.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- auth.controller.ts — POST /login — o'zgarishsiz qoldi (ataylab public)
+- auth.controller.ts — POST /logout — guard qo'shildi
+- auth.controller.ts — POST /refresh — o'zgarishsiz qoldi (ataylab public)
+- authors.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- authors.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- authors.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- authors.controller.ts — POST /:id/images — o'zgarishsiz qoldi, allaqachon to'g'ri
+- authors.controller.ts — PATCH /:id/images/:imageId/set-main — o'zgarishsiz qoldi, allaqachon to'g'ri
+- authors.controller.ts — DELETE /:id/images/:imageId — o'zgarishsiz qoldi, allaqachon to'g'ri
+- banners.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — POST /admin/recalculate-scores — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — POST /:id/images — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — PATCH /:id/images/:imageId/set-main — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — DELETE /:id/images/:imageId — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — POST /:id/files — o'zgarishsiz qoldi, allaqachon to'g'ri
+- books.controller.ts — DELETE /:id/files/:fileId — o'zgarishsiz qoldi, allaqachon to'g'ri
+- contact-info.controller.ts — PATCH / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- contact-messages.controller.ts — POST / — o'zgarishsiz qoldi (ataylab public)
+- contact-messages.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- departments.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- departments.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- departments.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- documents.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- events.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- genres.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- genres.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- genres.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- media-albums.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- media-albums.controller.ts — DELETE /:id/items/:itemId — o'zgarishsiz qoldi, allaqachon to'g'ri
+- news.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- online-requests.controller.ts — POST / — o'zgarishsiz qoldi (ataylab public)
+- online-requests.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- online-requests.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- pages.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- pages.controller.ts — PATCH /:slug — o'zgarishsiz qoldi, allaqachon to'g'ri
+- pages.controller.ts — DELETE /:slug — o'zgarishsiz qoldi, allaqachon to'g'ri
+- useful-links.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- useful-links.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- useful-links.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- users.controller.ts — POST / — o'zgarishsiz qoldi, allaqachon to'g'ri
+- users.controller.ts — PATCH /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+- users.controller.ts — DELETE /:id — o'zgarishsiz qoldi, allaqachon to'g'ri
+
+@ApiTags TUZATISHLARI:
+- announcements.controller.ts — 'Announcements(E\'lonlar)' → 'Announcements (E'lonlar)'
+- auth.controller.ts — 'Auth' → 'Auth (Avtorizatsiya)'
+- authors.controller.ts — 'Authors(Mualliflar)' → 'Authors (Mualliflar)'
+- banners.controller.ts — 'Banners(Bannerlar)' → 'Banners (Bannerlar)'
+- books.controller.ts — 'Books(Kitoblar)' → 'Books (Kitoblar)'
+- contact-info.controller.ts — 'Contact Info(Aloqa ma\'lumotlari)' → 'Contact Info (Aloqa ma'lumotlari)'
+- contact-messages.controller.ts — 'Contact Messages(Qayta aloqa)' → 'Contact Messages (Aloqa xabarlari)'
+- departments.controller.ts — 'Departments(Bo\'limlar)' → 'Departments (Bo'limlar)'
+- documents.controller.ts — 'Documents(Hujjatlar)' → 'Documents (Hujjatlar)'
+- events.controller.ts — 'Events(Tadbirlar)' → 'Events (Tadbirlar)'
+- genres.controller.ts — 'Genres(Janrlar)' → 'Genres (Janrlar)'
+- media-albums.controller.ts — 'Media(Media)' → 'Media Albums (Media albomlari)'
+- news.controller.ts — 'News(Yangiliklar)' → 'News (Yangiliklar)'
+- online-requests.controller.ts — 'Online Requests(Murojaatlar)' → 'Online Requests (Onlayn murojaatlar)'
+- pages.controller.ts — 'Pages(Sahifalar)' → 'Pages (Sahifalar)'
+- useful-links.controller.ts — 'Useful Links(Foydali linklar)' → 'Useful Links (Foydali havolalar)'
+- users.controller.ts — 'Users(Foydalanuvchilar va Hodimlar)' → 'Users (Foydalanuvchilar)'

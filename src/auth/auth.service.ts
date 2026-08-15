@@ -3,6 +3,7 @@ import {
   ForbiddenException,
   UnauthorizedException,
   Logger,
+  BadRequestException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -27,18 +28,17 @@ export class AuthService {
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
-  ) {}
+  ) { }
 
   async login(
     phone_number: string,
     password: string,
     res: Response,
-    clientIp: string,
   ) {
-    const user = await this.prisma.user.findUnique({ where: { phone_number } });
+    const user = await this.prisma.user.findUnique({ where: { phone_number }, select: { phone_number: true, role: true, refresh_token_jti: true, hashed_password: true, is_login: true,  id: true } });
 
     if (!user || !(await bcrypt.compare(password, user.hashed_password))) {
-      throw new UnauthorizedException("Telefon raqam yoki parol noto'g'ri!");
+      throw new BadRequestException("Telefon raqam yoki parol noto'g'ri!");
     }
 
     this.logger.log(`Login: Phone number=${phone_number} | role=${user.role}`);
@@ -53,7 +53,8 @@ export class AuthService {
 
     this.setRefreshCookie(res, tokens.refresh_token);
 
-    return { user, tokens };
+    const {hashed_password,refresh_token_jti, ...restUser} = user;
+    return { user:restUser, tokens };
   }
 
   async logout(userId: string, res: Response, clientIp: string) {

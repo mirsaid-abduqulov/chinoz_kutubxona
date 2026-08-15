@@ -10,16 +10,18 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerStorage, imageFileFilter, imageLimits } from '../common/storage/multer.config';
 import { UploadTimeoutGuard } from '../common/guards/upload-timeout.guard';
 import { UserRole } from 'src/core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
-@ApiTags('Authors')
-@ApiBearerAuth()
-@UseGuards(RolesGuard)
+@ApiTags('Authors(Mualliflar)')
+// @UseGuards(RolesGuard,JwtAuthGuard)
 @Controller('authors')
 export class AuthorsController {
-  constructor(private readonly authorsService: AuthorsService) {}
-
+  constructor(private readonly authorsService: AuthorsService) { }
+  
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new author' })
   create(@Body() createAuthorDto: CreateAuthorDto) {
     return this.authorsService.create(createAuthorDto);
@@ -38,13 +40,17 @@ export class AuthorsController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update an author' })
   update(@Param('id') id: string, @Body() updateAuthorDto: UpdateAuthorDto) {
     return this.authorsService.update(id, updateAuthorDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete an author (Admin only)' })
   remove(@Param('id') id: string) {
@@ -54,8 +60,9 @@ export class AuthorsController {
   // --- Sub-resources: Images ---
 
   @Post(':id/images')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
-  @UseGuards(UploadTimeoutGuard)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Upload images for an author' })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -76,14 +83,18 @@ export class AuthorsController {
   }
 
   @Patch(':id/images/:imageId/set-main')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Set an image as main for an author' })
   setMainImage(@Param('id') id: string, @Param('imageId') imageId: string) {
     return this.authorsService.setMainImage(id, imageId);
   }
 
   @Delete(':id/images/:imageId')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete an image for an author' })
   removeImage(@Param('id') id: string, @Param('imageId') imageId: string) {
     return this.authorsService.removeImage(id, imageId);

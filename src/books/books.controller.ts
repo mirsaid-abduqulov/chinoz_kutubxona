@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFiles, StreamableFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFiles, StreamableFile, Res, Req } from '@nestjs/common';
 import { BooksService } from './books.service';
+import { BookScoringCron } from './book-scoring.cron';
 import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto } from './dto/update-book.dto';
 import { QueryBookDto } from './dto/query-book.dto';
@@ -11,16 +12,30 @@ import { multerStorage, imageFileFilter, documentFileFilter, imageLimits, docume
 import { UploadTimeoutGuard } from '../common/guards/upload-timeout.guard';
 import type { Response } from 'express';
 import { UserRole } from 'src/core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
-@ApiTags('Books')
-@ApiBearerAuth()
-@UseGuards(RolesGuard)
+@ApiTags('Books(Kitoblar)')
 @Controller('books')
 export class BooksController {
-  constructor(private readonly booksService: BooksService) {}
+  constructor(
+    private readonly booksService: BooksService,
+    private readonly bookScoringCron: BookScoringCron,
+  ) {}
+  
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @Post('admin/recalculate-scores')
+  @ApiOperation({ summary: 'Recalculate book scores manually' })
+  async recalculateScores() {
+    await this.bookScoringCron.handleWeeklyScoring();
+    return { success: true, message: 'Scores recalculated successfully' };
+  }
 
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
   @ApiOperation({ summary: 'Create a new book' })
   create(@Body() createBookDto: CreateBookDto) {
     return this.booksService.create(createBookDto);
@@ -38,14 +53,18 @@ export class BooksController {
     return this.booksService.findOne(id);
   }
 
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
   @ApiOperation({ summary: 'Update a book details (metadata only)' })
   update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
     return this.booksService.update(id, updateBookDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a book (Admin only)' })
   remove(@Param('id') id: string) {
@@ -55,8 +74,9 @@ export class BooksController {
   // --- Sub-resources: Images ---
 
   @Post(':id/images')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
-  @UseGuards(UploadTimeoutGuard)
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Upload images for a book' })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
@@ -71,14 +91,18 @@ export class BooksController {
   }
 
   @Patch(':id/images/:imageId/set-main')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Set an image as main for a book' })
   setMainImage(@Param('id') id: string, @Param('imageId') imageId: string) {
     return this.booksService.setMainImage(id, imageId);
   }
 
   @Delete(':id/images/:imageId')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard,JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete an image for a book' })
   removeImage(@Param('id') id: string, @Param('imageId') imageId: string) {
     return this.booksService.removeImage(id, imageId);
@@ -114,9 +138,10 @@ export class BooksController {
   async downloadFile(
     @Param('id') id: string,
     @Param('fileId') fileId: string,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
+    @Req() req: any
   ) {
-    const { stream, fileName } = await this.booksService.getDownloadStream(id, fileId);
+    const { stream, fileName } = await this.booksService.getDownloadStream(id, fileId, req.user);
     
     // URL encode the filename to avoid issues with special characters in the Content-Disposition header
     const encodedFileName = encodeURIComponent(fileName);
@@ -124,6 +149,9 @@ export class BooksController {
     res.set({
       'Content-Disposition': `attachment; filename*=UTF-8''${encodedFileName}`,
     });
+
+    // Fire and forget logging so it doesn't block stream
+    this.booksService.logDownload(id).catch(console.error);
 
     return new StreamableFile(stream);
   }

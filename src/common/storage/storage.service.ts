@@ -8,7 +8,17 @@ import * as fs from 'fs';
 
 const unlinkAsync = promisify(unlink);
 
-export type StorageFolder = 'books' | 'book_images' | 'author_images';
+export type StorageFolder = 
+  | 'books'
+  | 'book_images'
+  | 'author_images'
+  | 'announcements'
+  | 'banners'
+  | 'news'
+  | 'events'
+  | 'documents'
+  | 'media_albums'
+  | 'media_items';
 
 @Injectable()
 export class StorageService {
@@ -20,7 +30,18 @@ export class StorageService {
   }
 
   private ensureDirectories() {
-    const folders: StorageFolder[] = ['books', 'book_images', 'author_images'];
+    const folders: StorageFolder[] = [
+      'books',
+      'book_images',
+      'author_images',
+      'announcements',
+      'banners',
+      'news',
+      'events',
+      'documents',
+      'media_albums',
+      'media_items',
+    ];
     for (const folder of folders) {
       const path = join(this.mediaBasePath, folder);
       if (!fs.existsSync(path)) {
@@ -37,9 +58,9 @@ export class StorageService {
       const ext = file.originalname.split('.').pop() || '';
       const uniqueName = `${uuidv4()}.${ext}`;
       const filePath = join(this.mediaBasePath, folder, uniqueName);
-      
+
       const writeStream = createWriteStream(filePath);
-      
+
       writeStream.on('finish', () => {
         resolve({
           url: `/media/${folder}/${uniqueName}`,
@@ -60,12 +81,12 @@ export class StorageService {
 
   async deleteFile(url: string | null): Promise<void> {
     if (!url) return;
-    
+
     try {
       // URL format is /media/folder/filename
       const relativePath = url.replace('/media/', '');
       const fullPath = join(this.mediaBasePath, relativePath);
-      
+
       if (fs.existsSync(fullPath)) {
         await unlinkAsync(fullPath);
         this.logger.log(`Deleted file: ${fullPath}`);
@@ -81,13 +102,13 @@ export class StorageService {
     folder: StorageFolder,
   ): Promise<{ url: string; fileName: string; fileSize: number }> {
     const newFileInfo = await this.saveFile(newFile, folder);
-    
+
     if (oldUrl) {
       // Don't await deletion to not block the response, or await it if preferred.
       // Here we await it to ensure cleanup.
       await this.deleteFile(oldUrl);
     }
-    
+
     return newFileInfo;
   }
 }
