@@ -7,16 +7,17 @@ import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from 'src/core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Genres(Janrlar)')
-@ApiBearerAuth()
-@UseGuards(RolesGuard)
 @Controller('genres')
 export class GenresController {
-  constructor(private readonly genresService: GenresService) {}
+  constructor(private readonly genresService: GenresService) { }
 
   @Post()
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard, JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new genre' })
   create(@Body() createGenreDto: CreateGenreDto) {
     return this.genresService.create(createGenreDto);
@@ -35,13 +36,17 @@ export class GenresController {
   }
 
   @Patch(':id')
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN, UserRole.LIBRARIAN)
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard, JwtAuthGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a genre' })
   update(@Param('id') id: string, @Body() updateGenreDto: UpdateGenreDto) {
     return this.genresService.update(id, updateGenreDto);
   }
 
   @Delete(':id')
+  @ApiBearerAuth()
+  @UseGuards(RolesGuard, JwtAuthGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a genre (Admin only)' })
   remove(@Param('id') id: string) {
