@@ -5,6 +5,7 @@ import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Contact Info(Aloqa ma\'lumotlari)')
 @Controller('contact/info')
@@ -19,7 +20,7 @@ export class ContactInfoController {
 
   @Patch()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update contact info (Admin only)' })
   update(@Body() updateDto: UpdateContactInfoDto) {

@@ -21,7 +21,7 @@ export class ContactMessagesController {
 
   @Get()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all contact messages (Admin only)' })
   findAll(@Query() query: QueryContactMessageDto) {
@@ -30,7 +30,7 @@ export class ContactMessagesController {
 
   @Get(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get contact message by id (Admin only)' })
   findOne(@Param('id') id: string) {
@@ -39,7 +39,7 @@ export class ContactMessagesController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard,JwtAuthGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a contact message (Admin only)' })
   remove(@Param('id') id: string) {

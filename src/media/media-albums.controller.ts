@@ -9,6 +9,7 @@ import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { imageFileFilter, imageLimits, mediaItemFileFilter, mediaItemLimits } from '../common/storage/multer.config';
+import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 @ApiTags('Media(Media)')
 @Controller('media/albums')
@@ -17,7 +18,7 @@ export class MediaAlbumsController {
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new media album' })
   @ApiConsumes('multipart/form-data')
@@ -47,7 +48,7 @@ export class MediaAlbumsController {
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a media album' })
   @ApiConsumes('multipart/form-data')
@@ -65,7 +66,7 @@ export class MediaAlbumsController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(RolesGuard)
+  @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a media album (Admin only)' })
   remove(@Param('id') id: string) {
