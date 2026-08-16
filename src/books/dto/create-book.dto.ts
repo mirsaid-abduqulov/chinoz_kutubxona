@@ -1,60 +1,73 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsArray, IsInt, IsNotEmpty, IsOptional, IsString, IsUUID } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsString,
+  IsOptional,
+  IsArray,
+  IsUUID,
+  IsInt,
+  IsDateString,
+  Min,
+  Max,
+} from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 
 export class CreateBookDto {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
-  @IsNotEmpty()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   name_latin: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
-  @IsNotEmpty()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   name_cyril: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
-  @IsNotEmpty()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   name_ru: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
   @IsString()
-  @IsOptional()
-  description_latin?: string;
+  @Transform(({ value }) => value?.trim?.() || undefined)
+  description_latin: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
   @IsString()
-  @IsOptional()
-  description_cyril?: string;
+  @Transform(({ value }) => value?.trim?.() || undefined)
+  description_cyril: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
   @IsString()
-  @IsOptional()
-  description_ru?: string;
+  @Transform(({ value }) => value?.trim?.() || undefined)
+  description_ru: string;
 
   @ApiProperty()
   @IsUUID()
-  @IsNotEmpty()
   author_id: string;
 
-  @ApiPropertyOptional()
-  @IsString()
-  @IsOptional()
-  published_date?: string;
+  @ApiProperty()
+  @IsDateString()
+  published_date: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
   @IsInt()
   @IsOptional()
+  @Min(1)
+  @Max(11)
+  @Transform(({ value }) => (value === '' || value === null ? undefined : Number(value)))
   grade_level?: number;
 
-  @ApiProperty()
-  @IsUUID()
-  @IsNotEmpty()
-  creator_id: string;
-
-  @ApiProperty({ type: [String] })
-  @IsArray()
-  @IsUUID('4', { each: true })
-  @IsNotEmpty()
-  genreIds: string[];
+  @ApiProperty({
+    example: ['uuid1', 'uuid2'],
+    description: "Janr IDlar ro'yxati",
+  })
+  @IsOptional()
+  @IsArray({ message: "genreIds massiv (array) bo'lishi shart!" })
+  @IsUUID('4', {
+    each: true,
+    message:
+      "genreIds ichidagi har bir element to'g'ri UUID bo'lishi kerak!",
+  })
+  genreIds?: string[];
 }
