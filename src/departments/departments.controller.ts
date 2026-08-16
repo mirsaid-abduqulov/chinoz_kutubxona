@@ -9,49 +9,46 @@ import { Roles } from 'src/common/decorators/roles-auth-decorator';
 import { UserRole } from 'src/core/database/generated';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
-@ApiTags('Departments(Bo\'limlar)')
+@ApiTags('Department Members (Bo\'lim xodimlari)')
 @Controller('departments')
 export class DepartmentsController {
-  constructor(private readonly departmentsService: DepartmentsService) {}
+  constructor(private readonly departmentsService: DepartmentsService) { }
 
-  // TODO: RolesGuard yaratilgach shu yerga @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ADMIN','SUPER_ADMIN') qo'shiladi
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Post()
-  @ApiOperation({ summary: 'Create a new department (Admin only)' })
+  @ApiOperation({ summary: 'Create a new department member (Admin only)' })
   create(@Body() createDepartmentDto: CreateDepartmentDto) {
     return this.departmentsService.create(createDepartmentDto);
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all departments with pagination' })
+  @ApiOperation({ summary: 'Get all department members with pagination' })
   findAll(@Query() query: QueryDepartmentDto) {
     return this.departmentsService.findAll(query);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get a department by id' })
+  @ApiOperation({ summary: 'Get a department member by id' })
   findOne(@Param('id') id: string) {
     return this.departmentsService.findOne(id);
   }
 
-  // TODO: RolesGuard yaratilgach shu yerga @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ADMIN','SUPER_ADMIN') qo'shiladi
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Patch(':id')
-  @ApiOperation({ summary: 'Update a department by id (Admin only)' })
+  @ApiOperation({ summary: 'Update a department member by id (Admin only)' })
   update(@Param('id') id: string, @Body() updateDepartmentDto: UpdateDepartmentDto) {
     return this.departmentsService.update(id, updateDepartmentDto);
   }
 
-  // TODO: RolesGuard yaratilgach shu yerga @UseGuards(JwtAuthGuard, RolesGuard) @Roles('ADMIN','SUPER_ADMIN') qo'shiladi
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a department by id (Admin only)' })
+  @ApiOperation({ summary: 'Delete a department member by id (Admin only)' })
   remove(@Param('id') id: string) {
     return this.departmentsService.remove(id);
   }

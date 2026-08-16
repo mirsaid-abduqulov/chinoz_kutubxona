@@ -1,59 +1,47 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsString, IsNumber, IsUrl } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsOptional, IsEmail, IsLatitude, IsLongitude } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 
 export class UpdateContactInfoDto {
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty({ required: false })
   @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   address_latin?: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty({ required: false })
   @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   address_cyril?: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty({ required: false })
   @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   address_ru?: string;
 
-  @ApiPropertyOptional()
-  @IsOptional()
+  @ApiProperty({ required: false })
   @IsString()
+  @IsOptional()
+  @Transform(({ value }) => value?.trim?.() || undefined)
   phone?: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
+  @IsEmail()
   @IsOptional()
-  @IsString()
+  @Transform(({ value }) => value?.trim?.().toLowerCase() || undefined)
   email?: string;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
+  @IsLatitude()
   @IsOptional()
-  @IsNumber()
+  @Type(() => Number)
   latitude?: number;
 
-  @ApiPropertyOptional()
+  @ApiProperty({ required: false })
+  @IsLongitude()
   @IsOptional()
-  @IsNumber()
+  @Type(() => Number)
   longitude?: number;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUrl()
-  telegram_url?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUrl()
-  facebook_url?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUrl()
-  instagram_url?: string;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @IsUrl()
-  youtube_url?: string;
 }

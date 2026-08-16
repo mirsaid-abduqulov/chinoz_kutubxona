@@ -6,38 +6,58 @@ export class CreateDepartmentDto {
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name_latin: string;
+  full_name_latin: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name_cyril: string;
+  full_name_cyril: string;
 
   @ApiProperty()
   @IsString()
   @IsNotEmpty()
-  name_ru: string;
+  full_name_ru: string;
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  description_latin?: string;
+  position_latin?: string;
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  description_cyril?: string;
+  position_cyril?: string;
 
   @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
-  description_ru?: string;
+  position_ru?: string;
 
   @ApiProperty({ required: false, default: 0 })
   @IsInt()
   @IsOptional()
   @Transform(({ value }) => Number(value))
-  order?: number;
+  position_order?: number;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  phone?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  email?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  fax?: string;
+
+  @ApiProperty({ required: false })
+  @IsString()
+  @IsOptional()
+  reception_days?: string;
 
   @ApiProperty({ required: false, default: true })
   @IsBoolean()

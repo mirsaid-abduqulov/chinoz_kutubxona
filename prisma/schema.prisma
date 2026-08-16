@@ -206,18 +206,22 @@ model Page {
   updated_at    DateTime @updatedAt
 }
 
-model Department {
+model DepartmentMember {
   id                 String   @id @default(uuid())
-  name_latin         String
-  name_cyril         String
-  name_ru            String
-  description_latin  String?
-  description_cyril  String?
-  description_ru     String?
-  order              Int      @default(0)
-  is_active          Boolean  @default(true)
-  created_at         DateTime @default(now())
-  updated_at         DateTime @updatedAt
+  full_name_latin    String
+  full_name_cyril    String
+  full_name_ru       String
+  position_latin     String?
+  position_cyril     String?
+  position_ru        String?
+  phone              String? @unique
+  email              String? @unique
+  fax                String? @unique
+  reception_days     String?
+  position_order     Int       @default(0)
+  is_active          Boolean   @default(true)
+  created_at         DateTime  @default(now())
+  updated_at         DateTime  @updatedAt
 }
 
 model News {
@@ -276,8 +280,10 @@ model Document {
   file_size    Int?
   published_at DateTime         @default(now())
   creator_id   String
+  is_public    Boolean          @default(false)
   creator      User             @relation(fields: [creator_id], references: [id])
   created_at   DateTime         @default(now())
+  updated_at   DateTime         @updatedAt
 }
 
 enum MediaType {
@@ -350,10 +356,7 @@ model ContactInfo {
   email          String
   latitude       Float?
   longitude      Float?
-  telegram_url   String?
-  facebook_url   String?
-  instagram_url  String?
-  youtube_url    String?
+  social_links   Json?
   updated_at     DateTime @updatedAt
 }
 

@@ -5,10 +5,9 @@ import { Transform } from 'class-transformer';
 import { DocumentCategory } from '../../core/database/generated';
 
 export class QueryDocumentsDto extends BaseQueryDto {
-  
+
   @ApiPropertyOptional({ enum: DocumentCategory })
   @IsOptional()
   @IsEnum(DocumentCategory)
   category?: DocumentCategory;
-  
 }

@@ -24,7 +24,7 @@ async function bootstrap() {
     .split(',')
     .map((o) => o.trim())
     .filter(Boolean);
- 
+
   const corsLogger = new Logger('CORS');
   const httpLogger = new Logger('HTTP');
   const appLogger = new Logger('Bootstrap');
@@ -88,7 +88,7 @@ async function bootstrap() {
     });
     next();
   });
-  
+
   app.useStaticAssets(join(process.cwd(), 'media'), { prefix: '/media/' });
 
   if (!isProd) {
@@ -100,7 +100,7 @@ async function bootstrap() {
       .addServer(`http://${config.get<string>('API_HOST')}:${port}`, 'Server')
       .addBearerAuth()
       .build();
-    
+
     const document = SwaggerModule.createDocument(app, swaggerConfig);
     SwaggerModule.setup('api/docs', app, document, {
       swaggerOptions: {
@@ -109,6 +109,17 @@ async function bootstrap() {
         tagsSorter: 'alpha',
         operationsSorter: 'alpha',
       },
+      customCss: `
+      /* Authorize tugmasi turgan panelni yuqorida qotirish */
+      .swagger-ui .scheme-container {
+        position: sticky !important;
+        top: 0 !important;
+        z-index: 1000 !important;
+        background-color: #fafafa !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+        padding: 12px 0 !important;
+      }
+    `,
     });
     appLogger.log(`Swagger: http://localhost:${port}/api/docs`);
   }

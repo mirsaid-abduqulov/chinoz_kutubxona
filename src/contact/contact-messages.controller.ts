@@ -14,35 +14,28 @@ export class ContactMessagesController {
   constructor(private readonly contactMessagesService: ContactMessagesService) {}
 
   @Post()
-  @ApiOperation({ summary: 'Send a contact message (Public)' })
-  create(@Body() createDto: CreateContactMessageDto) {
-    return this.contactMessagesService.create(createDto);
-  }
-
-  @Get()
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
-  @ApiOperation({ summary: 'Get all contact messages (Admin only)' })
-  findAll(@Query() query: QueryContactMessageDto) {
-    return this.contactMessagesService.findAll(query);
-  }
-
-  @Get(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
-  @ApiOperation({ summary: 'Get contact message by id (Admin only)' })
-  findOne(@Param('id') id: string) {
-    return this.contactMessagesService.findOne(id);
-  }
-
-  @Delete(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
-  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
-  @ApiOperation({ summary: 'Delete a contact message (Admin only)' })
-  remove(@Param('id') id: string) {
-    return this.contactMessagesService.remove(id);
-  }
+create(@Body() dto: CreateContactMessageDto) {
+  return this.contactMessagesService.create(dto);
+}
+ 
+@Get()
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+findAll(@Query() query: QueryContactMessageDto) {
+  return this.contactMessagesService.findAll(query);
+}
+ 
+@Get(':id')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+findOne(@Param('id') id: string) {
+  return this.contactMessagesService.findOne(id);
+}
+ 
+@Delete(':id')
+@UseGuards(JwtAuthGuard, RolesGuard)
+@Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+remove(@Param('id') id: string) {
+  return this.contactMessagesService.remove(id);
+}
 }

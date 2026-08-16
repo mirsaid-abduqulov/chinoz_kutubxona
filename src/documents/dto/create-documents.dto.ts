@@ -22,14 +22,23 @@ export class CreateDocumentsDto {
   @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
   title_ru: string;
 
-  
+
   @ApiProperty({ enum: DocumentCategory })
   @IsNotEmpty()
   @IsEnum(DocumentCategory)
   category: DocumentCategory;
 
-  @ApiProperty({ type: 'string', format: 'binary' })
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: true,
+    description: 'Document file (PDF, DOC, DOCX, max 10MB)',
+  })
+  file?: Express.Multer.File;
+
+  @ApiProperty()
   @IsOptional()
-  file?: any;
-  
+  @IsBoolean()
+  @Transform(({ value }) => typeof value === 'string' ? value.toLowerCase() === 'true' : value)
+  is_public?: boolean = false;
 }

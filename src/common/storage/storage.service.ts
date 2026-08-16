@@ -18,7 +18,8 @@ export type StorageFolder =
   | 'events'
   | 'documents'
   | 'media_albums'
-  | 'media_items';
+  | 'media_items'
+  | 'social_icons';
 
 @Injectable()
 export class StorageService {
@@ -41,6 +42,7 @@ export class StorageService {
       'documents',
       'media_albums',
       'media_items',
+      'social_icons',
     ];
     for (const folder of folders) {
       const path = join(this.mediaBasePath, folder);
