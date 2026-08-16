@@ -283,7 +283,7 @@ model Document {
   is_public    Boolean          @default(false)
   creator      User             @relation(fields: [creator_id], references: [id])
   created_at   DateTime         @default(now())
-  updated_at   DateTime         @updatedAt
+  updated_at   DateTime         @default(now()) @updatedAt
 }
 
 enum MediaType {
