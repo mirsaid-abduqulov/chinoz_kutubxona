@@ -7,6 +7,7 @@ import { BaseQueryDto } from '../common/dto/base-query.dto';
 import { buildPaginationParams, buildPaginatedResponse } from '../common/helpers/pagination.helper';
 import { IsPublishedDto } from './dto/is_published.dto';
 import { normalizeName } from 'src/common/helpers/normalize-name.helper';
+import { FindAllQueryDto } from './dto/findAllQuerry.dto';
 
 @Injectable()
 export class AnnouncementsService {
@@ -65,12 +66,28 @@ export class AnnouncementsService {
     }
   }
 
-  async findAllPublished(query: BaseQueryDto) {
+  async findAllPublished(query: FindAllQueryDto) {
     const { skip, take } = buildPaginationParams(query);
 
+    const where: any = {is_published:query.is_published}
+      if(query.search){
+        where.OR=[{
+          title_latin: {contains:query.search}
+        },{
+          title_cyril: {contains:query.search}
+        },{
+          title_ru: {contains:query.search}
+        },{
+          content_latin: {contains:query.search}
+        },{
+          content_cyril: {contains:query.search}
+        },{
+          content_ru: {contains:query.search}
+        }]
+      }
     const [data, total] = await Promise.all([
       this.prisma.announcement.findMany({
-        where: { is_published: true },
+        where,
         skip,
         take,
         orderBy: { published_at: 'desc' },
@@ -80,7 +97,7 @@ export class AnnouncementsService {
           }
         }
       }),
-      this.prisma.announcement.count({ where: { is_published: true } }),
+      this.prisma.announcement.count({ where }),
     ]);
 
     return buildPaginatedResponse(data, total, query.page!, query.limit!);
