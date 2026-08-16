@@ -1,29 +1,37 @@
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, ValidateIf } from 'class-validator';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsEmail, IsPhoneNumber, IsNotEmpty, IsOptional, ValidateIf } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateContactMessageDto {
-  @ApiProperty()
-  @IsNotEmpty()
+  @ApiProperty({ description: 'To\'liq ismi' })
   @IsString()
-  @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
+  @IsNotEmpty()
+  @Transform(({ value }) => value?.trim?.() || '')
   full_name: string;
-
-  @ApiPropertyOptional()
-  @ValidateIf(o => !o.email || o.phone)
-  @IsNotEmpty({ message: 'Phone or email must be provided' })
-  @IsString()
-  phone?: string;
-
-  @ApiPropertyOptional()
-  @ValidateIf(o => !o.phone || o.email)
-  @IsNotEmpty({ message: 'Phone or email must be provided' })
-  @IsString()
+ 
+  @ApiProperty({ required: false, description: 'Elektron pochta' })
+  @IsEmail()
+  @IsOptional()
+  @Transform(({ value }) => value?.trim?.().toLowerCase() || undefined)
   email?: string;
-
-  @ApiProperty()
-  @IsNotEmpty()
+ 
+  @ApiProperty({ required: false, description: 'Telefon raqami' })
+  @IsPhoneNumber('UZ')
+  @IsOptional()
+  @Transform(({ value }) => value?.trim?.() || undefined)
+  phone?: string;
+ 
+  @ApiProperty({ description: 'Xabar mazmuni' })
   @IsString()
-  @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
+  @IsNotEmpty()
+  @Transform(({ value }) => value?.trim?.() || '')
   message: string;
+ 
+  @ValidateIf(() => true)
+  validateEmailOrPhone() {
+    if (!this.email && !this.phone) {
+      throw new Error('Email yoki telefon raqamidan kamida bittasi majburiy');
+    }
+    return true;
+  }
 }

@@ -272,15 +272,19 @@ exports.Prisma.PageScalarFieldEnum = {
   updated_at: 'updated_at'
 };
 
-exports.Prisma.DepartmentScalarFieldEnum = {
+exports.Prisma.DepartmentMemberScalarFieldEnum = {
   id: 'id',
-  name_latin: 'name_latin',
-  name_cyril: 'name_cyril',
-  name_ru: 'name_ru',
-  description_latin: 'description_latin',
-  description_cyril: 'description_cyril',
-  description_ru: 'description_ru',
-  order: 'order',
+  full_name_latin: 'full_name_latin',
+  full_name_cyril: 'full_name_cyril',
+  full_name_ru: 'full_name_ru',
+  position_latin: 'position_latin',
+  position_cyril: 'position_cyril',
+  position_ru: 'position_ru',
+  phone: 'phone',
+  email: 'email',
+  fax: 'fax',
+  reception_days: 'reception_days',
+  position_order: 'position_order',
   is_active: 'is_active',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -333,7 +337,9 @@ exports.Prisma.DocumentScalarFieldEnum = {
   file_size: 'file_size',
   published_at: 'published_at',
   creator_id: 'creator_id',
-  created_at: 'created_at'
+  is_public: 'is_public',
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.MediaAlbumScalarFieldEnum = {
@@ -382,10 +388,7 @@ exports.Prisma.ContactInfoScalarFieldEnum = {
   email: 'email',
   latitude: 'latitude',
   longitude: 'longitude',
-  telegram_url: 'telegram_url',
-  facebook_url: 'facebook_url',
-  instagram_url: 'instagram_url',
-  youtube_url: 'youtube_url',
+  social_links: 'social_links',
   updated_at: 'updated_at'
 };
 
@@ -404,6 +407,11 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
 exports.Prisma.QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -412,6 +420,12 @@ exports.Prisma.QueryMode = {
 exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
+};
+
+exports.Prisma.JsonNullValueFilter = {
+  DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull,
+  AnyNull: Prisma.AnyNull
 };
 exports.UserRole = exports.$Enums.UserRole = {
   ADMIN: 'ADMIN',
@@ -474,7 +488,7 @@ exports.Prisma.ModelName = {
   UsefulLink: 'UsefulLink',
   BookDownloadLog: 'BookDownloadLog',
   Page: 'Page',
-  Department: 'Department',
+  DepartmentMember: 'DepartmentMember',
   News: 'News',
   Event: 'Event',
   Document: 'Document',

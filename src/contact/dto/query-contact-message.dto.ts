@@ -1,12 +1,10 @@
-import { BaseQueryDto } from '../../common/dto/base-query.dto';
-import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsOptional, IsBoolean } from 'class-validator';
-import { Transform } from 'class-transformer';
-
+import { ApiProperty } from '@nestjs/swagger';
+import { IsBoolean, IsOptional } from 'class-validator';
+import { BaseQueryDto } from 'src/common/dto/base-query.dto';
+ 
 export class QueryContactMessageDto extends BaseQueryDto {
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === true)
+  @ApiProperty({ required: false, description: 'O\'qilgan yoki o\'qilmagan xabarlar' })
   @IsBoolean()
+  @IsOptional()
   is_read?: boolean;
 }

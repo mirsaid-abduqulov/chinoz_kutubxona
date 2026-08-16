@@ -1,17 +1,33 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
 import { PrismaService } from '../core/database/prisma.service';
 import { QueryDepartmentDto } from './dto/query-department.dto';
 import { buildPaginationParams, buildPaginatedResponse } from '../common/helpers/pagination.helper';
-import { buildMultilangSearchWhere } from '../common/helpers/multilang-search.helper';
+import { Prisma } from 'src/core/database/generated';
 
 @Injectable()
 export class DepartmentsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prisma: PrismaService) { }
 
   async create(createDepartmentDto: CreateDepartmentDto) {
-    const department = await this.prisma.department.create({
+    const where: Prisma.DepartmentMemberWhereInput = { OR: [] };
+    if (createDepartmentDto.phone) {
+      where.OR?.push({ phone: createDepartmentDto.phone })
+    }
+    if (createDepartmentDto.fax) {
+      where.OR?.push({ fax: createDepartmentDto.fax })
+    }
+    if (createDepartmentDto.email) {
+      where.OR?.push({ email: createDepartmentDto.email });
+    }
+    const existMember = await this.prisma.departmentMember.findFirst({
+      where: where,
+    });
+    if (existMember) {
+      throw new BadRequestException(' phone numbe/email/fax  already exists');
+    }
+    const department = await this.prisma.departmentMember.create({
       data: createDepartmentDto,
     });
     return department;
@@ -19,34 +35,64 @@ export class DepartmentsService {
 
   async findAll(query: QueryDepartmentDto) {
     const { skip, take } = buildPaginationParams(query);
-    const searchWhere = buildMultilangSearchWhere(query.search as string, 'name');
+    const where: Prisma.DepartmentMemberWhereInput = {};
+    if (query.search) {
+      where.OR = [{
+        full_name_latin: { contains: query.search, mode: 'insensitive' }
+      },
+      { full_name_cyril: { contains: query.search, mode: 'insensitive' } },
+      { full_name_ru: { contains: query.search, mode: 'insensitive' } },
+      { position_latin: { contains: query.search, mode: 'insensitive' } },
+      { position_cyril: { contains: query.search, mode: 'insensitive' } },
+      { position_ru: { contains: query.search, mode: 'insensitive' } },
+      { phone: { contains: query.search, mode: 'insensitive' } },
+      { fax: { contains: query.search, mode: 'insensitive' } },
+      { reception_days: { contains: query.search, mode: 'insensitive' } },
+      ]
+    }
 
-    const where = searchWhere ? searchWhere : {};
 
     const [data, total] = await Promise.all([
-      this.prisma.department.findMany({
+      this.prisma.departmentMember.findMany({
         where,
         skip,
         take,
-        orderBy: query.sortBy ? { [query.sortBy]: query.sortOrder || 'asc' } : { order: 'asc' },
+        orderBy: { position_order: query.sortOrder },
       }),
-      this.prisma.department.count({ where }),
+      this.prisma.departmentMember.count({ where }),
     ]);
 
     return buildPaginatedResponse(data, total, query.page! || 1, query.limit! || 10);
   }
 
   async findOne(id: string) {
-    const department = await this.prisma.department.findUnique({ where: { id } });
+    const department = await this.prisma.departmentMember.findUnique({ where: { id } });
     if (!department) throw new NotFoundException('Department not found');
     return department;
   }
 
   async update(id: string, updateDepartmentDto: UpdateDepartmentDto) {
-    const department = await this.prisma.department.findUnique({ where: { id } });
+    const department = await this.prisma.departmentMember.findUnique({ where: { id } });
     if (!department) throw new NotFoundException('Department not found');
 
-    const updated = await this.prisma.department.update({
+    const where: Prisma.DepartmentMemberWhereInput = { OR: [] };
+    if (updateDepartmentDto.phone) {
+      where.OR?.push({ phone: updateDepartmentDto.phone })
+    }
+    if (updateDepartmentDto.fax) {
+      where.OR?.push({ fax: updateDepartmentDto.fax })
+    }
+    if (updateDepartmentDto.email) {
+      where.OR?.push({ email: updateDepartmentDto.email });
+    }
+    const existMember = await this.prisma.departmentMember.findFirst({
+      where: where,
+    });
+    if (existMember) {
+      throw new BadRequestException(' phone numbe/email/fax  already exists');
+    }
+
+    const updated = await this.prisma.departmentMember.update({
       where: { id },
       data: updateDepartmentDto,
     });
@@ -55,10 +101,10 @@ export class DepartmentsService {
   }
 
   async remove(id: string) {
-    const department = await this.prisma.department.findUnique({ where: { id } });
+    const department = await this.prisma.departmentMember.findUnique({ where: { id } });
     if (!department) throw new NotFoundException('Department not found');
 
-    await this.prisma.department.delete({ where: { id } });
+    await this.prisma.departmentMember.delete({ where: { id } });
     return { success: true };
   }
 }
