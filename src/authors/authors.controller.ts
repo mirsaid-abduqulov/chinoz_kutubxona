@@ -3,7 +3,7 @@ import { AuthorsService } from './authors.service';
 import { CreateAuthorDto } from './dto/create-author.dto';
 import { UpdateAuthorDto } from './dto/update-author.dto';
 import { QueryAuthorDto } from './dto/query-author.dto';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { FilesInterceptor } from '@nestjs/platform-express';
@@ -62,6 +62,18 @@ export class AuthorsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Upload images for an author' })
+  @ApiBody({
+    schema: {
+      type: 'object',
+      properties: {
+        files: {
+          type: 'array',
+          items: { type: 'string', format: 'binary' },
+          description: 'Image files to upload',
+        },
+      },
+    },
+  })
   @ApiConsumes('multipart/form-data')
   @UseInterceptors(
     FilesInterceptor('files', 10, {

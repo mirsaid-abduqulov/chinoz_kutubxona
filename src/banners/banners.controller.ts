@@ -10,6 +10,8 @@ import { BaseQueryDto } from '../common/dto/base-query.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { imageFileFilter, imageLimits } from '../common/storage/multer.config';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
+import { IsActiveDto } from './dto/is_active.dto';
+import { QueryBannerDto } from './dto/get-all-querry.dto';
 
 @ApiTags('Banners(Bannerlar)')
 @Controller('banners')
@@ -22,7 +24,7 @@ export class BannersController {
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new banner (Admin only)' })
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('image', {
+  @UseInterceptors(FileInterceptor('image_file', {
     fileFilter: imageFileFilter,
     limits: imageLimits,
   }))
@@ -35,9 +37,9 @@ export class BannersController {
   }
 
   @Get()
-  @ApiOperation({ summary: 'Get all active banners (Public)' })
+  @ApiOperation({ summary: 'Get all active banners (Active only)' })
   findAllActive(@Query() query: BaseQueryDto) {
-    return this.bannersService.findAllActive(query);
+    return this.bannersService.findAll(query);
   }
 
   @Get('all')
@@ -45,7 +47,7 @@ export class BannersController {
   @UseGuards(JwtAuthGuard,RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all banners including inactive (Admin only)' })
-  findAll(@Query() query: BaseQueryDto) {
+  findAll(@Query() query: QueryBannerDto) {
     return this.bannersService.findAll(query);
   }
 
@@ -55,7 +57,7 @@ export class BannersController {
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a banner (Admin only)' })
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(FileInterceptor('image', {
+  @UseInterceptors(FileInterceptor('image_file', {
     fileFilter: imageFileFilter,
     limits: imageLimits,
   }))
@@ -74,5 +76,14 @@ export class BannersController {
   @ApiOperation({ summary: 'Delete a banner (Admin only)' })
   remove(@Param('id') id: string) {
     return this.bannersService.remove(id);
+  }
+
+  @Patch(':id/active')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Update banner active status (Admin only)' })
+  updateIsActive(@Param('id') id: string, @Body() dto: IsActiveDto) {
+    return this.bannersService.updateIsActive(id, dto);
   }
 }
