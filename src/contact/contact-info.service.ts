@@ -37,7 +37,6 @@ export class ContactInfoService {
     let contactInfo = await this.prisma.contactInfo.findFirst();
 
     if (!contactInfo) {
-      // Default qiymat bilan init
       contactInfo = await this.prisma.contactInfo.create({
         data: {
           address_latin: '',
@@ -62,9 +61,6 @@ export class ContactInfoService {
     });
   }
 
-  /**
-   * Yangi social link qo'shish
-   */
   async addSocialLink(dto: CreateSocialLinkDto, iconFile?: Express.Multer.File) {
     if (!iconFile) {
       throw new BadRequestException('Icon rasmi majburiy');
@@ -78,7 +74,6 @@ export class ContactInfoService {
 
     const contactInfo = await this.getInfo();
 
-    // Platform allaqachon mavjudmi tekshir
     const existingPlatform = (contactInfo.social_links as unknown as SocialLink[])?.find(
       (link) => link.platform === dto.platform,
     );
@@ -88,7 +83,6 @@ export class ContactInfoService {
       );
     }
 
-    // Icon rasmini saqlash
     let iconUrl: string;
     try {
       const saved = await this.storageService.saveFile(iconFile, 'social_icons');
@@ -97,7 +91,6 @@ export class ContactInfoService {
       throw new BadRequestException('Icon rasmini saqlashda xato: ' + error.message);
     }
 
-    // Social link qo'shish (JSON array'ga qo'shish)
     try {
       const currentLinks = (contactInfo.social_links as unknown as SocialLink[]) || [];
       const newLink = {
@@ -113,16 +106,12 @@ export class ContactInfoService {
         data: { social_links: updatedLinks as unknown as Prisma.InputJsonValue },
       });
     } catch (error) {
-      // Xatolik bo'lsa, icon'ni o'chir
       await this.storageService.deleteFile(iconUrl);
       this.logger.error(`Social link qo'shishda xato: ${error.message}`);
       throw new BadRequestException('Social link qo\'shishda xato yuz berdi');
     }
   }
 
-  /**
-   * Social link'ni yangilash
-   */
   async updateSocialLink(
     platform: string,
     dto: UpdateSocialLinkDto,
@@ -145,7 +134,6 @@ export class ContactInfoService {
     const oldLink = links[linkIndex];
     let newIconUrl = oldLink.icon_url;
 
-    // Yangi icon kelsa, eskisini o'chirib yangisini saqlash
     if (newIconFile) {
       try {
         const saved = await this.storageService.saveFile(newIconFile, 'social_icons');
@@ -156,7 +144,6 @@ export class ContactInfoService {
     }
 
     try {
-      // Social link'ni yangilash
       links[linkIndex] = {
         platform,
         url: dto.url?.trim() || oldLink.url,
@@ -168,14 +155,12 @@ export class ContactInfoService {
         data: { social_links: links as unknown as Prisma.InputJsonValue },
       });
 
-      // Eski icon o'chirish (yangi kelgan bo'lsa)
       if (newIconFile && oldLink.icon_url) {
         await this.storageService.deleteFile(oldLink.icon_url);
       }
 
       return updated;
     } catch (error) {
-      // Yangi icon saqlandi lekin DB yangilash muvaffaqiyatsiz bo'lsa, uni o'chir
       if (newIconFile) {
         await this.storageService.deleteFile(newIconUrl);
       }
@@ -184,9 +169,6 @@ export class ContactInfoService {
     }
   }
 
-  /**
-   * Social link'ni o'chirish
-   */
   async removeSocialLink(platform: string) {
     platform = platform.toLowerCase();
 
@@ -224,17 +206,11 @@ export class ContactInfoService {
     }
   }
 
-  /**
-   * Barcha social link'larni olish
-   */
   async getSocialLinks() {
     const contactInfo = await this.getInfo();
     return (contactInfo.social_links as unknown as SocialLink[]) || [];
   }
 
-  /**
-   * Bitta social link'ni olish
-   */
   async getSocialLink(platform: string) {
     platform = platform.toLowerCase();
 

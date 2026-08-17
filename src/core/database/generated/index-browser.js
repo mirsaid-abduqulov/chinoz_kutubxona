@@ -235,7 +235,7 @@ exports.Prisma.AnnouncementScalarFieldEnum = {
   content_cyril: 'content_cyril',
   content_ru: 'content_ru',
   cover_image: 'cover_image',
-  is_published: 'is_published',
+  is_public: 'is_public',
   published_at: 'published_at',
   creator_id: 'creator_id',
   created_at: 'created_at',
@@ -299,8 +299,7 @@ exports.Prisma.NewsScalarFieldEnum = {
   content_cyril: 'content_cyril',
   content_ru: 'content_ru',
   cover_image: 'cover_image',
-  views_count: 'views_count',
-  is_published: 'is_published',
+  is_public: 'is_public',
   published_at: 'published_at',
   creator_id: 'creator_id',
   created_at: 'created_at',
@@ -320,7 +319,7 @@ exports.Prisma.EventScalarFieldEnum = {
   location_ru: 'location_ru',
   cover_image: 'cover_image',
   event_date: 'event_date',
-  is_published: 'is_published',
+  is_public: 'is_public',
   creator_id: 'creator_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -349,6 +348,7 @@ exports.Prisma.MediaAlbumScalarFieldEnum = {
   title_ru: 'title_ru',
   type: 'type',
   cover_image: 'cover_image',
+  is_public: 'is_public',
   creator_id: 'creator_id',
   created_at: 'created_at',
   updated_at: 'updated_at'
@@ -442,9 +442,12 @@ exports.FileType = exports.$Enums.FileType = {
 };
 
 exports.PageSlug = exports.$Enums.PageSlug = {
-  HISTORY: 'HISTORY',
-  CHARTER: 'CHARTER',
-  STRUCTURE: 'STRUCTURE'
+  ABOUT: 'ABOUT',
+  PRIVACY_POLICY: 'PRIVACY_POLICY',
+  TERMS_OF_SERVICE: 'TERMS_OF_SERVICE',
+  FAQ: 'FAQ',
+  RULES: 'RULES',
+  CONTACTS: 'CONTACTS'
 };
 
 exports.DocumentCategory = exports.$Enums.DocumentCategory = {

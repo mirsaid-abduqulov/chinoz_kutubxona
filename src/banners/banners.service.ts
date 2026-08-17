@@ -13,7 +13,7 @@ export class BannersService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storageService: StorageService,
-  ) {}
+  ) { }
 
   async create(createBannerDto: CreateBannerDto, imageFile?: Express.Multer.File) {
     if (!imageFile) {
@@ -53,6 +53,14 @@ export class BannersService {
     const where: any = {};
     if (query.is_active !== undefined) {
       where.is_active = query.is_active;
+    }
+
+    if (query.search) {
+      where.OR = [
+        { title_latin: { contains: query.search } },
+        { title_cyril: { contains: query.search } },
+        { title_ru: { contains: query.search } },
+      ];
     }
 
     const [banners, total] = await Promise.all([

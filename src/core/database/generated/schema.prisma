@@ -159,7 +159,7 @@ model Announcement {
   content_cyril String
   content_ru    String
   cover_image   String?
-  is_published  Boolean  @default(true)
+  is_public     Boolean  @default(true)
   published_at  DateTime @default(now())
   creator_id    String
   creator       User     @relation(fields: [creator_id], references: [id])
@@ -188,9 +188,12 @@ model BookDownloadLog {
 }
 
 enum PageSlug {
-  HISTORY
-  CHARTER
-  STRUCTURE
+  ABOUT
+  PRIVACY_POLICY
+  TERMS_OF_SERVICE
+  FAQ
+  RULES
+  CONTACTS
 }
 
 model Page {
@@ -199,9 +202,9 @@ model Page {
   title_latin   String
   title_cyril   String
   title_ru      String
-  content_latin String
-  content_cyril String
-  content_ru    String
+  content_latin String // @db.Text (uzun matn uchun)
+  content_cyril String // @db.Text
+  content_ru    String // @db.Text
   created_at    DateTime @default(now())
   updated_at    DateTime @updatedAt
 }
@@ -233,8 +236,7 @@ model News {
   content_cyril String
   content_ru    String
   cover_image   String?
-  views_count   Int      @default(0)
-  is_published  Boolean  @default(true)
+  is_public     Boolean  @default(true)
   published_at  DateTime @default(now())
   creator_id    String
   creator       User     @relation(fields: [creator_id], references: [id])
@@ -255,7 +257,7 @@ model Event {
   location_ru       String?
   cover_image       String?
   event_date        DateTime
-  is_published      Boolean  @default(true)
+  is_public         Boolean  @default(true)
   creator_id        String
   creator           User     @relation(fields: [creator_id], references: [id])
   created_at        DateTime @default(now())
@@ -300,6 +302,7 @@ model MediaAlbum {
   type        MediaType
   cover_image String?
   items       MediaItem[]
+  is_public   Boolean     @default(true)
   creator_id  String
   creator     User        @relation(fields: [creator_id], references: [id])
   created_at  DateTime    @default(now())

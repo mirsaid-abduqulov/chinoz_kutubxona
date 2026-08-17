@@ -1,6 +1,5 @@
-// dto/create-banner.dto.ts
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, IsBoolean, IsInt, IsUrl } from 'class-validator';
+import { IsOptional, IsString, IsBoolean, IsInt } from 'class-validator';
 import { Transform } from 'class-transformer';
 
 export class CreateBannerDto {

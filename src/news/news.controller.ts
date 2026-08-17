@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFile, Req, StreamableFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFile, Req, StreamableFile, Res, ForbiddenException } from '@nestjs/common';
 import { NewsService } from './news.service';
 import { CreateNewsDto } from './dto/create-news.dto';
 import { UpdateNewsDto } from './dto/update-news.dto';
@@ -8,18 +8,18 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { imageFileFilter, imageLimits} from '../common/storage/multer.config';
+import { imageFileFilter, imageLimits } from '../common/storage/multer.config';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 
 
 @ApiTags('News(Yangiliklar)')
 @Controller('news')
 export class NewsController {
-  constructor(private readonly newsService: NewsService) {}
+  constructor(private readonly newsService: NewsService) { }
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new news' })
   @ApiConsumes('multipart/form-data')
@@ -32,26 +32,47 @@ export class NewsController {
     @Body() createDto: CreateNewsDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.newsService.create(req.user.sub, createDto, file);
+    return this.newsService.create(req.user.id, createDto, file);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all news (Public)' })
   findAll(@Query() query: QueryNewsDto, @Req() req: any) {
-    return this.newsService.findAll(query, req.user?.sub);
+    return this.newsService.findAll(query);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get news by id (Public)' })
-  findOne(@Param('id') id: string, @Query('admin') admin?: string) {
-    return this.newsService.findOne(id, admin === 'true');
+  findOne(@Param('id') id: string) {
+    return this.newsService.findOne(id);
+  }
+  @Get('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Get all news (Admin)' })
+  findAllAdmin(@Query() query: QueryNewsDto, @Req() req: any) {
+    const role = req.user.role;
+    if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
+      throw new ForbiddenException('You are not allowed to access this resource');
+    }
+    return this.newsService.findAll(query);
   }
 
-  
+  @Get(':id/admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Get news by id (Admin)' })
+  findOneAdmin(@Param('id') id: string, @Req() req: any) {
+    return this.newsService.findOne(id);
+  }
+
+
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a news' })
   @ApiConsumes('multipart/form-data')
@@ -69,7 +90,7 @@ export class NewsController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a news (Admin only)' })
   remove(@Param('id') id: string) {

@@ -18,7 +18,7 @@ export class DocumentsService {
 
   async create(creatorId: string, createDto: CreateDocumentsDto, file?: Express.Multer.File) {
     const existingUser = await this.prisma.user.findUnique({ where: { id: creatorId } });
-    if (!existingUser) throw new NotFoundException('User not found');
+    if (!existingUser) throw new NotFoundException('Yaratuvchi topilmadi');
     let fileInfo: any = null;
     if (file) {
       fileInfo = await this.storageService.saveFile(file, 'documents');
@@ -29,7 +29,7 @@ export class DocumentsService {
     const title_ru = normalizeName(createDto.title_ru);
 
 
-    if (!file) throw new NotFoundException('Document file is required');
+    if (!file) throw new NotFoundException('Dokument fayli yuklanmagan');
     const data = {
       ...createDto,
       title_latin,
@@ -137,7 +137,7 @@ export class DocumentsService {
         updated_at: true,
       }
     });
-    if (!item) throw new NotFoundException('Documents not found');
+    if (!item) throw new NotFoundException('Dokument topilmadi');
     return item;
   }
 
@@ -146,13 +146,13 @@ export class DocumentsService {
       where: { id },
       include: { creator: { select: { id: true, full_name: true } } },
     });
-    if (!item) throw new NotFoundException('Documents not found');
+    if (!item) throw new NotFoundException('Dokument topilmadi');
     return item;
   }
 
   async update(id: string, updateDto: UpdateDocumentsDto, file?: Express.Multer.File) {
     const existing = await this.prisma.document.findUnique({ where: { id } });
-    if (!existing) throw new NotFoundException('Documents not found');
+    if (!existing) throw new NotFoundException('Dokument topilmadi');
 
     let fileUpdateData: any = {};
     if (file) {
@@ -172,7 +172,7 @@ export class DocumentsService {
 
   async remove(id: string) {
     const existing = await this.prisma.document.findUnique({ where: { id } });
-    if (!existing) throw new NotFoundException('Documents not found');
+    if (!existing) throw new NotFoundException('Dokument topilmadi');
 
     if (existing.file_url) {
       await this.storageService.deleteFile(existing.file_url);
@@ -184,12 +184,12 @@ export class DocumentsService {
 
   async download(id: string) {
     const doc = await this.findOne(id);
-    if (!doc.file_url) throw new NotFoundException('File not found');
+    if (!doc.file_url) throw new NotFoundException('Fayl topilmadi');
     return doc;
   }
   async downloadAdmin(id: string) {
     const doc = await this.findOneAdmin(id);
-    if (!doc.file_url) throw new NotFoundException('File not found');
+    if (!doc.file_url) throw new NotFoundException('Fayl topilmadi');
     return doc;
   }
 
@@ -197,7 +197,7 @@ export class DocumentsService {
     const document = await this.prisma.document.findUnique({
       where: { id },
     });
-    if (!document) throw new NotFoundException('Document not found');
+    if (!document) throw new NotFoundException('Dokument topilmadi');
 
     const updated = await this.prisma.document.update({
       where: { id },

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFile, Req, StreamableFile, Res, BadRequestException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFile, Req, StreamableFile, Res, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { DocumentsService } from './documents.service';
 import { CreateDocumentsDto } from './dto/create-documents.dto';
 import { UpdateDocumentsDto } from './dto/update-documents.dto';
@@ -58,7 +58,7 @@ export class DocumentsController {
   findAllAdmin(@Query() query: QueryDocumentsDto, @Req() req: any, @Query('is_public') is_public?: boolean) {
     const role = req.user.role;
     if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
-      throw new BadRequestException('You are not allowed to access this resource');
+      throw new ForbiddenException('You are not allowed to access this resource');
     }
     return this.documentsService.findAllAdmin(query, Boolean(is_public));
   }
@@ -77,7 +77,7 @@ export class DocumentsController {
   findOneAdmin(@Param('id') id: string, @Req() req: any) {
     const role = req.user.role;
     if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
-      throw new BadRequestException('You are not allowed to access this resource');
+      throw new ForbiddenException('You are not allowed to access this resource');
     }
     return this.documentsService.findOneAdmin(id);
   }

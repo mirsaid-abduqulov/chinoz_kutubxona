@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFile, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseGuards, UseInterceptors, UploadedFile, Req, ForbiddenException } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventsDto } from './dto/create-events.dto';
 import { UpdateEventsDto } from './dto/update-events.dto';
@@ -32,19 +32,44 @@ export class EventsController {
     @Body() createDto: CreateEventsDto,
     @UploadedFile() file?: Express.Multer.File,
   ) {
-    return this.eventsService.create(req.user.sub, createDto, file);
+    return this.eventsService.create(req.user.id, createDto, file);
   }
 
   @Get()
   @ApiOperation({ summary: 'Get all events (Public)' })
-  findAll(@Query() query: QueryEventsDto, @Req() req: any) {
-    return this.eventsService.findAll(query, req.user?.sub);
+  findAll(@Query() query: QueryEventsDto) {
+    return this.eventsService.findAll(query);
   }
 
   @Get(':id')
   @ApiOperation({ summary: 'Get events by id (Public)' })
   findOne(@Param('id') id: string, @Query('admin') admin?: string) {
     return this.eventsService.findOne(id, admin === 'true');
+  }
+
+  @Get('admin')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Get all events' })
+  findAll_admin(@Query() query: QueryEventsDto, @Req() req: any) {
+     const role = req.user.role;
+        if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
+          throw new ForbiddenException('You are not allowed to access this resource');
+        }
+    return this.eventsService.findAll(query);
+  }
+
+  @Get('admin/:id')
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard,RolesGuard)
+  @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Get events by id' })
+  findOne_admin(@Param('id') id: string, @Req() req: any) {
+    if (req.user.role !== UserRole.ADMIN && req.user.role !== UserRole.SUPER_ADMIN) {
+      throw new ForbiddenException('You are not authorized to perform this action');
+    }
+    return this.eventsService.findOne(id);
   }
 
   

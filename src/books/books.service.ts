@@ -169,7 +169,6 @@ export class BooksService {
       throw new NotFoundException('Kitob topilmadi');
     }
 
-    // Validate author if provided
     if (dto.author_id) {
       const author = await this.prisma.author.findUnique({
         where: { id: dto.author_id },
@@ -250,10 +249,8 @@ export class BooksService {
       ...book.files.map((file) => file.url),
     ];
 
-    // Delete from DB (cascade handles relations)
     await this.prisma.book.delete({ where: { id } });
 
-    // Clean up storage
     if (fileUrls.length > 0) {
       await Promise.allSettled(
         fileUrls.map((url) => this.storageService.deleteFile(url)),
@@ -454,7 +451,6 @@ export class BooksService {
   async getDownloadStream(
     bookId: string,
     fileId: string,
-    user?: { role: string },
   ) {
     const book = await this.prisma.book.findUnique({
       where: { id: bookId },

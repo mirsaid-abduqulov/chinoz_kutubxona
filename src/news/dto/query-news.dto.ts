@@ -8,5 +8,5 @@ export class QueryNewsDto extends BaseQueryDto {
   @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
-  is_published?: boolean;
+  is_public?: boolean;
 }

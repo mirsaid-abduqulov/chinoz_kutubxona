@@ -1,7 +1,6 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsBoolean, IsNotEmpty, IsOptional, IsString, IsEnum, IsDateString } from 'class-validator';
-import { Transform } from 'class-transformer';
-import { DocumentCategory } from '../../core/database/generated';
+import { Transform, Type } from 'class-transformer';
 
 export class CreateEventsDto {
   @ApiProperty()
@@ -59,19 +58,26 @@ export class CreateEventsDto {
   @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
   location_ru?: string;
 
-  @ApiProperty()
+ @ApiProperty({
+    example: '2026-08-19',
+    description: 'Tadbir sanasi (YYYY-MM-DD formatida)',
+  })
   @IsNotEmpty()
   @IsDateString()
-  event_date: Date;
+  event_date: string;
 
-  @ApiPropertyOptional({ type: 'string', format: 'binary' })
-  @IsOptional()
-  cover_image?: any;
+  @ApiProperty({
+    type: 'string',
+    format: 'binary',
+    required: true,
+    description: 'Cover image for the event',
+  })
+  cover_image?: Express.Multer.File;
 
   @ApiPropertyOptional()
   @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
-  is_published?: boolean;
+  is_public?: boolean;
   
 }

@@ -13,7 +13,7 @@ export class AuthorsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storageService: StorageService,
-  ) {}
+  ) { }
 
   async create(dto: CreateAuthorDto) {
     const normalizedName = normalizeName(dto.full_name_latin);
@@ -55,14 +55,14 @@ export class AuthorsService {
 
   async findAll(query: QueryAuthorDto) {
     const { skip, take, page, limit } = buildPaginationParams(query);
-    
+
     const conditions: any[] = [];
     if (query.search) {
       conditions.push(buildMultilangSearchWhere(query.search, 'full_name'));
     }
 
     const where = conditions.length > 0 ? { AND: conditions } : {};
-    
+
     const ALLOWED_SORT_FIELDS = ['created_at', 'updated_at', 'full_name_latin', 'rating_score'];
     const sortBy = ALLOWED_SORT_FIELDS.includes(query.sortBy as string) ? query.sortBy : 'created_at';
 
@@ -90,36 +90,36 @@ export class AuthorsService {
       where: { id },
       include: { images: true },
     });
-    if (!author) throw new NotFoundException('Author not found');
+    if (!author) throw new NotFoundException('Mualif topilmadi');
     return author;
   }
 
   async update(id: string, dto: UpdateAuthorDto) {
     const author = await this.prisma.author.findUnique({ where: { id } });
-    if (!author) throw new NotFoundException('Author not found');
+    if (!author) throw new NotFoundException('Mualif topilmadi');
 
     const data: any = { ...dto };
     if (dto.full_name_latin) data.full_name_latin = normalizeName(dto.full_name_latin);
     if (dto.full_name_cyril) data.full_name_cyril = normalizeName(dto.full_name_cyril);
     if (dto.full_name_ru) data.full_name_ru = normalizeName(dto.full_name_ru);
-    
+
     if (dto.biography_latin !== undefined) data.biography_latin = dto.biography_latin?.trim();
     if (dto.biography_cyril !== undefined) data.biography_cyril = dto.biography_cyril?.trim();
     if (dto.biography_ru !== undefined) data.biography_ru = dto.biography_ru?.trim();
-    
+
     if (dto.nationality_latin !== undefined) data.nationality_latin = dto.nationality_latin?.trim();
     if (dto.nationality_cyril !== undefined) data.nationality_cyril = dto.nationality_cyril?.trim();
     if (dto.nationality_ru !== undefined) data.nationality_ru = dto.nationality_ru?.trim();
 
-    if(dto.birth_date !== undefined) {
-      if(dto.birth_date.trim() === '') {
+    if (dto.birth_date !== undefined) {
+      if (dto.birth_date.trim() === '') {
         data.birth_date = null;
       } else {
         data.birth_date = dto.birth_date.trim();
       }
     }
-    if(dto.death_date !== undefined) {
-      if(dto.death_date.trim() === '') {
+    if (dto.death_date !== undefined) {
+      if (dto.death_date.trim() === '') {
         data.death_date = null;
       } else {
         data.death_date = dto.death_date.trim();
@@ -137,15 +137,15 @@ export class AuthorsService {
       where: { id },
       include: { images: true },
     });
-    
-    if (!author) throw new NotFoundException('Author not found');
+
+    if (!author) throw new NotFoundException('Mualif topilmadi');
+    const book = await this.prisma.book.findMany({ where: { author_id: id } });
+    if (book.length > 0) throw new BadRequestException('Muallifga biriktirilgan kitob mavjud, avval uni o\'chiring!');
 
     const imageUrls = author.images.map((img) => img.url);
 
-    // DB delete first, cascade deletes the images rows
     await this.prisma.author.delete({ where: { id } });
 
-    // Then delete files from disk
     if (imageUrls.length > 0) {
       await Promise.allSettled(
         imageUrls.map((url) => this.storageService.deleteFile(url))
@@ -162,15 +162,15 @@ export class AuthorsService {
       where: { id: authorId },
       include: { images: true },
     });
-    
-    if (!author) throw new NotFoundException('Author not found');
-    if (!files || files.length === 0) throw new BadRequestException('No files provided');
+
+    if (!author) throw new NotFoundException('Mualif topilmadi');
+    if (!files || files.length === 0) throw new BadRequestException('Hech qanday fayl yuklanmadi');
 
     const hasMain = author.images.some((img) => img.is_main);
 
     // Determine the highest order to append new images
-    const currentMaxOrder = author.images.length > 0 
-      ? Math.max(...author.images.map((img) => img.order)) 
+    const currentMaxOrder = author.images.length > 0
+      ? Math.max(...author.images.map((img) => img.order))
       : -1;
 
     const savedFilesInfo = await Promise.all(
@@ -178,9 +178,9 @@ export class AuthorsService {
     );
 
     const validFilesInfo = savedFilesInfo.filter(info => info !== null);
-    
+
     if (validFilesInfo.length === 0) {
-      throw new BadRequestException('Failed to upload images');
+      throw new BadRequestException('Fayllarni yuklashda xatolik yuz berdi');
     }
 
     let isFirstImage = !hasMain;
@@ -198,9 +198,8 @@ export class AuthorsService {
           },
         });
         dbImages.push(image);
-        isFirstImage = false; // only the first one of the batch gets to be main if there wasn't one
+        isFirstImage = false;
       } catch (error) {
-        // Rollback: DB write failed, delete file
         await this.storageService.deleteFile(info.url);
       }
     }
@@ -213,7 +212,7 @@ export class AuthorsService {
       where: { id: authorId },
       include: { images: { orderBy: { order: 'asc' } } },
     });
-    if (!author) throw new NotFoundException('Author not found');
+    if (!author) throw new NotFoundException('Mualif topilmadi');
     return author.images;
   }
 
@@ -222,15 +221,13 @@ export class AuthorsService {
       where: { id: imageId, author_id: authorId },
     });
 
-    if (!image) throw new NotFoundException('Image not found for this author');
+    if (!image) throw new NotFoundException('Rasm topilmadi');
 
     await this.prisma.$transaction([
-      // Set all to false
       this.prisma.authorImage.updateMany({
         where: { author_id: authorId },
         data: { is_main: false },
       }),
-      // Set the specific one to true
       this.prisma.authorImage.update({
         where: { id: imageId },
         data: { is_main: true },
@@ -245,14 +242,13 @@ export class AuthorsService {
       where: { id: imageId, author_id: authorId },
     });
 
-    if (!image) throw new NotFoundException('Image not found');
+    if (!image) throw new NotFoundException('Rasm topilmadi');
 
     const wasMain = image.is_main;
 
     await this.prisma.authorImage.delete({ where: { id: imageId } });
     await this.storageService.deleteFile(image.url);
 
-    // If we deleted the main image, make another one main if exists
     if (wasMain) {
       const remainingImage = await this.prisma.authorImage.findFirst({
         where: { author_id: authorId },

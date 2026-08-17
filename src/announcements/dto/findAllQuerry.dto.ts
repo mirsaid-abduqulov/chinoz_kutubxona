@@ -7,5 +7,5 @@ export class FindAllQueryDto extends BaseQueryDto {
     @IsOptional()
     @IsBoolean()
     @Transform(({ value }) => value === 'true' || value === true)
-    is_published?: boolean;
+    is_public?: boolean;
 }

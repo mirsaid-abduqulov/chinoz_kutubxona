@@ -16,6 +16,8 @@ export class EventsService {
   ) {}
 
   async create(creatorId: string, createDto: CreateEventsDto, file?: Express.Multer.File) {
+    const existUser = await this.prisma.user.findUnique({ where: { id: creatorId } });
+    if (!existUser) throw new NotFoundException('Yaratuvchi topilmadi');
     let fileInfo: any = null;
     if (file) {
       fileInfo = await this.storageService.saveFile(file, 'events');
@@ -31,19 +33,19 @@ export class EventsService {
       title_latin, title_cyril, title_ru,
       creator_id: creatorId,
       ...(fileInfo && { cover_image: fileInfo.url }),
+      event_date: new Date(createDto.event_date),
     };
     return this.prisma.event.create({ data });
     
   }
 
-  async findAll(query: QueryEventsDto, userId?: string) {
+  async findAll(query: QueryEventsDto) {
     const { page, limit, skip } = buildPaginationParams(query);
     
-    // Default conditions
     const where: any = {};
     
     
-    where.is_published = true;
+    where.is_public =query.is_public ?? true;
     if (query.upcoming !== undefined) {
       if (query.upcoming) {
         where.event_date = { gte: new Date() };
@@ -75,13 +77,13 @@ export class EventsService {
       where: { id },
       include: { creator: { select: { id: true, full_name: true } } },
     });
-    if (!item) throw new NotFoundException('Events not found');
+    if (!item) throw new NotFoundException('Tadbir topilmadi');
 
     
 
     
-    if (!item.is_published && !isAdmin) {
-      throw new NotFoundException('Events not found');
+    if (!item.is_public && !isAdmin) {
+      throw new NotFoundException('Tadbir topilmadi');
     }
     
 
@@ -114,11 +116,9 @@ export class EventsService {
   async remove(id: string) {
     const existing = await this.findOne(id, true);
     
-    
     if (existing.cover_image) {
       await this.storageService.deleteFile(existing.cover_image);
     }
-    
     
     return this.prisma.event.delete({ where: { id } });
   }

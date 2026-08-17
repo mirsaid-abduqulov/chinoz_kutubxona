@@ -1,8 +1,7 @@
 import { BaseQueryDto } from '../../common/dto/base-query.dto';
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsBoolean, IsOptional, IsEnum } from 'class-validator';
+import { IsBoolean, IsOptional } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { DocumentCategory } from '../../core/database/generated';
 
 export class QueryEventsDto extends BaseQueryDto {
   
@@ -12,4 +11,9 @@ export class QueryEventsDto extends BaseQueryDto {
   @IsBoolean()
   upcoming?: boolean;
   
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  is_public?: boolean;
 }
