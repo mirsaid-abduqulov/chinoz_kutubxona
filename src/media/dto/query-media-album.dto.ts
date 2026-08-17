@@ -9,10 +9,4 @@ export class QueryMediaAlbumDto extends BaseQueryDto {
   @IsOptional()
   @IsEnum(MediaType)
   type?: MediaType;
-
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === true)
-  @IsBoolean()
-  is_public?: boolean;
 }

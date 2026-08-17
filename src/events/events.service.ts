@@ -39,13 +39,18 @@ export class EventsService {
     
   }
 
-  async findAll(query: QueryEventsDto) {
+  async findAll(query: QueryEventsDto,is_public?: boolean) {
     const { page, limit, skip } = buildPaginationParams(query);
     
     const where: any = {};
     
-    
-    where.is_public =query.is_public ?? true;
+    if (is_public === true) {
+      where.is_public = true;
+    }
+    if (is_public === false) {
+      where.is_public = false;
+    }
+
     if (query.upcoming !== undefined) {
       if (query.upcoming) {
         where.event_date = { gte: new Date() };
@@ -72,26 +77,29 @@ export class EventsService {
     return buildPaginatedResponse(items, total, page, limit);
   }
 
-  async findOne(id: string, isAdmin = false) {
+  async findOne(id: string,is_public?:boolean) {
+    const where: any = {id};
+    if (is_public === true) {
+      where.is_public = true;
+    }
+    if (is_public === false) {
+      where.is_public = false;
+    }
     const item = await this.prisma.event.findUnique({
-      where: { id },
+      where,
       include: { creator: { select: { id: true, full_name: true } } },
     });
     if (!item) throw new NotFoundException('Tadbir topilmadi');
 
-    
-
-    
-    if (!item.is_public && !isAdmin) {
+    if (!item.is_public) {
       throw new NotFoundException('Tadbir topilmadi');
     }
-    
 
     return item;
   }
 
   async update(id: string, updateDto: UpdateEventsDto, file?: Express.Multer.File) {
-    const existing = await this.findOne(id, true);
+    const existing = await this.findOne(id);
     
     let fileUpdateData: any = {};
     if (file) {
@@ -114,7 +122,7 @@ export class EventsService {
   }
 
   async remove(id: string) {
-    const existing = await this.findOne(id, true);
+    const existing = await this.findOne(id);
     
     if (existing.cover_image) {
       await this.storageService.deleteFile(existing.cover_image);

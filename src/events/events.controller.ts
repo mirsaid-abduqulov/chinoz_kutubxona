@@ -15,11 +15,11 @@ import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 @ApiTags('Events(Tadbirlar)')
 @Controller('events')
 export class EventsController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(private readonly eventsService: EventsService) { }
 
   @Post()
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Create a new events' })
   @ApiConsumes('multipart/form-data')
@@ -38,45 +38,45 @@ export class EventsController {
   @Get()
   @ApiOperation({ summary: 'Get all events (Public)' })
   findAll(@Query() query: QueryEventsDto) {
-    return this.eventsService.findAll(query);
-  }
-
-  @Get(':id')
-  @ApiOperation({ summary: 'Get events by id (Public)' })
-  findOne(@Param('id') id: string, @Query('admin') admin?: string) {
-    return this.eventsService.findOne(id, admin === 'true');
+    return this.eventsService.findAll(query, true);
   }
 
   @Get('admin')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all events' })
-  findAll_admin(@Query() query: QueryEventsDto, @Req() req: any) {
-     const role = req.user.role;
-        if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
-          throw new ForbiddenException('You are not allowed to access this resource');
-        }
-    return this.eventsService.findAll(query);
+  findAll_admin(@Query() query: QueryEventsDto, @Req() req: any, @Query('is_public') is_public?: boolean) {
+    const role = req.user.role;
+    if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
+      throw new ForbiddenException('Siz ushbu resursdan foydalanishga ruxsat berilmadi');
+    }
+    return this.eventsService.findAll(query, is_public);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get events by id (Public)' })
+  findOne(@Param('id') id: string) {
+    return this.eventsService.findOne(id, true);
   }
 
   @Get('admin/:id')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
-  @ApiOperation({ summary: 'Get events by id' })
-  findOne_admin(@Param('id') id: string, @Req() req: any) {
-    if (req.user.role !== UserRole.ADMIN && req.user.role !== UserRole.SUPER_ADMIN) {
-      throw new ForbiddenException('You are not authorized to perform this action');
+  @ApiOperation({ summary: 'Get events by id (Public)' })
+  findOneAdmin(@Param('id') id: string, @Req() req: any) {
+    const role = req.user.role;
+    if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
+      throw new ForbiddenException('Siz ushbu resursdan foydalanishga ruxsat berilmadi');
     }
     return this.eventsService.findOne(id);
   }
 
-  
 
   @Patch(':id')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Update a events' })
   @ApiConsumes('multipart/form-data')
@@ -94,7 +94,7 @@ export class EventsController {
 
   @Delete(':id')
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard,RolesGuard)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Delete a events (Admin only)' })
   remove(@Param('id') id: string) {
