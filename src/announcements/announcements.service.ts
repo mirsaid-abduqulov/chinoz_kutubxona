@@ -5,9 +5,9 @@ import { PrismaService } from '../core/database/prisma.service';
 import { StorageService } from '../common/storage/storage.service';
 import { BaseQueryDto } from '../common/dto/base-query.dto';
 import { buildPaginationParams, buildPaginatedResponse } from '../common/helpers/pagination.helper';
-import { IsPublishedDto } from './dto/is_published.dto';
 import { normalizeName } from 'src/common/helpers/normalize-name.helper';
 import { FindAllQueryDto } from './dto/findAllQuerry.dto';
+import { IsPublishedDto } from './dto/is_published.dto';
 
 @Injectable()
 export class AnnouncementsService {
@@ -52,7 +52,7 @@ export class AnnouncementsService {
           content_cyril: createAnnouncementDto.content_cyril.trim(),
           content_ru: createAnnouncementDto.content_ru.trim(),
           cover_image: imageUrl,
-          is_published: createAnnouncementDto.is_published ?? true,
+          is_public: createAnnouncementDto.is_public ?? true,
           creator_id: userId,
         },
         include: { creator: { select: { id: true, full_name: true } } },
@@ -69,7 +69,7 @@ export class AnnouncementsService {
   async findAllPublished(query: FindAllQueryDto) {
     const { skip, take } = buildPaginationParams(query);
 
-    const where: any = {is_published:query.is_published}
+    const where: any = {is_public:query.is_public}
       if(query.search){
         where.OR=[{
           title_latin: {contains:query.search}
@@ -163,8 +163,8 @@ export class AnnouncementsService {
     if (updateAnnouncementDto.content_ru !== undefined) {
       data.content_ru = updateAnnouncementDto.content_ru.trim();
     }
-    if (updateAnnouncementDto.is_published !== undefined) {
-      data.is_published = updateAnnouncementDto.is_published;
+    if (updateAnnouncementDto.is_public !== undefined) {
+      data.is_public = updateAnnouncementDto.is_public;
     }
 
     if (newImageUrl) {
@@ -210,8 +210,8 @@ export class AnnouncementsService {
     const updated = await this.prisma.announcement.update({
       where: { id },
       data: {
-        is_published: dto.is_published,
-        published_at: dto.is_published ? new Date() : undefined,
+        is_public: dto.is_public,
+        published_at: dto.is_public ? new Date() : undefined,
       },
     });
 

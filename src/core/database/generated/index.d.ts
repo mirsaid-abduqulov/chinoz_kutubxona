@@ -149,9 +149,12 @@ export type FileType = (typeof FileType)[keyof typeof FileType]
 
 
 export const PageSlug: {
-  HISTORY: 'HISTORY',
-  CHARTER: 'CHARTER',
-  STRUCTURE: 'STRUCTURE'
+  ABOUT: 'ABOUT',
+  PRIVACY_POLICY: 'PRIVACY_POLICY',
+  TERMS_OF_SERVICE: 'TERMS_OF_SERVICE',
+  FAQ: 'FAQ',
+  RULES: 'RULES',
+  CONTACTS: 'CONTACTS'
 };
 
 export type PageSlug = (typeof PageSlug)[keyof typeof PageSlug]
@@ -13701,7 +13704,7 @@ export namespace Prisma {
     content_cyril: string | null
     content_ru: string | null
     cover_image: string | null
-    is_published: boolean | null
+    is_public: boolean | null
     published_at: Date | null
     creator_id: string | null
     created_at: Date | null
@@ -13717,7 +13720,7 @@ export namespace Prisma {
     content_cyril: string | null
     content_ru: string | null
     cover_image: string | null
-    is_published: boolean | null
+    is_public: boolean | null
     published_at: Date | null
     creator_id: string | null
     created_at: Date | null
@@ -13733,7 +13736,7 @@ export namespace Prisma {
     content_cyril: number
     content_ru: number
     cover_image: number
-    is_published: number
+    is_public: number
     published_at: number
     creator_id: number
     created_at: number
@@ -13751,7 +13754,7 @@ export namespace Prisma {
     content_cyril?: true
     content_ru?: true
     cover_image?: true
-    is_published?: true
+    is_public?: true
     published_at?: true
     creator_id?: true
     created_at?: true
@@ -13767,7 +13770,7 @@ export namespace Prisma {
     content_cyril?: true
     content_ru?: true
     cover_image?: true
-    is_published?: true
+    is_public?: true
     published_at?: true
     creator_id?: true
     created_at?: true
@@ -13783,7 +13786,7 @@ export namespace Prisma {
     content_cyril?: true
     content_ru?: true
     cover_image?: true
-    is_published?: true
+    is_public?: true
     published_at?: true
     creator_id?: true
     created_at?: true
@@ -13872,7 +13875,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image: string | null
-    is_published: boolean
+    is_public: boolean
     published_at: Date
     creator_id: string
     created_at: Date
@@ -13905,7 +13908,7 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
@@ -13922,7 +13925,7 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
@@ -13939,7 +13942,7 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
@@ -13956,14 +13959,14 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type AnnouncementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "content_latin" | "content_cyril" | "content_ru" | "cover_image" | "is_published" | "published_at" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["announcement"]>
+  export type AnnouncementOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "content_latin" | "content_cyril" | "content_ru" | "cover_image" | "is_public" | "published_at" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["announcement"]>
   export type AnnouncementInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -13988,7 +13991,7 @@ export namespace Prisma {
       content_cyril: string
       content_ru: string
       cover_image: string | null
-      is_published: boolean
+      is_public: boolean
       published_at: Date
       creator_id: string
       created_at: Date
@@ -14425,7 +14428,7 @@ export namespace Prisma {
     readonly content_cyril: FieldRef<"Announcement", 'String'>
     readonly content_ru: FieldRef<"Announcement", 'String'>
     readonly cover_image: FieldRef<"Announcement", 'String'>
-    readonly is_published: FieldRef<"Announcement", 'Boolean'>
+    readonly is_public: FieldRef<"Announcement", 'Boolean'>
     readonly published_at: FieldRef<"Announcement", 'DateTime'>
     readonly creator_id: FieldRef<"Announcement", 'String'>
     readonly created_at: FieldRef<"Announcement", 'DateTime'>
@@ -19194,18 +19197,8 @@ export namespace Prisma {
 
   export type AggregateNews = {
     _count: NewsCountAggregateOutputType | null
-    _avg: NewsAvgAggregateOutputType | null
-    _sum: NewsSumAggregateOutputType | null
     _min: NewsMinAggregateOutputType | null
     _max: NewsMaxAggregateOutputType | null
-  }
-
-  export type NewsAvgAggregateOutputType = {
-    views_count: number | null
-  }
-
-  export type NewsSumAggregateOutputType = {
-    views_count: number | null
   }
 
   export type NewsMinAggregateOutputType = {
@@ -19217,8 +19210,7 @@ export namespace Prisma {
     content_cyril: string | null
     content_ru: string | null
     cover_image: string | null
-    views_count: number | null
-    is_published: boolean | null
+    is_public: boolean | null
     published_at: Date | null
     creator_id: string | null
     created_at: Date | null
@@ -19234,8 +19226,7 @@ export namespace Prisma {
     content_cyril: string | null
     content_ru: string | null
     cover_image: string | null
-    views_count: number | null
-    is_published: boolean | null
+    is_public: boolean | null
     published_at: Date | null
     creator_id: string | null
     created_at: Date | null
@@ -19251,8 +19242,7 @@ export namespace Prisma {
     content_cyril: number
     content_ru: number
     cover_image: number
-    views_count: number
-    is_published: number
+    is_public: number
     published_at: number
     creator_id: number
     created_at: number
@@ -19260,14 +19250,6 @@ export namespace Prisma {
     _all: number
   }
 
-
-  export type NewsAvgAggregateInputType = {
-    views_count?: true
-  }
-
-  export type NewsSumAggregateInputType = {
-    views_count?: true
-  }
 
   export type NewsMinAggregateInputType = {
     id?: true
@@ -19278,8 +19260,7 @@ export namespace Prisma {
     content_cyril?: true
     content_ru?: true
     cover_image?: true
-    views_count?: true
-    is_published?: true
+    is_public?: true
     published_at?: true
     creator_id?: true
     created_at?: true
@@ -19295,8 +19276,7 @@ export namespace Prisma {
     content_cyril?: true
     content_ru?: true
     cover_image?: true
-    views_count?: true
-    is_published?: true
+    is_public?: true
     published_at?: true
     creator_id?: true
     created_at?: true
@@ -19312,8 +19292,7 @@ export namespace Prisma {
     content_cyril?: true
     content_ru?: true
     cover_image?: true
-    views_count?: true
-    is_published?: true
+    is_public?: true
     published_at?: true
     creator_id?: true
     created_at?: true
@@ -19359,18 +19338,6 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
-     * Select which fields to average
-    **/
-    _avg?: NewsAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: NewsSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
      * Select which fields to find the minimum value
     **/
     _min?: NewsMinAggregateInputType
@@ -19401,8 +19368,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: NewsCountAggregateInputType | true
-    _avg?: NewsAvgAggregateInputType
-    _sum?: NewsSumAggregateInputType
     _min?: NewsMinAggregateInputType
     _max?: NewsMaxAggregateInputType
   }
@@ -19416,15 +19381,12 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image: string | null
-    views_count: number
-    is_published: boolean
+    is_public: boolean
     published_at: Date
     creator_id: string
     created_at: Date
     updated_at: Date
     _count: NewsCountAggregateOutputType | null
-    _avg: NewsAvgAggregateOutputType | null
-    _sum: NewsSumAggregateOutputType | null
     _min: NewsMinAggregateOutputType | null
     _max: NewsMaxAggregateOutputType | null
   }
@@ -19452,8 +19414,7 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    views_count?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
@@ -19470,8 +19431,7 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    views_count?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
@@ -19488,8 +19448,7 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    views_count?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
@@ -19506,15 +19465,14 @@ export namespace Prisma {
     content_cyril?: boolean
     content_ru?: boolean
     cover_image?: boolean
-    views_count?: boolean
-    is_published?: boolean
+    is_public?: boolean
     published_at?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type NewsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "content_latin" | "content_cyril" | "content_ru" | "cover_image" | "views_count" | "is_published" | "published_at" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["news"]>
+  export type NewsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "content_latin" | "content_cyril" | "content_ru" | "cover_image" | "is_public" | "published_at" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["news"]>
   export type NewsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -19539,8 +19497,7 @@ export namespace Prisma {
       content_cyril: string
       content_ru: string
       cover_image: string | null
-      views_count: number
-      is_published: boolean
+      is_public: boolean
       published_at: Date
       creator_id: string
       created_at: Date
@@ -19977,8 +19934,7 @@ export namespace Prisma {
     readonly content_cyril: FieldRef<"News", 'String'>
     readonly content_ru: FieldRef<"News", 'String'>
     readonly cover_image: FieldRef<"News", 'String'>
-    readonly views_count: FieldRef<"News", 'Int'>
-    readonly is_published: FieldRef<"News", 'Boolean'>
+    readonly is_public: FieldRef<"News", 'Boolean'>
     readonly published_at: FieldRef<"News", 'DateTime'>
     readonly creator_id: FieldRef<"News", 'String'>
     readonly created_at: FieldRef<"News", 'DateTime'>
@@ -20425,7 +20381,7 @@ export namespace Prisma {
     location_ru: string | null
     cover_image: string | null
     event_date: Date | null
-    is_published: boolean | null
+    is_public: boolean | null
     creator_id: string | null
     created_at: Date | null
     updated_at: Date | null
@@ -20444,7 +20400,7 @@ export namespace Prisma {
     location_ru: string | null
     cover_image: string | null
     event_date: Date | null
-    is_published: boolean | null
+    is_public: boolean | null
     creator_id: string | null
     created_at: Date | null
     updated_at: Date | null
@@ -20463,7 +20419,7 @@ export namespace Prisma {
     location_ru: number
     cover_image: number
     event_date: number
-    is_published: number
+    is_public: number
     creator_id: number
     created_at: number
     updated_at: number
@@ -20484,7 +20440,7 @@ export namespace Prisma {
     location_ru?: true
     cover_image?: true
     event_date?: true
-    is_published?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -20503,7 +20459,7 @@ export namespace Prisma {
     location_ru?: true
     cover_image?: true
     event_date?: true
-    is_published?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -20522,7 +20478,7 @@ export namespace Prisma {
     location_ru?: true
     cover_image?: true
     event_date?: true
-    is_published?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -20614,7 +20570,7 @@ export namespace Prisma {
     location_ru: string | null
     cover_image: string | null
     event_date: Date
-    is_published: boolean
+    is_public: boolean
     creator_id: string
     created_at: Date
     updated_at: Date
@@ -20650,7 +20606,7 @@ export namespace Prisma {
     location_ru?: boolean
     cover_image?: boolean
     event_date?: boolean
-    is_published?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -20670,7 +20626,7 @@ export namespace Prisma {
     location_ru?: boolean
     cover_image?: boolean
     event_date?: boolean
-    is_published?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -20690,7 +20646,7 @@ export namespace Prisma {
     location_ru?: boolean
     cover_image?: boolean
     event_date?: boolean
-    is_published?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -20710,13 +20666,13 @@ export namespace Prisma {
     location_ru?: boolean
     cover_image?: boolean
     event_date?: boolean
-    is_published?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "description_latin" | "description_cyril" | "description_ru" | "location_latin" | "location_cyril" | "location_ru" | "cover_image" | "event_date" | "is_published" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["event"]>
+  export type EventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "description_latin" | "description_cyril" | "description_ru" | "location_latin" | "location_cyril" | "location_ru" | "cover_image" | "event_date" | "is_public" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["event"]>
   export type EventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     creator?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -20745,7 +20701,7 @@ export namespace Prisma {
       location_ru: string | null
       cover_image: string | null
       event_date: Date
-      is_published: boolean
+      is_public: boolean
       creator_id: string
       created_at: Date
       updated_at: Date
@@ -21185,7 +21141,7 @@ export namespace Prisma {
     readonly location_ru: FieldRef<"Event", 'String'>
     readonly cover_image: FieldRef<"Event", 'String'>
     readonly event_date: FieldRef<"Event", 'DateTime'>
-    readonly is_published: FieldRef<"Event", 'Boolean'>
+    readonly is_public: FieldRef<"Event", 'Boolean'>
     readonly creator_id: FieldRef<"Event", 'String'>
     readonly created_at: FieldRef<"Event", 'DateTime'>
     readonly updated_at: FieldRef<"Event", 'DateTime'>
@@ -22826,6 +22782,7 @@ export namespace Prisma {
     title_ru: string | null
     type: $Enums.MediaType | null
     cover_image: string | null
+    is_public: boolean | null
     creator_id: string | null
     created_at: Date | null
     updated_at: Date | null
@@ -22838,6 +22795,7 @@ export namespace Prisma {
     title_ru: string | null
     type: $Enums.MediaType | null
     cover_image: string | null
+    is_public: boolean | null
     creator_id: string | null
     created_at: Date | null
     updated_at: Date | null
@@ -22850,6 +22808,7 @@ export namespace Prisma {
     title_ru: number
     type: number
     cover_image: number
+    is_public: number
     creator_id: number
     created_at: number
     updated_at: number
@@ -22864,6 +22823,7 @@ export namespace Prisma {
     title_ru?: true
     type?: true
     cover_image?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -22876,6 +22836,7 @@ export namespace Prisma {
     title_ru?: true
     type?: true
     cover_image?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -22888,6 +22849,7 @@ export namespace Prisma {
     title_ru?: true
     type?: true
     cover_image?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -22973,6 +22935,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image: string | null
+    is_public: boolean
     creator_id: string
     created_at: Date
     updated_at: Date
@@ -23002,6 +22965,7 @@ export namespace Prisma {
     title_ru?: boolean
     type?: boolean
     cover_image?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -23017,6 +22981,7 @@ export namespace Prisma {
     title_ru?: boolean
     type?: boolean
     cover_image?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -23030,6 +22995,7 @@ export namespace Prisma {
     title_ru?: boolean
     type?: boolean
     cover_image?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -23043,12 +23009,13 @@ export namespace Prisma {
     title_ru?: boolean
     type?: boolean
     cover_image?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
   }
 
-  export type MediaAlbumOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "type" | "cover_image" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["mediaAlbum"]>
+  export type MediaAlbumOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title_latin" | "title_cyril" | "title_ru" | "type" | "cover_image" | "is_public" | "creator_id" | "created_at" | "updated_at", ExtArgs["result"]["mediaAlbum"]>
   export type MediaAlbumInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     items?: boolean | MediaAlbum$itemsArgs<ExtArgs>
     creator?: boolean | UserDefaultArgs<ExtArgs>
@@ -23074,6 +23041,7 @@ export namespace Prisma {
       title_ru: string
       type: $Enums.MediaType
       cover_image: string | null
+      is_public: boolean
       creator_id: string
       created_at: Date
       updated_at: Date
@@ -23508,6 +23476,7 @@ export namespace Prisma {
     readonly title_ru: FieldRef<"MediaAlbum", 'String'>
     readonly type: FieldRef<"MediaAlbum", 'MediaType'>
     readonly cover_image: FieldRef<"MediaAlbum", 'String'>
+    readonly is_public: FieldRef<"MediaAlbum", 'Boolean'>
     readonly creator_id: FieldRef<"MediaAlbum", 'String'>
     readonly created_at: FieldRef<"MediaAlbum", 'DateTime'>
     readonly updated_at: FieldRef<"MediaAlbum", 'DateTime'>
@@ -28535,7 +28504,7 @@ export namespace Prisma {
     content_cyril: 'content_cyril',
     content_ru: 'content_ru',
     cover_image: 'cover_image',
-    is_published: 'is_published',
+    is_public: 'is_public',
     published_at: 'published_at',
     creator_id: 'creator_id',
     created_at: 'created_at',
@@ -28614,8 +28583,7 @@ export namespace Prisma {
     content_cyril: 'content_cyril',
     content_ru: 'content_ru',
     cover_image: 'cover_image',
-    views_count: 'views_count',
-    is_published: 'is_published',
+    is_public: 'is_public',
     published_at: 'published_at',
     creator_id: 'creator_id',
     created_at: 'created_at',
@@ -28638,7 +28606,7 @@ export namespace Prisma {
     location_ru: 'location_ru',
     cover_image: 'cover_image',
     event_date: 'event_date',
-    is_published: 'is_published',
+    is_public: 'is_public',
     creator_id: 'creator_id',
     created_at: 'created_at',
     updated_at: 'updated_at'
@@ -28673,6 +28641,7 @@ export namespace Prisma {
     title_ru: 'title_ru',
     type: 'type',
     cover_image: 'cover_image',
+    is_public: 'is_public',
     creator_id: 'creator_id',
     created_at: 'created_at',
     updated_at: 'updated_at'
@@ -29689,7 +29658,7 @@ export namespace Prisma {
     content_cyril?: StringFilter<"Announcement"> | string
     content_ru?: StringFilter<"Announcement"> | string
     cover_image?: StringNullableFilter<"Announcement"> | string | null
-    is_published?: BoolFilter<"Announcement"> | boolean
+    is_public?: BoolFilter<"Announcement"> | boolean
     published_at?: DateTimeFilter<"Announcement"> | Date | string
     creator_id?: StringFilter<"Announcement"> | string
     created_at?: DateTimeFilter<"Announcement"> | Date | string
@@ -29706,7 +29675,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrderInput | SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -29726,7 +29695,7 @@ export namespace Prisma {
     content_cyril?: StringFilter<"Announcement"> | string
     content_ru?: StringFilter<"Announcement"> | string
     cover_image?: StringNullableFilter<"Announcement"> | string | null
-    is_published?: BoolFilter<"Announcement"> | boolean
+    is_public?: BoolFilter<"Announcement"> | boolean
     published_at?: DateTimeFilter<"Announcement"> | Date | string
     creator_id?: StringFilter<"Announcement"> | string
     created_at?: DateTimeFilter<"Announcement"> | Date | string
@@ -29743,7 +29712,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrderInput | SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -29765,7 +29734,7 @@ export namespace Prisma {
     content_cyril?: StringWithAggregatesFilter<"Announcement"> | string
     content_ru?: StringWithAggregatesFilter<"Announcement"> | string
     cover_image?: StringNullableWithAggregatesFilter<"Announcement"> | string | null
-    is_published?: BoolWithAggregatesFilter<"Announcement"> | boolean
+    is_public?: BoolWithAggregatesFilter<"Announcement"> | boolean
     published_at?: DateTimeWithAggregatesFilter<"Announcement"> | Date | string
     creator_id?: StringWithAggregatesFilter<"Announcement"> | string
     created_at?: DateTimeWithAggregatesFilter<"Announcement"> | Date | string
@@ -30079,8 +30048,7 @@ export namespace Prisma {
     content_cyril?: StringFilter<"News"> | string
     content_ru?: StringFilter<"News"> | string
     cover_image?: StringNullableFilter<"News"> | string | null
-    views_count?: IntFilter<"News"> | number
-    is_published?: BoolFilter<"News"> | boolean
+    is_public?: BoolFilter<"News"> | boolean
     published_at?: DateTimeFilter<"News"> | Date | string
     creator_id?: StringFilter<"News"> | string
     created_at?: DateTimeFilter<"News"> | Date | string
@@ -30097,8 +30065,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrderInput | SortOrder
-    views_count?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -30118,8 +30085,7 @@ export namespace Prisma {
     content_cyril?: StringFilter<"News"> | string
     content_ru?: StringFilter<"News"> | string
     cover_image?: StringNullableFilter<"News"> | string | null
-    views_count?: IntFilter<"News"> | number
-    is_published?: BoolFilter<"News"> | boolean
+    is_public?: BoolFilter<"News"> | boolean
     published_at?: DateTimeFilter<"News"> | Date | string
     creator_id?: StringFilter<"News"> | string
     created_at?: DateTimeFilter<"News"> | Date | string
@@ -30136,17 +30102,14 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrderInput | SortOrder
-    views_count?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
     _count?: NewsCountOrderByAggregateInput
-    _avg?: NewsAvgOrderByAggregateInput
     _max?: NewsMaxOrderByAggregateInput
     _min?: NewsMinOrderByAggregateInput
-    _sum?: NewsSumOrderByAggregateInput
   }
 
   export type NewsScalarWhereWithAggregatesInput = {
@@ -30161,8 +30124,7 @@ export namespace Prisma {
     content_cyril?: StringWithAggregatesFilter<"News"> | string
     content_ru?: StringWithAggregatesFilter<"News"> | string
     cover_image?: StringNullableWithAggregatesFilter<"News"> | string | null
-    views_count?: IntWithAggregatesFilter<"News"> | number
-    is_published?: BoolWithAggregatesFilter<"News"> | boolean
+    is_public?: BoolWithAggregatesFilter<"News"> | boolean
     published_at?: DateTimeWithAggregatesFilter<"News"> | Date | string
     creator_id?: StringWithAggregatesFilter<"News"> | string
     created_at?: DateTimeWithAggregatesFilter<"News"> | Date | string
@@ -30185,7 +30147,7 @@ export namespace Prisma {
     location_ru?: StringNullableFilter<"Event"> | string | null
     cover_image?: StringNullableFilter<"Event"> | string | null
     event_date?: DateTimeFilter<"Event"> | Date | string
-    is_published?: BoolFilter<"Event"> | boolean
+    is_public?: BoolFilter<"Event"> | boolean
     creator_id?: StringFilter<"Event"> | string
     created_at?: DateTimeFilter<"Event"> | Date | string
     updated_at?: DateTimeFilter<"Event"> | Date | string
@@ -30205,7 +30167,7 @@ export namespace Prisma {
     location_ru?: SortOrderInput | SortOrder
     cover_image?: SortOrderInput | SortOrder
     event_date?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -30228,7 +30190,7 @@ export namespace Prisma {
     location_ru?: StringNullableFilter<"Event"> | string | null
     cover_image?: StringNullableFilter<"Event"> | string | null
     event_date?: DateTimeFilter<"Event"> | Date | string
-    is_published?: BoolFilter<"Event"> | boolean
+    is_public?: BoolFilter<"Event"> | boolean
     creator_id?: StringFilter<"Event"> | string
     created_at?: DateTimeFilter<"Event"> | Date | string
     updated_at?: DateTimeFilter<"Event"> | Date | string
@@ -30248,7 +30210,7 @@ export namespace Prisma {
     location_ru?: SortOrderInput | SortOrder
     cover_image?: SortOrderInput | SortOrder
     event_date?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -30273,7 +30235,7 @@ export namespace Prisma {
     location_ru?: StringNullableWithAggregatesFilter<"Event"> | string | null
     cover_image?: StringNullableWithAggregatesFilter<"Event"> | string | null
     event_date?: DateTimeWithAggregatesFilter<"Event"> | Date | string
-    is_published?: BoolWithAggregatesFilter<"Event"> | boolean
+    is_public?: BoolWithAggregatesFilter<"Event"> | boolean
     creator_id?: StringWithAggregatesFilter<"Event"> | string
     created_at?: DateTimeWithAggregatesFilter<"Event"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Event"> | Date | string
@@ -30386,6 +30348,7 @@ export namespace Prisma {
     title_ru?: StringFilter<"MediaAlbum"> | string
     type?: EnumMediaTypeFilter<"MediaAlbum"> | $Enums.MediaType
     cover_image?: StringNullableFilter<"MediaAlbum"> | string | null
+    is_public?: BoolFilter<"MediaAlbum"> | boolean
     creator_id?: StringFilter<"MediaAlbum"> | string
     created_at?: DateTimeFilter<"MediaAlbum"> | Date | string
     updated_at?: DateTimeFilter<"MediaAlbum"> | Date | string
@@ -30400,6 +30363,7 @@ export namespace Prisma {
     title_ru?: SortOrder
     type?: SortOrder
     cover_image?: SortOrderInput | SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -30417,6 +30381,7 @@ export namespace Prisma {
     title_ru?: StringFilter<"MediaAlbum"> | string
     type?: EnumMediaTypeFilter<"MediaAlbum"> | $Enums.MediaType
     cover_image?: StringNullableFilter<"MediaAlbum"> | string | null
+    is_public?: BoolFilter<"MediaAlbum"> | boolean
     creator_id?: StringFilter<"MediaAlbum"> | string
     created_at?: DateTimeFilter<"MediaAlbum"> | Date | string
     updated_at?: DateTimeFilter<"MediaAlbum"> | Date | string
@@ -30431,6 +30396,7 @@ export namespace Prisma {
     title_ru?: SortOrder
     type?: SortOrder
     cover_image?: SortOrderInput | SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -30449,6 +30415,7 @@ export namespace Prisma {
     title_ru?: StringWithAggregatesFilter<"MediaAlbum"> | string
     type?: EnumMediaTypeWithAggregatesFilter<"MediaAlbum"> | $Enums.MediaType
     cover_image?: StringNullableWithAggregatesFilter<"MediaAlbum"> | string | null
+    is_public?: BoolWithAggregatesFilter<"MediaAlbum"> | boolean
     creator_id?: StringWithAggregatesFilter<"MediaAlbum"> | string
     created_at?: DateTimeWithAggregatesFilter<"MediaAlbum"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"MediaAlbum"> | Date | string
@@ -31552,7 +31519,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -31568,7 +31535,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     creator_id: string
     created_at?: Date | string
@@ -31584,7 +31551,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31600,7 +31567,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31616,7 +31583,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     creator_id: string
     created_at?: Date | string
@@ -31632,7 +31599,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31647,7 +31614,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31998,8 +31965,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    views_count?: number
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -32015,8 +31981,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    views_count?: number
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     creator_id: string
     created_at?: Date | string
@@ -32032,8 +31997,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32049,8 +32013,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32066,8 +32029,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    views_count?: number
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     creator_id: string
     created_at?: Date | string
@@ -32083,8 +32045,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32099,8 +32060,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32120,7 +32080,7 @@ export namespace Prisma {
     location_ru?: string | null
     cover_image?: string | null
     event_date: Date | string
-    is_published?: boolean
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     creator: UserCreateNestedOneWithoutEventsInput
@@ -32139,7 +32099,7 @@ export namespace Prisma {
     location_ru?: string | null
     cover_image?: string | null
     event_date: Date | string
-    is_published?: boolean
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -32158,7 +32118,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutEventsNestedInput
@@ -32177,7 +32137,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32196,7 +32156,7 @@ export namespace Prisma {
     location_ru?: string | null
     cover_image?: string | null
     event_date: Date | string
-    is_published?: boolean
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -32215,7 +32175,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32233,7 +32193,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32357,6 +32317,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     items?: MediaItemCreateNestedManyWithoutAlbumInput
@@ -32370,6 +32331,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -32383,6 +32345,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: MediaItemUpdateManyWithoutAlbumNestedInput
@@ -32396,6 +32359,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32409,6 +32373,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -32421,6 +32386,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -32432,6 +32398,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33550,7 +33517,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -33566,7 +33533,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -33582,7 +33549,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -33775,16 +33742,11 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrder
-    views_count?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-  }
-
-  export type NewsAvgOrderByAggregateInput = {
-    views_count?: SortOrder
   }
 
   export type NewsMaxOrderByAggregateInput = {
@@ -33796,8 +33758,7 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrder
-    views_count?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
@@ -33813,16 +33774,11 @@ export namespace Prisma {
     content_cyril?: SortOrder
     content_ru?: SortOrder
     cover_image?: SortOrder
-    views_count?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     published_at?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
-  }
-
-  export type NewsSumOrderByAggregateInput = {
-    views_count?: SortOrder
   }
 
   export type EventCountOrderByAggregateInput = {
@@ -33838,7 +33794,7 @@ export namespace Prisma {
     location_ru?: SortOrder
     cover_image?: SortOrder
     event_date?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -33857,7 +33813,7 @@ export namespace Prisma {
     location_ru?: SortOrder
     cover_image?: SortOrder
     event_date?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -33876,7 +33832,7 @@ export namespace Prisma {
     location_ru?: SortOrder
     cover_image?: SortOrder
     event_date?: SortOrder
-    is_published?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -33979,6 +33935,7 @@ export namespace Prisma {
     title_ru?: SortOrder
     type?: SortOrder
     cover_image?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -33991,6 +33948,7 @@ export namespace Prisma {
     title_ru?: SortOrder
     type?: SortOrder
     cover_image?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -34003,6 +33961,7 @@ export namespace Prisma {
     title_ru?: SortOrder
     type?: SortOrder
     cover_image?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -35668,7 +35627,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -35683,7 +35642,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -35708,8 +35667,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    views_count?: number
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -35724,8 +35682,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    views_count?: number
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -35754,7 +35711,7 @@ export namespace Prisma {
     location_ru?: string | null
     cover_image?: string | null
     event_date: Date | string
-    is_published?: boolean
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -35772,7 +35729,7 @@ export namespace Prisma {
     location_ru?: string | null
     cover_image?: string | null
     event_date: Date | string
-    is_published?: boolean
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -35834,6 +35791,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     items?: MediaItemCreateNestedManyWithoutAlbumInput
@@ -35846,6 +35804,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     items?: MediaItemUncheckedCreateNestedManyWithoutAlbumInput
@@ -35928,7 +35887,7 @@ export namespace Prisma {
     content_cyril?: StringFilter<"Announcement"> | string
     content_ru?: StringFilter<"Announcement"> | string
     cover_image?: StringNullableFilter<"Announcement"> | string | null
-    is_published?: BoolFilter<"Announcement"> | boolean
+    is_public?: BoolFilter<"Announcement"> | boolean
     published_at?: DateTimeFilter<"Announcement"> | Date | string
     creator_id?: StringFilter<"Announcement"> | string
     created_at?: DateTimeFilter<"Announcement"> | Date | string
@@ -35963,8 +35922,7 @@ export namespace Prisma {
     content_cyril?: StringFilter<"News"> | string
     content_ru?: StringFilter<"News"> | string
     cover_image?: StringNullableFilter<"News"> | string | null
-    views_count?: IntFilter<"News"> | number
-    is_published?: BoolFilter<"News"> | boolean
+    is_public?: BoolFilter<"News"> | boolean
     published_at?: DateTimeFilter<"News"> | Date | string
     creator_id?: StringFilter<"News"> | string
     created_at?: DateTimeFilter<"News"> | Date | string
@@ -36003,7 +35961,7 @@ export namespace Prisma {
     location_ru?: StringNullableFilter<"Event"> | string | null
     cover_image?: StringNullableFilter<"Event"> | string | null
     event_date?: DateTimeFilter<"Event"> | Date | string
-    is_published?: BoolFilter<"Event"> | boolean
+    is_public?: BoolFilter<"Event"> | boolean
     creator_id?: StringFilter<"Event"> | string
     created_at?: DateTimeFilter<"Event"> | Date | string
     updated_at?: DateTimeFilter<"Event"> | Date | string
@@ -36070,6 +36028,7 @@ export namespace Prisma {
     title_ru?: StringFilter<"MediaAlbum"> | string
     type?: EnumMediaTypeFilter<"MediaAlbum"> | $Enums.MediaType
     cover_image?: StringNullableFilter<"MediaAlbum"> | string | null
+    is_public?: BoolFilter<"MediaAlbum"> | boolean
     creator_id?: StringFilter<"MediaAlbum"> | string
     created_at?: DateTimeFilter<"MediaAlbum"> | Date | string
     updated_at?: DateTimeFilter<"MediaAlbum"> | Date | string
@@ -37799,6 +37758,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     creator: UserCreateNestedOneWithoutMedia_albumsInput
@@ -37811,6 +37771,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -37839,6 +37800,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     creator?: UserUpdateOneRequiredWithoutMedia_albumsNestedInput
@@ -37851,6 +37813,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37996,7 +37959,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -38011,8 +37974,7 @@ export namespace Prisma {
     content_cyril: string
     content_ru: string
     cover_image?: string | null
-    views_count?: number
-    is_published?: boolean
+    is_public?: boolean
     published_at?: Date | string
     created_at?: Date | string
     updated_at?: Date | string
@@ -38031,7 +37993,7 @@ export namespace Prisma {
     location_ru?: string | null
     cover_image?: string | null
     event_date: Date | string
-    is_published?: boolean
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -38058,6 +38020,7 @@ export namespace Prisma {
     title_ru: string
     type: $Enums.MediaType
     cover_image?: string | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
   }
@@ -38138,7 +38101,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38153,7 +38116,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38168,7 +38131,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38183,8 +38146,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38199,8 +38161,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38215,8 +38176,7 @@ export namespace Prisma {
     content_cyril?: StringFieldUpdateOperationsInput | string
     content_ru?: StringFieldUpdateOperationsInput | string
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
-    views_count?: IntFieldUpdateOperationsInput | number
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     published_at?: DateTimeFieldUpdateOperationsInput | Date | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38235,7 +38195,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38253,7 +38213,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38271,7 +38231,7 @@ export namespace Prisma {
     location_ru?: NullableStringFieldUpdateOperationsInput | string | null
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
     event_date?: DateTimeFieldUpdateOperationsInput | Date | string
-    is_published?: BoolFieldUpdateOperationsInput | boolean
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -38328,6 +38288,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: MediaItemUpdateManyWithoutAlbumNestedInput
@@ -38340,6 +38301,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     items?: MediaItemUncheckedUpdateManyWithoutAlbumNestedInput
@@ -38352,6 +38314,7 @@ export namespace Prisma {
     title_ru?: StringFieldUpdateOperationsInput | string
     type?: EnumMediaTypeFieldUpdateOperationsInput | $Enums.MediaType
     cover_image?: NullableStringFieldUpdateOperationsInput | string | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }

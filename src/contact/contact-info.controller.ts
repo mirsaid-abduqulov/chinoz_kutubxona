@@ -22,7 +22,6 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from 'src/common/decorators/roles-auth-decorator';
 import { UserRole } from 'src/core/database/generated';
 import { imageFileFilter, imageLimits } from 'src/common/storage/multer.config';
-import { SocialLink } from 'src/common/interfaces/socila_link';
 import { SocialPlatform } from 'src/common/enums/socialPlatforms';
 
 @ApiTags('Contact Info (Aloqa ma\'lumotlari)')

@@ -152,7 +152,7 @@ export class BooksController {
     @Res({ passthrough: true }) res: Response,
     @Req() req: any
   ) {
-    const { stream, fileName } = await this.booksService.getDownloadStream(id, fileId, req.user);
+    const { stream, fileName } = await this.booksService.getDownloadStream(id, fileId);
 
     const encodedFileName = encodeURIComponent(fileName);
 

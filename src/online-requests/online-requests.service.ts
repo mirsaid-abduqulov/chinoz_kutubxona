@@ -12,9 +12,9 @@ export class OnlineRequestsService {
 
   async create(createDto: CreateOnlineRequestDto) {
     if (createDto.type === OnlineRequestType.BOOK_ORDER) {
-      if (!createDto.book_id) throw new BadRequestException('book_id is required for BOOK_ORDER');
+      if (!createDto.book_id) throw new BadRequestException('Kitob uchun buyurtma berilganda kitob tanlanishi kerak');
       const book = await this.prisma.book.findUnique({ where: { id: createDto.book_id } });
-      if (!book) throw new NotFoundException('Book not found');
+      if (!book) throw new NotFoundException('Kitob topilmadi');
     }
 
     return this.prisma.onlineRequest.create({
@@ -58,7 +58,7 @@ export class OnlineRequestsService {
       where: { id },
       include: { book: true },
     });
-    if (!item) throw new NotFoundException('Request not found');
+    if (!item) throw new NotFoundException('Buyurtma topilmadi');
     return item;
   }
 

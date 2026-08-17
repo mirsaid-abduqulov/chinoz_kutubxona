@@ -40,14 +40,14 @@ export class UpdateAnnouncementDto {
   content_ru?: string;
 
   @ApiProperty({ required: false })
-  @IsBoolean({ message: 'is_published boolean bo\'lishi kerak' })
+  @IsBoolean({ message: 'is_public boolean bo\'lishi kerak' })
   @IsOptional()
   @Transform(({ value }) => {
     if (value === 'true' || value === true) return true;
     if (value === 'false' || value === false) return false;
     return undefined; // o'zgartirilmasa, mavjud qiymat saqlanadi
   })
-  is_published?: boolean;
+  is_public?: boolean;
 
   @ApiProperty({ 
     type: 'string', 

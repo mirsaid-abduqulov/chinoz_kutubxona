@@ -38,6 +38,12 @@ export class UsefulLinksController {
     return this.usefulLinksService.findAll(query);
   }
 
+  @Get(':id')
+  @ApiOperation({ summary: 'Get a useful link by id (Public)' })
+  findOne(@Param('id') id: string) {
+    return this.usefulLinksService.findOne(id);
+  }
+
   @Patch(':id')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard,RolesGuard)

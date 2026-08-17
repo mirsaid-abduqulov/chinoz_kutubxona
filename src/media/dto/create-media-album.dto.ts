@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsNotEmpty, IsOptional, IsString, IsEnum } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsString, IsEnum, IsBoolean } from 'class-validator';
 import { Transform } from 'class-transformer';
 import { MediaType } from '../../core/database/generated';
 
@@ -30,4 +30,10 @@ export class CreateMediaAlbumDto {
   @ApiPropertyOptional({ type: 'string', format: 'binary' })
   @IsOptional()
   cover_image?: any;
+
+  @ApiPropertyOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  @IsOptional()
+  is_public?: boolean;
 }

@@ -75,7 +75,7 @@ export class UsersService implements OnModuleInit {
     });
 
     if (existingUser) {
-      throw new ConflictException('User with this phone number or email already exists');
+      throw new ConflictException('Bu telefon raqami yoki email allaqachon mavjud');
     }
 
     const hashed_password = await bcrypt.hash(dto.password, 10);
@@ -122,14 +122,14 @@ export class UsersService implements OnModuleInit {
       where: { id },
     });
     if (!user) {
-      throw new NotFoundException('User not found');
+      throw new NotFoundException('User topilmadi');
     }
     return this.excludeSecrets(user);
   }
 
   async update(id: string, dto: UpdateUserDto) {
     const user = await this.prisma.user.findUnique({ where: { id } });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new NotFoundException('User topilmadi');
 
     const updateData: any = { ...dto };
     if (dto.password) {
@@ -148,7 +148,7 @@ export class UsersService implements OnModuleInit {
           },
        });
        if (existingUser) {
-          throw new ConflictException('Phone number or email already in use');
+          throw new ConflictException('Bu telefon raqami yoki email allaqachon mavjud');
        }
     }
 
@@ -162,7 +162,7 @@ export class UsersService implements OnModuleInit {
 
   async remove(id: string) {
     const user = await this.prisma.user.findUnique({ where: { id } });
-    if (!user) throw new NotFoundException('User not found');
+    if (!user) throw new NotFoundException('User topilmadi');
 
     await this.prisma.user.delete({ where: { id } });
     return { success: true };

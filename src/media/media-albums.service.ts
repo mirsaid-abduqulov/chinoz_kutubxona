@@ -8,13 +8,14 @@ import { buildMultilangSearchWhere } from '../common/helpers/multilang-search.he
 import { buildPaginationParams, buildPaginatedResponse } from '../common/helpers/pagination.helper';
 import { normalizeName } from '../common/helpers/normalize-name.helper';
 import { MediaType } from '../core/database/generated';
+import { IsPublicDto } from 'src/documents/dto/update-document-public';
 
 @Injectable()
 export class MediaAlbumsService {
   constructor(
     private readonly prisma: PrismaService,
     private readonly storageService: StorageService,
-  ) {}
+  ) { }
 
   async create(creatorId: string, createDto: CreateMediaAlbumDto, file?: Express.Multer.File) {
     let fileInfo: any = null;
@@ -38,16 +39,17 @@ export class MediaAlbumsService {
   async findAll(query: QueryMediaAlbumDto) {
     const { page, limit, skip } = buildPaginationParams(query);
     const where: any = {};
-    
+    where.is_public = query.is_public ?? true
+
     if (query.type) {
       where.type = query.type;
     }
-    
+
     if (query.search) {
       const searchWhere = buildMultilangSearchWhere(query.search, 'title');
       Object.assign(where, searchWhere);
     }
-    
+
     const [items, total] = await this.prisma.$transaction([
       this.prisma.mediaAlbum.findMany({
         where,
@@ -58,7 +60,7 @@ export class MediaAlbumsService {
       }),
       this.prisma.mediaAlbum.count({ where })
     ]);
-    
+
     return buildPaginatedResponse(items, total, page, limit);
   }
 
@@ -67,16 +69,16 @@ export class MediaAlbumsService {
       where: { id },
       include: { creator: { select: { id: true, full_name: true } }, items: { orderBy: { order: 'asc' } } },
     });
-    if (!item) throw new NotFoundException('Album not found');
+    if (!item) throw new NotFoundException('Album topilmadi');
     return item;
   }
 
   async update(id: string, updateDto: UpdateMediaAlbumDto, file?: Express.Multer.File) {
     const existing = await this.findOne(id);
-    
+
     let fileUpdateData: any = {};
     if (file) {
-      const fileInfo = existing.cover_image 
+      const fileInfo = existing.cover_image
         ? await this.storageService.replaceFile(existing.cover_image, file, 'media_albums')
         : await this.storageService.saveFile(file, 'media_albums');
       fileUpdateData = { cover_image: fileInfo.url };
@@ -88,33 +90,48 @@ export class MediaAlbumsService {
 
     return this.prisma.mediaAlbum.update({
       where: { id },
-      data: { ...updateDto, ...fileUpdateData, ...(title_latin && {title_latin}), ...(title_cyril && {title_cyril}), ...(title_ru && {title_ru}) },
+      data: { ...updateDto, ...fileUpdateData, ...(title_latin && { title_latin }), ...(title_cyril && { title_cyril }), ...(title_ru && { title_ru }) },
     });
   }
 
+  async updateIsPublic(id: string, dto: IsPublicDto) {
+      const document = await this.prisma.mediaAlbum.findUnique({
+        where: { id },
+      });
+      if (!document) throw new NotFoundException('Media albom topilmadi');
+  
+      const updated = await this.prisma.mediaAlbum.update({
+        where: { id },
+        data: {
+          is_public: dto.is_public,
+        },
+      });
+  
+      return updated;
+    }
+
   async remove(id: string) {
     const existing = await this.findOne(id);
-    
-    // Delete all item files
+
     const fileUrls = existing.items.map(item => item.url);
     if (existing.cover_image) fileUrls.push(existing.cover_image);
 
     await Promise.allSettled(fileUrls.map(url => this.storageService.deleteFile(url)));
-    
+
     return this.prisma.mediaAlbum.delete({ where: { id } });
   }
 
   async addItems(albumId: string, files: Express.Multer.File[]) {
     const album = await this.findOne(albumId);
-    
+
     for (const file of files) {
       const isVideo = file.mimetype.startsWith('video/') || file.originalname.match(/\.(mp4|avi|mkv|mov|webm)$/i);
       const isPhoto = file.mimetype.startsWith('image/') || file.originalname.match(/\.(jpg|jpeg|png|webp)$/i);
       const isPresentation = file.originalname.match(/\.(pdf|ppt|pptx)$/i);
 
-      if (album.type === MediaType.PHOTO && !isPhoto) throw new BadRequestException('Only photos allowed in PHOTO album');
-      if (album.type === MediaType.VIDEO && !isVideo) throw new BadRequestException('Only videos allowed in VIDEO album');
-      if (album.type === MediaType.PRESENTATION && !isPresentation) throw new BadRequestException('Only presentations allowed in PRESENTATION album');
+      if (album.type === MediaType.PHOTO && !isPhoto) throw new BadRequestException('Bu turdagi fayllar faqat foto albomiga qo`shiladi');
+      if (album.type === MediaType.VIDEO && !isVideo) throw new BadRequestException('Bu turdagi fayllar faqat video albomiga qo`shiladi');
+      if (album.type === MediaType.PRESENTATION && !isPresentation) throw new BadRequestException('Bu turdagi fayllar faqat presentation albomiga qo`shiladi');
     }
 
     const savedFiles = await Promise.all(
@@ -135,8 +152,8 @@ export class MediaAlbumsService {
 
   async removeItem(albumId: string, itemId: string) {
     const item = await this.prisma.mediaItem.findUnique({ where: { id: itemId } });
-    if (!item) throw new NotFoundException('Item not found');
-    if (item.album_id !== albumId) throw new BadRequestException('Item does not belong to this album');
+    if (!item) throw new NotFoundException('Media topilmadi');
+    if (item.album_id !== albumId) throw new BadRequestException('Media boshqa albomga tegishli');
 
     await this.storageService.deleteFile(item.url);
     return this.prisma.mediaItem.delete({ where: { id: itemId } });

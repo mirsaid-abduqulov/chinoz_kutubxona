@@ -49,6 +49,6 @@ export class CreateNewsDto {
   @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
-  is_published?: boolean;
+  is_public?: boolean;
   
 }
