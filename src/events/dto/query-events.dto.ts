@@ -10,10 +10,4 @@ export class QueryEventsDto extends BaseQueryDto {
   @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   upcoming?: boolean;
-  
-  @ApiPropertyOptional()
-  @IsOptional()
-  @Transform(({ value }) => value === 'true' || value === true)
-  @IsBoolean()
-  is_public?: boolean;
 }

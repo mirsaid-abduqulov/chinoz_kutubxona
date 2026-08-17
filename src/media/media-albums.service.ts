@@ -36,10 +36,16 @@ export class MediaAlbumsService {
     return this.prisma.mediaAlbum.create({ data });
   }
 
-  async findAll(query: QueryMediaAlbumDto) {
+  async findAll(query: QueryMediaAlbumDto,is_public?:boolean) {
     const { page, limit, skip } = buildPaginationParams(query);
     const where: any = {};
-    where.is_public = query.is_public ?? true
+   
+    if (is_public === true) {
+      where.is_public = true;
+    }
+    if (is_public === false) {
+      where.is_public = false;
+    }
 
     if (query.type) {
       where.type = query.type;

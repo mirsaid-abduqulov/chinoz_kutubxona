@@ -38,7 +38,7 @@ export class MediaAlbumsController {
   @Get()
   @ApiOperation({ summary: 'Get all media albums (Public)' })
   findAll(@Query() query: QueryMediaAlbumDto) {
-    return this.mediaAlbumsService.findAll(query);
+    return this.mediaAlbumsService.findAll(query,true);
   }
 
 
@@ -47,12 +47,12 @@ export class MediaAlbumsController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all media albums (Admin)' })
-  findAllAdmin(@Query() query: QueryMediaAlbumDto, @Req() req: any) {
+  findAllAdmin(@Query() query: QueryMediaAlbumDto, @Req() req: any,@Query() is_public: boolean) {
     const role = req.user.role;
     if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
-      throw new ForbiddenException('You are not allowed to access this resource');
+      throw new ForbiddenException('Siz ushbu resursdan foydalanishga ruxsat berilmadi');
     }
-    return this.mediaAlbumsService.findAll(query);
+    return this.mediaAlbumsService.findAll(query,is_public);
   }
 
   @Get(':id')
@@ -69,7 +69,7 @@ export class MediaAlbumsController {
   findOneAdmin(@Param('id') id: string, @Req() req: any) {
     const role = req.user.role;
     if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
-      throw new ForbiddenException('You are not allowed to access this resource');
+      throw new ForbiddenException('Siz ushbu resursdan foydalanishga ruxsat berilmadi');
     }
     return this.mediaAlbumsService.findOne(id);
   }

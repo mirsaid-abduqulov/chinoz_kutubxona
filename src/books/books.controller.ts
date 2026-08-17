@@ -9,7 +9,6 @@ import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { multerStorage, imageFileFilter, documentFileFilter, imageLimits, documentLimits } from '../common/storage/multer.config';
-import { UploadTimeoutGuard } from '../common/guards/upload-timeout.guard';
 import type { Response } from 'express';
 import { UserRole } from 'src/core/database/generated';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';

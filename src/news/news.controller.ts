@@ -38,25 +38,26 @@ export class NewsController {
   @Get()
   @ApiOperation({ summary: 'Get all news (Public)' })
   findAll(@Query() query: QueryNewsDto, @Req() req: any) {
-    return this.newsService.findAll(query);
+    return this.newsService.findAll(query,true);
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get news by id (Public)' })
-  findOne(@Param('id') id: string) {
-    return this.newsService.findOne(id);
-  }
   @Get('admin')
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get all news (Admin)' })
-  findAllAdmin(@Query() query: QueryNewsDto, @Req() req: any) {
+  findAllAdmin(@Query() query: QueryNewsDto, @Req() req: any, @Query() is_public?: boolean) {
     const role = req.user.role;
     if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
-      throw new ForbiddenException('You are not allowed to access this resource');
+      throw new ForbiddenException('Siz ushbu resursdan foydalanishga ruxsat berilmadi');
     }
-    return this.newsService.findAll(query);
+    return this.newsService.findAll(query, is_public);
+  }
+
+  @Get(':id')
+  @ApiOperation({ summary: 'Get news by id (Public)' })
+  findOne(@Param('id') id: string) {
+    return this.newsService.findOne(id, true);
   }
 
   @Get(':id/admin')
@@ -65,6 +66,10 @@ export class NewsController {
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Get news by id (Admin)' })
   findOneAdmin(@Param('id') id: string, @Req() req: any) {
+    const role = req.user.role;
+    if (![UserRole.ADMIN, UserRole.SUPER_ADMIN].includes(role)) {
+      throw new ForbiddenException('Siz ushbu resursdan foydalanishga ruxsat berilmadi');
+    }
     return this.newsService.findOne(id);
   }
 
