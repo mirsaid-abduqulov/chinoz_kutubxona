@@ -3,7 +3,7 @@ import { EventsService } from './events.service';
 import { CreateEventsDto } from './dto/create-events.dto';
 import { UpdateEventsDto } from './dto/update-events.dto';
 import { QueryEventsDto } from './dto/query-events.dto';
-import { ApiBearerAuth, ApiTags, ApiOperation, ApiConsumes } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiOperation, ApiConsumes, ApiQuery } from '@nestjs/swagger';
 import { RolesGuard } from '../common/guards/roles.guard';
 import { Roles } from '../common/decorators/roles-auth-decorator';
 import { UserRole } from '../core/database/generated';
@@ -45,6 +45,7 @@ export class EventsController {
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)
+  @ApiQuery({ name: 'is_public', required: false, type: Boolean, example: true })
   @ApiOperation({ summary: 'Get all events' })
   findAll_admin(@Query() query: QueryEventsDto, @Req() req: any, @Query('is_public') is_public?: boolean) {
     const role = req.user.role;
