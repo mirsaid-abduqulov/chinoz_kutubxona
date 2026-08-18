@@ -293,7 +293,7 @@ enum MediaType {
   VIDEO
   PRESENTATION
 }
-
+ 
 model MediaAlbum {
   id          String      @id @default(uuid())
   title_latin String
@@ -302,21 +302,21 @@ model MediaAlbum {
   type        MediaType
   cover_image String?
   items       MediaItem[]
-  is_public Boolean @default(true)
+  is_public   Boolean     @default(true)
   creator_id  String
   creator     User        @relation(fields: [creator_id], references: [id])
   created_at  DateTime    @default(now())
   updated_at  DateTime    @updatedAt
 }
-
+ 
 model MediaItem {
   id         String     @id @default(uuid())
   album_id   String
   album      MediaAlbum @relation(fields: [album_id], references: [id], onDelete: Cascade)
-  url        String
+  url        String     // Video URL (YouTube, Vimeo) yoki File Storage URL
   file_name  String
   file_size  Int?
-  thumbnail  String?
+  thumbnail  String?    // Faqat PHOTO va PRESENTATION uchun
   order      Int        @default(0)
   created_at DateTime   @default(now())
 }

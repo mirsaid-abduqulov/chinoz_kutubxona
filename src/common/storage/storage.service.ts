@@ -19,7 +19,8 @@ export type StorageFolder =
   | 'documents'
   | 'media_albums'
   | 'media_items'
-  | 'social_icons';
+  | 'social_icons'
+  | 'media_presentations';
 
 @Injectable()
 export class StorageService {
