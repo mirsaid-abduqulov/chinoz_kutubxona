@@ -23,8 +23,8 @@ model User {
   refresh_token_jti    String?
   role                 UserRole  @default(LIBRARIAN)
   is_login             Boolean   @default(true)
-  createdAt            DateTime  @default(now())
-  updatedAt            DateTime  @updatedAt
+  created_at           DateTime  @default(now())
+  updated_at           DateTime  @updatedAt
   books                Book[]
   announcements        Announcement[]
   news                 News[]
