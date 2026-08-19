@@ -187,15 +187,6 @@ model BookDownloadLog {
   @@index([book_id, downloaded_at])
 }
 
-enum PageSlug {
-  ABOUT              
-  PRIVACY_POLICY    
-  TERMS_OF_SERVICE   
-  FAQ             
-  RULES              
-  CONTACTS           
-}
- 
 model Page {
   id            String   @id @default(uuid())
   slug          PageSlug @unique
