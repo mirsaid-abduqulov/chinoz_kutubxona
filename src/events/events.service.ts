@@ -91,10 +91,6 @@ export class EventsService {
     });
     if (!item) throw new NotFoundException('Tadbir topilmadi');
 
-    if (!item.is_public) {
-      throw new NotFoundException('Tadbir topilmadi');
-    }
-
     return item;
   }
 
