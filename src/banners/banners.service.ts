@@ -7,6 +7,8 @@ import { StorageService } from 'src/common/storage/storage.service';
 import { buildPaginationParams, buildPaginatedResponse } from 'src/common/helpers/pagination.helper';
 import { QueryBannerDto } from './dto/get-all-querry.dto';
 import { IsActiveDto } from './dto/is_active.dto';
+import { buildMultilangSearchWhere } from 'src/common/helpers/multilang-search.helper';
+import { normalizeName } from 'src/common/helpers/normalize-name.helper';
 
 @Injectable()
 export class BannersService {
@@ -50,17 +52,17 @@ export class BannersService {
   async findAll(query: QueryBannerDto) {
     const { skip, take, page, limit } = buildPaginationParams(query);
 
-    const where: any = {};
+    const where: any = { }  
+        if (query.search) {
+          const search = normalizeName(query.search)
+          const titleFilter = buildMultilangSearchWhere(search, 'title')
+          where.OR = [
+            ...(titleFilter?.OR || []),
+          ];
+        }
+
     if (query.is_active !== undefined) {
       where.is_active = query.is_active;
-    }
-
-    if (query.search) {
-      where.OR = [
-        { title_latin: { contains: query.search } },
-        { title_cyril: { contains: query.search } },
-        { title_ru: { contains: query.search } },
-      ];
     }
 
     const [banners, total] = await Promise.all([

@@ -8,6 +8,7 @@ import { buildPaginationParams, buildPaginatedResponse } from '../common/helpers
 import { normalizeName } from 'src/common/helpers/normalize-name.helper';
 import { FindAllQueryDto } from './dto/findAllQuerry.dto';
 import { IsPublishedDto } from './dto/is_published.dto';
+import { buildMultilangSearchWhere } from 'src/common/helpers/multilang-search.helper';
 
 @Injectable()
 export class AnnouncementsService {
@@ -69,22 +70,17 @@ export class AnnouncementsService {
   async findAllPublished(query: FindAllQueryDto) {
     const { skip, take } = buildPaginationParams(query);
 
-    const where: any = {is_public:query.is_public}
-      if(query.search){
-        where.OR=[{
-          title_latin: {contains:query.search}
-        },{
-          title_cyril: {contains:query.search}
-        },{
-          title_ru: {contains:query.search}
-        },{
-          content_latin: {contains:query.search}
-        },{
-          content_cyril: {contains:query.search}
-        },{
-          content_ru: {contains:query.search}
-        }]
-      }
+    const where: any = { is_public: query.is_public }
+    if (query.search) {
+      const search = normalizeName(query.search)
+      const titleFilter = buildMultilangSearchWhere(search, 'title')
+      const contentFilter = buildMultilangSearchWhere(search, 'content')
+      where.OR = [
+        ...(titleFilter?.OR || []),
+        ...(contentFilter?.OR || []),
+      ];
+    }
+
     const [data, total] = await Promise.all([
       this.prisma.announcement.findMany({
         where,

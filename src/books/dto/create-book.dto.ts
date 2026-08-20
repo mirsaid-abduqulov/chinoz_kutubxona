@@ -8,6 +8,7 @@ import {
   IsDateString,
   Min,
   Max,
+  IsBoolean,
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
@@ -70,4 +71,14 @@ export class CreateBookDto {
       "genreIds ichidagi har bir element to'g'ri UUID bo'lishi kerak!",
   })
   genreIds?: string[];
+
+  @ApiProperty({
+    required: false,
+    description: 'Kitob jamoatchilikka ko\'rsatilishi kerakmi?',
+    default: true,
+  })
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  is_public?: boolean;
 }

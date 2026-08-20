@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PrismaModule } from './core/database/prsima.module';
 import { JwtModule } from '@nestjs/jwt';
@@ -21,6 +21,7 @@ import { DocumentsModule } from './documents/documents.module';
 import { MediaModule } from './media/media.module';
 import { OnlineRequestsModule } from './online-requests/online-requests.module';
 import { ContactModule } from './contact/contact.module';
+import { CacheMiddleware } from './common/middlewares/cashe.middleware';
 
 @Module({
   imports: [
@@ -60,4 +61,8 @@ import { ContactModule } from './contact/contact.module';
   controllers: [],
   providers: [],
 })
-export class AppModule { }
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(CacheMiddleware).forRoutes('*');
+  }
+}

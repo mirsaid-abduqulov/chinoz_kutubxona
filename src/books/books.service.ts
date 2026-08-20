@@ -94,7 +94,10 @@ export class BooksService {
     const conditions: any[] = [];
 
     if (query.search) {
-      conditions.push(buildMultilangSearchWhere(query.search, 'name'));
+      const search = normalizeName(query.search);
+      const titleFilter = buildMultilangSearchWhere(search, 'name');
+      const descriptionFilter = buildMultilangSearchWhere(search, 'description');
+      conditions.push({ OR: [...(titleFilter?.OR || []), ...(descriptionFilter?.OR || [])] });
     }
     if (query.author_id) {
       conditions.push({ author_id: query.author_id });
@@ -104,6 +107,9 @@ export class BooksService {
     }
     if (query.grade_level !== undefined) {
       conditions.push({ grade_level: query.grade_level });
+    }
+    if (query.is_public !== undefined) {
+      conditions.push({ is_public: query.is_public });
     }
 
     const where = conditions.length > 0 ? { AND: conditions } : {};

@@ -81,6 +81,7 @@ model Book {
   author_id             String
   published_date        DateTime?
   grade_level           Int?
+  is_public             Boolean   @default(true)
   creator_id            String
   created_at            DateTime    @default(now())
   updated_at            DateTime    @updatedAt
