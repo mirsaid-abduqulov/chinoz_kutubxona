@@ -1,9 +1,10 @@
 import { Global, Module } from '@nestjs/common';
 import { StorageService } from './storage.service';
+import { ImageCompressionService } from './image-compression.service';
 
 @Global()
 @Module({
-  providers: [StorageService],
+  providers: [StorageService,ImageCompressionService],
   exports: [StorageService],
 })
 export class StorageModule {}

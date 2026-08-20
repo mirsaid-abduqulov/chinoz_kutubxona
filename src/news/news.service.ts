@@ -49,8 +49,10 @@ export class NewsService {
     }
 
     if (query.search) {
-      const searchWhere = buildMultilangSearchWhere(query.search, 'title');
-      Object.assign(where, searchWhere);
+      const title = normalizeName(query.search);
+      const contentSearchWhere = buildMultilangSearchWhere(query.search, 'content');
+      const searchWhere = buildMultilangSearchWhere(title, 'title');
+      where.OR = [...(contentSearchWhere?.OR || []), ...(searchWhere?.OR || [])];
     }
 
     const [items, total] = await this.prisma.$transaction([

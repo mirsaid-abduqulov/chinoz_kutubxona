@@ -15,6 +15,7 @@ import {
   buildPaginationParams,
   buildPaginatedResponse,
 } from '../common/helpers/pagination.helper';
+import { buildMultilangSearchWhere } from 'src/common/helpers/multilang-search.helper';
 
 @Injectable()
 export class MediaService {
@@ -100,10 +101,9 @@ export class MediaService {
 
     // Search by title
     if (query.search) {
+      const title = buildMultilangSearchWhere(query.search, 'title');
       conditions.OR = [
-        { title_latin: { contains: query.search, mode: 'insensitive' } },
-        { title_cyril: { contains: query.search, mode: 'insensitive' } },
-        { title_ru: { contains: query.search, mode: 'insensitive' } },
+        ...(title?.OR || []),
       ];
     }
 
@@ -306,7 +306,7 @@ export class MediaService {
     }
 
     // Hajm tekshiruvi (5MB gacha)
-    const MAX_SIZE = 5 * 1024 * 1024;
+    const MAX_SIZE = 10 * 1024 * 1024;
     if (file.size > MAX_SIZE) {
       throw new BadRequestException('Rasm hajmi 5MB gacha bo\'lishi kerak');
     }
@@ -352,15 +352,15 @@ export class MediaService {
     const trimmedUrl = videoUrl.trim();
 
     // URL validatsiya
-    if (
-      !trimmedUrl.includes('youtube.com') &&
-      !trimmedUrl.includes('youtu.be') &&
-      !trimmedUrl.includes('vimeo.com')
-    ) {
-      throw new BadRequestException(
-        'Faqat YouTube yoki Vimeo URL ruxsat etiladi',
-      );
-    }
+    // if (
+    //   !trimmedUrl.includes('youtube.com') &&
+    //   !trimmedUrl.includes('youtu.be') &&
+    //   !trimmedUrl.includes('vimeo.com')
+    // ) {
+    //   throw new BadRequestException(
+    //     'Faqat YouTube yoki Vimeo URL ruxsat etiladi',
+    //   );
+    // }
 
     try {
       const order = await this.getNextOrderNumber(albumId);

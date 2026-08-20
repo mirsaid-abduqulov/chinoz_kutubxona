@@ -5,6 +5,7 @@ import { PrismaService } from '../core/database/prisma.service';
 import { QueryDepartmentDto } from './dto/query-department.dto';
 import { buildPaginationParams, buildPaginatedResponse } from '../common/helpers/pagination.helper';
 import { Prisma } from 'src/core/database/generated';
+import { buildMultilangSearchWhere } from 'src/common/helpers/multilang-search.helper';
 
 @Injectable()
 export class DepartmentsService {
@@ -25,7 +26,7 @@ export class DepartmentsService {
       where: where,
     });
     if (existMember) {
-      throw new BadRequestException(' phone numbe/email/fax  already exists');
+      throw new BadRequestException('Telefon raqami/Email/Fax shulardan bittasi band qilingan');
     }
     const department = await this.prisma.departmentMember.create({
       data: createDepartmentDto,
@@ -37,17 +38,14 @@ export class DepartmentsService {
     const { skip, take } = buildPaginationParams(query);
     const where: Prisma.DepartmentMemberWhereInput = {};
     if (query.search) {
-      where.OR = [{
-        full_name_latin: { contains: query.search, mode: 'insensitive' }
-      },
-      { full_name_cyril: { contains: query.search, mode: 'insensitive' } },
-      { full_name_ru: { contains: query.search, mode: 'insensitive' } },
-      { position_latin: { contains: query.search, mode: 'insensitive' } },
-      { position_cyril: { contains: query.search, mode: 'insensitive' } },
-      { position_ru: { contains: query.search, mode: 'insensitive' } },
-      { phone: { contains: query.search, mode: 'insensitive' } },
-      { fax: { contains: query.search, mode: 'insensitive' } },
-      { reception_days: { contains: query.search, mode: 'insensitive' } },
+      const full_name = buildMultilangSearchWhere(query.search, 'full_name')
+      const position = buildMultilangSearchWhere(query.search, 'position')
+      where.  OR = [
+        ...(full_name?.OR || []),
+        ...(position?.OR || []),
+        { phone: { contains: query.search, mode: 'insensitive' } },
+        { fax: { contains: query.search, mode: 'insensitive' } },
+        { reception_days: { contains: query.search, mode: 'insensitive' } },
       ]
     }
 

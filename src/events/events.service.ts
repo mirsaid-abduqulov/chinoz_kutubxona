@@ -59,8 +59,10 @@ export class EventsService {
     
     
     if (query.search) {
-      const searchWhere = buildMultilangSearchWhere(query.search, 'title');
-      Object.assign(where, searchWhere);
+      const title = buildMultilangSearchWhere(query.search, 'title');
+      const description = buildMultilangSearchWhere(query.search, 'description');
+      
+      where.OR= [...(title?.OR || []), ...(description?.OR || [])];
     }
     
     const [items, total] = await this.prisma.$transaction([
