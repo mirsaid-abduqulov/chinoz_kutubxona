@@ -3173,8 +3173,8 @@ export namespace Prisma {
     refresh_token_jti: string | null
     role: $Enums.UserRole | null
     is_login: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    created_at: Date | null
+    updated_at: Date | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -3187,8 +3187,8 @@ export namespace Prisma {
     refresh_token_jti: string | null
     role: $Enums.UserRole | null
     is_login: boolean | null
-    createdAt: Date | null
-    updatedAt: Date | null
+    created_at: Date | null
+    updated_at: Date | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -3201,8 +3201,8 @@ export namespace Prisma {
     refresh_token_jti: number
     role: number
     is_login: number
-    createdAt: number
-    updatedAt: number
+    created_at: number
+    updated_at: number
     _all: number
   }
 
@@ -3217,8 +3217,8 @@ export namespace Prisma {
     refresh_token_jti?: true
     role?: true
     is_login?: true
-    createdAt?: true
-    updatedAt?: true
+    created_at?: true
+    updated_at?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -3231,8 +3231,8 @@ export namespace Prisma {
     refresh_token_jti?: true
     role?: true
     is_login?: true
-    createdAt?: true
-    updatedAt?: true
+    created_at?: true
+    updated_at?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -3245,8 +3245,8 @@ export namespace Prisma {
     refresh_token_jti?: true
     role?: true
     is_login?: true
-    createdAt?: true
-    updatedAt?: true
+    created_at?: true
+    updated_at?: true
     _all?: true
   }
 
@@ -3332,8 +3332,8 @@ export namespace Prisma {
     refresh_token_jti: string | null
     role: $Enums.UserRole
     is_login: boolean
-    createdAt: Date
-    updatedAt: Date
+    created_at: Date
+    updated_at: Date
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -3363,8 +3363,8 @@ export namespace Prisma {
     refresh_token_jti?: boolean
     role?: boolean
     is_login?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    created_at?: boolean
+    updated_at?: boolean
     books?: boolean | User$booksArgs<ExtArgs>
     announcements?: boolean | User$announcementsArgs<ExtArgs>
     news?: boolean | User$newsArgs<ExtArgs>
@@ -3384,8 +3384,8 @@ export namespace Prisma {
     refresh_token_jti?: boolean
     role?: boolean
     is_login?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    created_at?: boolean
+    updated_at?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3398,8 +3398,8 @@ export namespace Prisma {
     refresh_token_jti?: boolean
     role?: boolean
     is_login?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    created_at?: boolean
+    updated_at?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -3412,11 +3412,11 @@ export namespace Prisma {
     refresh_token_jti?: boolean
     role?: boolean
     is_login?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
+    created_at?: boolean
+    updated_at?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone_number" | "email" | "full_name" | "hashed_password" | "hashed_refresh_token" | "refresh_token_jti" | "role" | "is_login" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "phone_number" | "email" | "full_name" | "hashed_password" | "hashed_refresh_token" | "refresh_token_jti" | "role" | "is_login" | "created_at" | "updated_at", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     books?: boolean | User$booksArgs<ExtArgs>
     announcements?: boolean | User$announcementsArgs<ExtArgs>
@@ -3449,8 +3449,8 @@ export namespace Prisma {
       refresh_token_jti: string | null
       role: $Enums.UserRole
       is_login: boolean
-      createdAt: Date
-      updatedAt: Date
+      created_at: Date
+      updated_at: Date
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -3889,8 +3889,8 @@ export namespace Prisma {
     readonly refresh_token_jti: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly is_login: FieldRef<"User", 'Boolean'>
-    readonly createdAt: FieldRef<"User", 'DateTime'>
-    readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly created_at: FieldRef<"User", 'DateTime'>
+    readonly updated_at: FieldRef<"User", 'DateTime'>
   }
     
 
@@ -7875,6 +7875,7 @@ export namespace Prisma {
     author_id: string | null
     published_date: Date | null
     grade_level: number | null
+    is_public: boolean | null
     creator_id: string | null
     created_at: Date | null
     updated_at: Date | null
@@ -7895,6 +7896,7 @@ export namespace Prisma {
     author_id: string | null
     published_date: Date | null
     grade_level: number | null
+    is_public: boolean | null
     creator_id: string | null
     created_at: Date | null
     updated_at: Date | null
@@ -7915,6 +7917,7 @@ export namespace Prisma {
     author_id: number
     published_date: number
     grade_level: number
+    is_public: number
     creator_id: number
     created_at: number
     updated_at: number
@@ -7951,6 +7954,7 @@ export namespace Prisma {
     author_id?: true
     published_date?: true
     grade_level?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -7971,6 +7975,7 @@ export namespace Prisma {
     author_id?: true
     published_date?: true
     grade_level?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -7991,6 +7996,7 @@ export namespace Prisma {
     author_id?: true
     published_date?: true
     grade_level?: true
+    is_public?: true
     creator_id?: true
     created_at?: true
     updated_at?: true
@@ -8098,6 +8104,7 @@ export namespace Prisma {
     author_id: string
     published_date: Date | null
     grade_level: number | null
+    is_public: boolean
     creator_id: string
     created_at: Date
     updated_at: Date
@@ -8137,6 +8144,7 @@ export namespace Prisma {
     author_id?: boolean
     published_date?: boolean
     grade_level?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -8165,6 +8173,7 @@ export namespace Prisma {
     author_id?: boolean
     published_date?: boolean
     grade_level?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -8187,6 +8196,7 @@ export namespace Prisma {
     author_id?: boolean
     published_date?: boolean
     grade_level?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -8209,6 +8219,7 @@ export namespace Prisma {
     author_id?: boolean
     published_date?: boolean
     grade_level?: boolean
+    is_public?: boolean
     creator_id?: boolean
     created_at?: boolean
     updated_at?: boolean
@@ -8218,7 +8229,7 @@ export namespace Prisma {
     score_updated_at?: boolean
   }
 
-  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name_latin" | "name_cyril" | "name_ru" | "description_latin" | "description_cyril" | "description_ru" | "author_id" | "published_date" | "grade_level" | "creator_id" | "created_at" | "updated_at" | "download_count" | "rating_score" | "weekly_trend_score" | "score_updated_at", ExtArgs["result"]["book"]>
+  export type BookOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name_latin" | "name_cyril" | "name_ru" | "description_latin" | "description_cyril" | "description_ru" | "author_id" | "published_date" | "grade_level" | "is_public" | "creator_id" | "created_at" | "updated_at" | "download_count" | "rating_score" | "weekly_trend_score" | "score_updated_at", ExtArgs["result"]["book"]>
   export type BookInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     genres?: boolean | Book$genresArgs<ExtArgs>
     creator?: boolean | Book$creatorArgs<ExtArgs>
@@ -8260,6 +8271,7 @@ export namespace Prisma {
       author_id: string
       published_date: Date | null
       grade_level: number | null
+      is_public: boolean
       creator_id: string
       created_at: Date
       updated_at: Date
@@ -8707,6 +8719,7 @@ export namespace Prisma {
     readonly author_id: FieldRef<"Book", 'String'>
     readonly published_date: FieldRef<"Book", 'DateTime'>
     readonly grade_level: FieldRef<"Book", 'Int'>
+    readonly is_public: FieldRef<"Book", 'Boolean'>
     readonly creator_id: FieldRef<"Book", 'String'>
     readonly created_at: FieldRef<"Book", 'DateTime'>
     readonly updated_at: FieldRef<"Book", 'DateTime'>
@@ -28372,8 +28385,8 @@ export namespace Prisma {
     refresh_token_jti: 'refresh_token_jti',
     role: 'role',
     is_login: 'is_login',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    created_at: 'created_at',
+    updated_at: 'updated_at'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -28432,6 +28445,7 @@ export namespace Prisma {
     author_id: 'author_id',
     published_date: 'published_date',
     grade_level: 'grade_level',
+    is_public: 'is_public',
     creator_id: 'creator_id',
     created_at: 'created_at',
     updated_at: 'updated_at',
@@ -28947,8 +28961,8 @@ export namespace Prisma {
     refresh_token_jti?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     is_login?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    created_at?: DateTimeFilter<"User"> | Date | string
+    updated_at?: DateTimeFilter<"User"> | Date | string
     books?: BookListRelationFilter
     announcements?: AnnouncementListRelationFilter
     news?: NewsListRelationFilter
@@ -28967,8 +28981,8 @@ export namespace Prisma {
     refresh_token_jti?: SortOrderInput | SortOrder
     role?: SortOrder
     is_login?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     books?: BookOrderByRelationAggregateInput
     announcements?: AnnouncementOrderByRelationAggregateInput
     news?: NewsOrderByRelationAggregateInput
@@ -28990,8 +29004,8 @@ export namespace Prisma {
     refresh_token_jti?: StringNullableFilter<"User"> | string | null
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     is_login?: BoolFilter<"User"> | boolean
-    createdAt?: DateTimeFilter<"User"> | Date | string
-    updatedAt?: DateTimeFilter<"User"> | Date | string
+    created_at?: DateTimeFilter<"User"> | Date | string
+    updated_at?: DateTimeFilter<"User"> | Date | string
     books?: BookListRelationFilter
     announcements?: AnnouncementListRelationFilter
     news?: NewsListRelationFilter
@@ -29010,8 +29024,8 @@ export namespace Prisma {
     refresh_token_jti?: SortOrderInput | SortOrder
     role?: SortOrder
     is_login?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -29030,8 +29044,8 @@ export namespace Prisma {
     refresh_token_jti?: StringNullableWithAggregatesFilter<"User"> | string | null
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     is_login?: BoolWithAggregatesFilter<"User"> | boolean
-    createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    created_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    updated_at?: DateTimeWithAggregatesFilter<"User"> | Date | string
   }
 
   export type GenreWhereInput = {
@@ -29263,6 +29277,7 @@ export namespace Prisma {
     author_id?: StringFilter<"Book"> | string
     published_date?: DateTimeNullableFilter<"Book"> | Date | string | null
     grade_level?: IntNullableFilter<"Book"> | number | null
+    is_public?: BoolFilter<"Book"> | boolean
     creator_id?: StringFilter<"Book"> | string
     created_at?: DateTimeFilter<"Book"> | Date | string
     updated_at?: DateTimeFilter<"Book"> | Date | string
@@ -29290,6 +29305,7 @@ export namespace Prisma {
     author_id?: SortOrder
     published_date?: SortOrderInput | SortOrder
     grade_level?: SortOrderInput | SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -29320,6 +29336,7 @@ export namespace Prisma {
     author_id?: StringFilter<"Book"> | string
     published_date?: DateTimeNullableFilter<"Book"> | Date | string | null
     grade_level?: IntNullableFilter<"Book"> | number | null
+    is_public?: BoolFilter<"Book"> | boolean
     creator_id?: StringFilter<"Book"> | string
     created_at?: DateTimeFilter<"Book"> | Date | string
     updated_at?: DateTimeFilter<"Book"> | Date | string
@@ -29347,6 +29364,7 @@ export namespace Prisma {
     author_id?: SortOrder
     published_date?: SortOrderInput | SortOrder
     grade_level?: SortOrderInput | SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -29375,6 +29393,7 @@ export namespace Prisma {
     author_id?: StringWithAggregatesFilter<"Book"> | string
     published_date?: DateTimeNullableWithAggregatesFilter<"Book"> | Date | string | null
     grade_level?: IntNullableWithAggregatesFilter<"Book"> | number | null
+    is_public?: BoolWithAggregatesFilter<"Book"> | boolean
     creator_id?: StringWithAggregatesFilter<"Book"> | string
     created_at?: DateTimeWithAggregatesFilter<"Book"> | Date | string
     updated_at?: DateTimeWithAggregatesFilter<"Book"> | Date | string
@@ -30729,8 +30748,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatorInput
     news?: NewsCreateNestedManyWithoutCreatorInput
@@ -30749,8 +30768,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookUncheckedCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatorInput
     news?: NewsUncheckedCreateNestedManyWithoutCreatorInput
@@ -30769,8 +30788,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatorNestedInput
     news?: NewsUpdateManyWithoutCreatorNestedInput
@@ -30789,8 +30808,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUncheckedUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatorNestedInput
     news?: NewsUncheckedUpdateManyWithoutCreatorNestedInput
@@ -30809,8 +30828,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
   }
 
   export type UserUpdateManyMutationInput = {
@@ -30823,8 +30842,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -30837,8 +30856,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type GenreCreateInput = {
@@ -31093,6 +31112,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -31119,6 +31139,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -31143,6 +31164,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -31169,6 +31191,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31194,6 +31217,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -31213,6 +31237,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -31232,6 +31257,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32866,8 +32892,8 @@ export namespace Prisma {
     refresh_token_jti?: SortOrder
     role?: SortOrder
     is_login?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -32880,8 +32906,8 @@ export namespace Prisma {
     refresh_token_jti?: SortOrder
     role?: SortOrder
     is_login?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -32894,8 +32920,8 @@ export namespace Prisma {
     refresh_token_jti?: SortOrder
     role?: SortOrder
     is_login?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
+    created_at?: SortOrder
+    updated_at?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -33219,6 +33245,7 @@ export namespace Prisma {
     author_id?: SortOrder
     published_date?: SortOrder
     grade_level?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -33246,6 +33273,7 @@ export namespace Prisma {
     author_id?: SortOrder
     published_date?: SortOrder
     grade_level?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -33266,6 +33294,7 @@ export namespace Prisma {
     author_id?: SortOrder
     published_date?: SortOrder
     grade_level?: SortOrder
+    is_public?: SortOrder
     creator_id?: SortOrder
     created_at?: SortOrder
     updated_at?: SortOrder
@@ -35570,6 +35599,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -35595,6 +35625,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -35850,6 +35881,7 @@ export namespace Prisma {
     author_id?: StringFilter<"Book"> | string
     published_date?: DateTimeNullableFilter<"Book"> | Date | string | null
     grade_level?: IntNullableFilter<"Book"> | number | null
+    is_public?: BoolFilter<"Book"> | boolean
     creator_id?: StringFilter<"Book"> | string
     created_at?: DateTimeFilter<"Book"> | Date | string
     updated_at?: DateTimeFilter<"Book"> | Date | string
@@ -36089,6 +36121,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -36113,6 +36146,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -36325,8 +36359,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     announcements?: AnnouncementCreateNestedManyWithoutCreatorInput
     news?: NewsCreateNestedManyWithoutCreatorInput
     events?: EventCreateNestedManyWithoutCreatorInput
@@ -36344,8 +36378,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatorInput
     news?: NewsUncheckedCreateNestedManyWithoutCreatorInput
     events?: EventUncheckedCreateNestedManyWithoutCreatorInput
@@ -36548,8 +36582,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     announcements?: AnnouncementUpdateManyWithoutCreatorNestedInput
     news?: NewsUpdateManyWithoutCreatorNestedInput
     events?: EventUpdateManyWithoutCreatorNestedInput
@@ -36567,8 +36601,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatorNestedInput
     news?: NewsUncheckedUpdateManyWithoutCreatorNestedInput
     events?: EventUncheckedUpdateManyWithoutCreatorNestedInput
@@ -36749,6 +36783,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -36774,6 +36809,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -36813,6 +36849,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -36838,6 +36875,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36861,6 +36899,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -36886,6 +36925,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -36925,6 +36965,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -36950,6 +36991,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36973,6 +37015,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -36998,6 +37041,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -37056,6 +37100,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -37081,6 +37126,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37129,8 +37175,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookCreateNestedManyWithoutCreatorInput
     news?: NewsCreateNestedManyWithoutCreatorInput
     events?: EventCreateNestedManyWithoutCreatorInput
@@ -37148,8 +37194,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookUncheckedCreateNestedManyWithoutCreatorInput
     news?: NewsUncheckedCreateNestedManyWithoutCreatorInput
     events?: EventUncheckedCreateNestedManyWithoutCreatorInput
@@ -37183,8 +37229,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUpdateManyWithoutCreatorNestedInput
     news?: NewsUpdateManyWithoutCreatorNestedInput
     events?: EventUpdateManyWithoutCreatorNestedInput
@@ -37202,8 +37248,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUncheckedUpdateManyWithoutCreatorNestedInput
     news?: NewsUncheckedUpdateManyWithoutCreatorNestedInput
     events?: EventUncheckedUpdateManyWithoutCreatorNestedInput
@@ -37221,6 +37267,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -37246,6 +37293,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -37285,6 +37333,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -37310,6 +37359,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37333,8 +37383,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatorInput
     events?: EventCreateNestedManyWithoutCreatorInput
@@ -37352,8 +37402,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookUncheckedCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatorInput
     events?: EventUncheckedCreateNestedManyWithoutCreatorInput
@@ -37387,8 +37437,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatorNestedInput
     events?: EventUpdateManyWithoutCreatorNestedInput
@@ -37406,8 +37456,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUncheckedUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatorNestedInput
     events?: EventUncheckedUpdateManyWithoutCreatorNestedInput
@@ -37425,8 +37475,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatorInput
     news?: NewsCreateNestedManyWithoutCreatorInput
@@ -37444,8 +37494,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookUncheckedCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatorInput
     news?: NewsUncheckedCreateNestedManyWithoutCreatorInput
@@ -37479,8 +37529,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatorNestedInput
     news?: NewsUpdateManyWithoutCreatorNestedInput
@@ -37498,8 +37548,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUncheckedUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatorNestedInput
     news?: NewsUncheckedUpdateManyWithoutCreatorNestedInput
@@ -37517,8 +37567,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatorInput
     news?: NewsCreateNestedManyWithoutCreatorInput
@@ -37536,8 +37586,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookUncheckedCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatorInput
     news?: NewsUncheckedCreateNestedManyWithoutCreatorInput
@@ -37571,8 +37621,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatorNestedInput
     news?: NewsUpdateManyWithoutCreatorNestedInput
@@ -37590,8 +37640,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUncheckedUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatorNestedInput
     news?: NewsUncheckedUpdateManyWithoutCreatorNestedInput
@@ -37639,8 +37689,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementCreateNestedManyWithoutCreatorInput
     news?: NewsCreateNestedManyWithoutCreatorInput
@@ -37658,8 +37708,8 @@ export namespace Prisma {
     refresh_token_jti?: string | null
     role?: $Enums.UserRole
     is_login?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
+    created_at?: Date | string
+    updated_at?: Date | string
     books?: BookUncheckedCreateNestedManyWithoutCreatorInput
     announcements?: AnnouncementUncheckedCreateNestedManyWithoutCreatorInput
     news?: NewsUncheckedCreateNestedManyWithoutCreatorInput
@@ -37723,8 +37773,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUpdateManyWithoutCreatorNestedInput
     news?: NewsUpdateManyWithoutCreatorNestedInput
@@ -37742,8 +37792,8 @@ export namespace Prisma {
     refresh_token_jti?: NullableStringFieldUpdateOperationsInput | string | null
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     is_login?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    created_at?: DateTimeFieldUpdateOperationsInput | Date | string
+    updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     books?: BookUncheckedUpdateManyWithoutCreatorNestedInput
     announcements?: AnnouncementUncheckedUpdateManyWithoutCreatorNestedInput
     news?: NewsUncheckedUpdateManyWithoutCreatorNestedInput
@@ -37829,6 +37879,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -37854,6 +37905,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -37893,6 +37945,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -37918,6 +37971,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -37942,6 +37996,7 @@ export namespace Prisma {
     author_id: string
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     created_at?: Date | string
     updated_at?: Date | string
     download_count?: number
@@ -38035,6 +38090,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -38060,6 +38116,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -38084,6 +38141,7 @@ export namespace Prisma {
     author_id?: StringFieldUpdateOperationsInput | string
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -38349,6 +38407,7 @@ export namespace Prisma {
     description_ru?: string | null
     published_date?: Date | string | null
     grade_level?: number | null
+    is_public?: boolean
     creator_id: string
     created_at?: Date | string
     updated_at?: Date | string
@@ -38376,6 +38435,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
     download_count?: IntFieldUpdateOperationsInput | number
@@ -38400,6 +38460,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38424,6 +38485,7 @@ export namespace Prisma {
     description_ru?: NullableStringFieldUpdateOperationsInput | string | null
     published_date?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     grade_level?: NullableIntFieldUpdateOperationsInput | number | null
+    is_public?: BoolFieldUpdateOperationsInput | boolean
     creator_id?: StringFieldUpdateOperationsInput | string
     created_at?: DateTimeFieldUpdateOperationsInput | Date | string
     updated_at?: DateTimeFieldUpdateOperationsInput | Date | string

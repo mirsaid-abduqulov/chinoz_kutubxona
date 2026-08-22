@@ -17,6 +17,8 @@ export class NewsService {
 
   async create(creatorId: string, createDto: CreateNewsDto, file?: Express.Multer.File) {
     let fileInfo: any = null;
+    const existUser = await this.prisma.user.findUnique({ where: { id: creatorId } });
+    if (!existUser) throw new NotFoundException('Yaratuvchi ID topilmadi');
     if (file) {
       fileInfo = await this.storageService.saveFile(file, 'news');
     }
@@ -90,6 +92,7 @@ export class NewsService {
   async update(id: string, updateDto: UpdateNewsDto, file?: Express.Multer.File) {
     const existing = await this.findOne(id);
 
+    const data: any = {}
     let fileUpdateData: any = {};
     if (file) {
 
@@ -100,13 +103,17 @@ export class NewsService {
 
     }
 
-    const title_latin = (updateDto.title_latin && updateDto.title_latin?.trim()?.length > 0) ? normalizeName(updateDto.title_latin) : undefined;
-    const title_cyril = (updateDto.title_cyril && updateDto.title_cyril?.trim()?.length > 0) ? normalizeName(updateDto.title_cyril) : undefined;
-    const title_ru = (updateDto.title_ru && updateDto.title_ru?.trim()?.length > 0) ? normalizeName(updateDto.title_ru) : undefined;
+    if (updateDto.title_latin && updateDto.title_latin?.trim()?.length > 0) data.title_latin = normalizeName(updateDto.title_latin);
+    if (updateDto.title_cyril && updateDto.title_cyril?.trim()?.length > 0) data.title_cyril = normalizeName(updateDto.title_cyril);
+    if (updateDto.title_ru && updateDto.title_ru?.trim()?.length > 0) data.title_ru = normalizeName(updateDto.title_ru);
+    if (updateDto.content_latin && updateDto.content_latin?.trim()?.length > 0) data.content_latin = updateDto.content_latin;
+    if (updateDto.content_cyril && updateDto.content_cyril?.trim()?.length > 0) data.content_cyril = updateDto.content_cyril;
+    if (updateDto.content_ru && updateDto.content_ru?.trim()?.length > 0) data.content_ru = updateDto.content_ru;
+    if (updateDto.is_public !== undefined) data.is_public = updateDto.is_public;
 
     return this.prisma.news.update({
       where: { id },
-      data: { ...updateDto, ...fileUpdateData, ...(title_latin && { title_latin }), ...(title_cyril && { title_cyril }), ...(title_ru && { title_ru }) },
+      data: { ...data, ...fileUpdateData },
     });
   }
 

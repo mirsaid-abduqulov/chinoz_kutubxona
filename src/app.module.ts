@@ -18,10 +18,10 @@ import { DepartmentsModule } from './departments/departments.module';
 import { NewsModule } from './news/news.module';
 import { EventsModule } from './events/events.module';
 import { DocumentsModule } from './documents/documents.module';
-import { MediaModule } from './media/media.module';
 import { OnlineRequestsModule } from './online-requests/online-requests.module';
 import { ContactModule } from './contact/contact.module';
 import { CacheMiddleware } from './common/middlewares/cashe.middleware';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [

@@ -181,12 +181,12 @@ export class DocumentsService {
     return this.prisma.document.delete({ where: { id } });
   }
 
-
   async download(id: string) {
     const doc = await this.findOne(id);
     if (!doc.file_url) throw new NotFoundException('Fayl topilmadi');
     return doc;
   }
+
   async downloadAdmin(id: string) {
     const doc = await this.findOneAdmin(id);
     if (!doc.file_url) throw new NotFoundException('Fayl topilmadi');
