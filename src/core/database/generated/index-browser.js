@@ -130,8 +130,8 @@ exports.Prisma.UserScalarFieldEnum = {
   refresh_token_jti: 'refresh_token_jti',
   role: 'role',
   is_login: 'is_login',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  created_at: 'created_at',
+  updated_at: 'updated_at'
 };
 
 exports.Prisma.GenreScalarFieldEnum = {
@@ -178,6 +178,7 @@ exports.Prisma.BookScalarFieldEnum = {
   author_id: 'author_id',
   published_date: 'published_date',
   grade_level: 'grade_level',
+  is_public: 'is_public',
   creator_id: 'creator_id',
   created_at: 'created_at',
   updated_at: 'updated_at',

@@ -7,7 +7,7 @@ import {
 } from '@nestjs/common';
 import { PrismaService } from '../core/database/prisma.service';
 import { StorageService } from '../common/storage/storage.service';
-import { CreateMediaAlbumDto, MediaType } from './dto/create-media-album.dto';
+import { CreateMediaAlbumDto } from './dto/create-media-album.dto';
 import { UpdateMediaAlbumDto } from './dto/update-media-album.dto';
 import { CreateMediaItemDto } from './dto/create-media-item.dto';
 import { QueryMediaAlbumDto } from './dto/query-media-album.dto';
@@ -16,6 +16,7 @@ import {
   buildPaginatedResponse,
 } from '../common/helpers/pagination.helper';
 import { buildMultilangSearchWhere } from 'src/common/helpers/multilang-search.helper';
+import { MediaType } from 'src/core/database/generated';
 
 @Injectable()
 export class MediaService {

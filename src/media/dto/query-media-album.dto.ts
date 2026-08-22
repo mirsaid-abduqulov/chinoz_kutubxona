@@ -1,9 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsOptional, IsString, IsInt, Min } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { MediaType } from './create-media-album.dto';
+import { IsBoolean, IsEnum, IsOptional } from 'class-validator';
 import { BaseQueryDto } from 'src/common/dto/base-query.dto';
- 
+import { booleanOrUndefined } from 'src/common/transformers/boolean-transformer';
+import { MediaType } from 'src/core/database/generated';
+
 export class QueryMediaAlbumDto extends BaseQueryDto {
   @ApiProperty({
     required: false,
@@ -14,4 +15,15 @@ export class QueryMediaAlbumDto extends BaseQueryDto {
   @IsEnum(MediaType)
   @IsOptional()
   type?: MediaType;
+
+  @ApiProperty({
+    required: false,
+    type: 'boolean',
+    description: 'Publik albumlar bo\'yicha filtrlash',
+    example: 'true',
+  })
+  @Transform(booleanOrUndefined)
+  @IsBoolean()
+  @IsOptional()
+  is_public?: boolean;
 }

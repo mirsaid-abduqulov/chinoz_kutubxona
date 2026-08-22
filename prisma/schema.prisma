@@ -130,8 +130,8 @@ enum FileType {
 
 model GenreBook {
   id      String @id @default(uuid())
-  book    Book   @relation(fields: [bookId], references: [id])
-  genre   Genre  @relation(fields: [genreId], references: [id])
+  book    Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  genre   Genre  @relation(fields: [genreId], references: [id], onDelete: Cascade)
   bookId  String
   genreId String
 

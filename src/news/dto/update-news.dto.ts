@@ -1,53 +1,54 @@
-import { ApiProperty, ApiPropertyOptional, PartialType } from '@nestjs/swagger';
-import { CreateNewsDto } from './create-news.dto';
-import { IsBoolean, IsNotEmpty, IsOptional, IsString } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsBoolean, IsOptional, IsString } from 'class-validator';
 import { Transform } from 'class-transformer';
+import { trimmedOrUndefined } from 'src/common/transformers/string-transformer';
+import { booleanOrUndefined } from 'src/common/transformers/boolean-transformer';
 
-export class UpdateNewsDto extends PartialType(CreateNewsDto) {
-    @ApiPropertyOptional()
-      @IsOptional()
-      @IsString()
-      @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
-      title_latin?: string;
-    
-      @ApiPropertyOptional()
-      @IsOptional()
-      @IsString()
-      @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
-      title_cyril?: string;
-    
-      @ApiPropertyOptional()
-      @IsOptional()
-      @IsString()
-      @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
-      title_ru?: string;
-    
-      
-      @ApiPropertyOptional()
-      @IsOptional()
-      @IsString()
-      @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
-      content_latin?: string;
-    
-      @ApiPropertyOptional()
-      @IsOptional()
-      @IsString()
-      @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
-      content_cyril?: string;
-    
-      @ApiPropertyOptional()
-      @IsOptional()
-      @IsString()
-      @Transform(({ value }) => typeof value === 'string' ? value.trim() : value)
-      content_ru?: string;
-    
-      @ApiPropertyOptional({ type: 'string', format: 'binary' })
-      @IsOptional()
-      cover_image?: any;
-    
-      @ApiPropertyOptional()
-      @IsOptional()
-      @Transform(({ value }) => value === 'true' || value === true)
-      @IsBoolean()
-      is_public?: boolean;
+export class UpdateNewsDto {
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Transform(trimmedOrUndefined)
+  title_latin?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Transform(trimmedOrUndefined)
+  title_cyril?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Transform(trimmedOrUndefined)
+  title_ru?: string;
+
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Transform(trimmedOrUndefined)
+  content_latin?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Transform(trimmedOrUndefined)
+  content_cyril?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  @Transform(trimmedOrUndefined)
+  content_ru?: string;
+
+  @ApiPropertyOptional({ type: 'string', format: 'binary' })
+  @IsOptional()
+  cover_image?: Express.Multer.File;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @Transform(booleanOrUndefined)
+  @IsBoolean()
+  is_public?: boolean;
 }
