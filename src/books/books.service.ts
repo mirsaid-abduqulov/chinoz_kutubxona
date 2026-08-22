@@ -91,6 +91,7 @@ export class BooksService {
   async findAll(query: QueryBookDto) {
     const { skip, take, page, limit } = buildPaginationParams(query);
 
+    const where: any = {};
     const conditions: any[] = [];
 
     if (query.search) {
@@ -100,19 +101,21 @@ export class BooksService {
       conditions.push({ OR: [...(titleFilter?.OR || []), ...(descriptionFilter?.OR || [])] });
     }
     if (query.author_id) {
-      conditions.push({ author_id: query.author_id });
+      where.author_id = query.author_id;
     }
     if (query.genre_id) {
-      conditions.push({ genres: { some: { genreId: query.genre_id } } });
+      where.genres = { some: { genreId: query.genre_id } };
     }
     if (query.grade_level !== undefined) {
-      conditions.push({ grade_level: query.grade_level });
+      where.grade_level = query.grade_level;
     }
     if (query.is_public !== undefined) {
-      conditions.push({ is_public: query.is_public });
+      where.is_public = query.is_public;
     }
 
-    const where = conditions.length > 0 ? { AND: conditions } : {};
+    if (conditions.length > 0) {
+      where.AND = conditions;
+    }
 
     const ALLOWED_SORT_FIELDS = [
       'created_at',

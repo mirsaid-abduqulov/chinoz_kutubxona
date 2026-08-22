@@ -2,6 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger';
 import { IsOptional, IsInt, IsUUID, IsBoolean } from 'class-validator';
 import { BaseQueryDto } from '../../common/dto/base-query.dto';
 import { Transform, Type } from 'class-transformer';
+import { booleanOrUndefined } from 'src/common/transformers/boolean-transformer';
 
 export class QueryBookDto extends BaseQueryDto {
   @ApiPropertyOptional()
@@ -22,10 +23,7 @@ export class QueryBookDto extends BaseQueryDto {
 
   @ApiPropertyOptional()
   @IsOptional()
-  @Transform(({ value }) => {
-    if (value === undefined || value === null) return undefined;
-    return value === 'true' || value === true || Number(value) === 1;
-  })
+  @Transform(booleanOrUndefined)
   @IsBoolean()
   is_public?: boolean;
 }
